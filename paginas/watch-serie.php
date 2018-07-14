@@ -80,9 +80,18 @@
 	.assistir .w_eps .w_input{
 		padding: 8px;font-size: 14px;
 		border:none;margin:0;
-		background: transparent;color:#fff;
+		background: transparent;color:#fff;outline:0;
 	}
-	.assistir .w_eps button.w_input{cursor:pointer;}
+	.assistir .w_eps select option{
+		background: #130000;color: #fff;
+		padding: 8px;outline:0;
+	}
+	.assistir .w_eps button.w_input{cursor:pointer;transition: transform 0.3s;}
+	.assistir .w_eps button.w_input:hover{
+		-ms-transform: translate(4px, 0px); /* IE 9 */
+    	-webkit-transform: translate(4px, 0px); /* Safari */
+	    transform: translate(4px, 0px);
+	}
 	/* PLAYERS */
 	.assistir .players_alt{
 		width: 90%;margin:10px auto;text-align: right;
