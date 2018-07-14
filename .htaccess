@@ -1,0 +1,12 @@
+Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteRule ^cadastro/?$ ./index.php [NC,L,QSA]
+  RewriteRule ^categoria\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=categoria/$1.php [NC,L,QSA]
+  RewriteRule ^watch/filme\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=watch-filme.php&midia_code=$1 [NC,L,QSA]
+  RewriteRule ^watch/serie\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=watch-serie.php&midia_code=$1 [NC,L,QSA]
+  
+</IfModule>
+#ErrorDocument 404 /404.html

@@ -1,0 +1,411 @@
+/* ESTILIZAÇÕES GLOBAIS */
+.oculto{display: none !important;}
+@media screen and (max-width: 530px) {
+	.oculto_mobile{display: none !important;}
+}
+.direita{float: right;}
+.esquerda{float: left;}
+.borda{border-bottom: 1px solid #a3a3a3;margin: 8px auto;}
+*{box-sizing: border-box;font-family: Arial;}
+ul{list-style:none;margin:0;padding:0;}
+a{text-decoration: none;color:#fff;}
+
+#fundo_preto{
+	height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+#fundo_preto .close_fp {
+    position: fixed;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    cursor: pointer;
+    color: white;
+}
+#fundo_preto .close_fp:hover {color: #ccc;}
+.fundo_p-content{
+    position: relative;
+    top: 46%;
+    width: 80%;
+    text-align: center;
+    margin-top: 30px;
+    margin: auto;overflow: auto;
+}
+/*********** Começo *************/
+body{margin: 0px; padding: 0px;background: #170909;}
+/* CABEÇALHO */
+header{
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 1px 5px 0px rgba(100,0,0,0.75);
+	background: #3b608e;margin-bottom: 50px;
+	position: relative;
+	height: 380px;
+	background: url(https://wallpaper29.files.wordpress.com/2016/11/filmes-2017-lanc3a7amentos-de-filmes-liga-da-justic3a7a.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+header .title_site{
+	font-size: 24px;
+	padding: 10px 4px;
+	text-align: center;
+	text-shadow: 0px 0px 1px red;color: #fff;
+}
+header .title_site figure{
+	position: absolute;bottom:0;left:0;right:0;
+	max-width: 300px;transition: opacity 0.2s;
+	width: 95%;margin:0 auto;opacity: 0.7;
+}
+header .title_site figure:hover{opacity: 1;}
+header .title_site figure:active{opacity: 0;transition: opacity 3s;}
+header .title_site figure img{border-radius: 40%;width: 100%;}
+header .menu{
+	overflow: auto;
+	border-bottom:1px solid #000;background: #160707;position: absolute;bottom: 0px;left:0;right:0;
+}
+header .menu .show_menu{
+	margin:2px;
+	float: left;display:none;
+}
+header .menu .show_menu a{
+	display: inline-block;
+	padding: 5px 13px;font-size: 20px;color: #fff;
+}
+header .menu nav{
+	margin:2px;
+	float: left;
+}
+header .menu nav ul{
+	overflow: hidden;
+}
+header .menu nav ul li{
+	float: left;
+}
+header .menu nav ul li a{
+	display: block;
+	/*padding: 6px 10px;   VALOR PADRÃO */
+	padding: 7px 10px;
+	font-size: 18px;color: #fff;
+}
+header .menu nav ul li:hover a{
+	color:#ddd;
+}
+/* MENU MOBI */
+header .menu nav .menu_mob{
+	position: fixed;top:0;left:0;bottom:0;display:none;
+	background: rgba(35,0,0,0.9);border-right: 2px solid #980f0f;
+	width: 90%;
+	max-width: 230px;
+	min-width: 190px;
+	z-index: 2;
+}
+header .menu nav .menu_mob li{display: block;float:none;}
+header .menu nav .menu_mob li a{
+	padding: 7px 10px;
+	font-size: 18px;color: #f9f9f9;
+}
+header .menu nav .menu_mob li:hover a{
+	text-decoration: underline;
+}
+header .menu nav li#close_menu{background: #980f0f;text-align: center;}
+header .menu nav li#close_menu a{color:#fbfbfb;padding: 4px;font-size: 22px;}
+header .menu nav li#close_menu a:hover{color:#f59b9b;}
+@media screen and (max-width: 910px) {
+	header .menu .show_menu{display: block;}
+	.menu_desk{display: none;}
+}
+/** Parte direita **/
+header .menu .menu_dir{
+	margin:2px;
+	float: right;
+}
+header .menu .busca{max-width: 480px;width: 98%;margin:0 auto;}
+header .menu .busca input{
+	padding: 15px;
+    font-size: 17px;
+    border: none;
+    float: left;
+    width: 80%;
+    background: white;
+}
+header .menu .busca button {
+    float: left;
+    width: 20%;
+    padding: 15px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+header .menu .menu_user{float: right;text-align: right;}
+header .menu .menu_user a{
+	display: inline-block;
+	/*padding: 7px 10px; VALOR PADRÃO*/
+	padding: 6px 10px;
+	color:#fff;
+	font-size: 17px;
+}
+header .menu .menu_user a.btn_show_search{display: none;}
+header .menu .menu_user input{
+	display: inline-block;
+	border:none;
+	width: 0px;
+	opacity: 0;
+	font-size: 16px;
+	transition: all 0.5s;
+}
+header .menu .menu_user .busc_desk{display: inline-block;}
+
+header .menu .menu_user .busc_desk:focus-within input,
+header .menu .menu_user .busc_desk:hover input{
+	opacity: 1;
+	padding: 6px 10px;
+	width: 200px;
+}
+@media screen and (max-width: 530px) {
+	header .menu .menu_user a{
+		padding: 7px 5px;
+		color:#fff;
+		font-size: 16px;
+	}
+	header .menu .menu_user .busc_desk{
+		display: none;
+	}
+	header .menu .menu_user a.btn_show_search{display:inline-block;}
+}
+@media screen and (max-width: 280px) {
+	header .menu .show_menu a {
+	    padding: 5px 10px;
+	    padding-right: 4px;
+	    font-size: 19px;
+	}
+	header .menu .menu_user a{
+		padding: 7px 4px;
+		font-size: 16px;
+	}
+	
+}
+/*************************** MAIN ******************************/
+main{color:#fff; background: #170909;overflow: auto;}
+main aside{
+	display: none;
+	width: 25%;float: right;
+	padding-right: 5%;
+}
+main aside ul{
+	margin-bottom: 15px;
+}
+main aside ul li:first-child{
+	text-align: center;
+    font-size: 18px;
+    background: #2b0808;
+    padding: 5px 2px;
+    border: 1px solid #6b1818;
+    border-bottom-width: 0;
+}
+main aside ul li a{
+	color: white;
+    background: transparent;
+    display: block;
+    font-size: 15px;
+    padding: 8px 16px;
+    border: 1px solid #6b1818;
+    border-bottom-width: 0;
+}
+main aside ul li:last-child a{
+border-bottom-width:1px;
+}
+main aside ul li:hover a{
+	text-decoration: underline; 
+}
+
+
+
+@media screen and (min-width: 840px) {
+	main section.conteudo{
+		width: 75%;float: left;
+	}
+	main aside{display: block;}
+
+}
+main .links_categoria{
+	width: 90%;margin:10px auto;
+}
+main .links_categoria a{
+	font-size: 14px;color: #ddd;padding: 4px 16px 4px 0px;
+}
+main .links_categoria a:first-child{padding-left:0;}
+main .links_categoria a:last-child{padding-right:0;}
+main .links_categoria a:hover{text-decoration:underline;}
+main .container-cat{
+	margin-bottom: 35px;text-shadow: 0px 0px 9px rgba(255, 0, 0, 0.42);
+}
+main .container-cat .cat-conteudo, .watch_section{
+	margin: 0px auto;
+	width: 90%;
+}
+main .container-cat .cat_nome{font-size: 24px;margin:5px 0px;}
+main .container-cat .list-films{
+	display: flex;
+	flex-wrap: wrap;
+}
+.filme{
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(255,0,0,1);
+-moz-box-shadow: 0px 0px 20px 2px rgba(255,0,0,1);
+box-shadow: 0px 0px 5px 2px rgba(192,0,0,1);
+	width: 200px;
+	height: 280px;
+	position: relative;
+}
+@media screen and (min-width: 511px) and (max-width: 710px) {
+	main .container-cat .list-films{justify-content: center;}
+	main .container-cat .cat_nome{padding: 10px 8px;}
+	.filme{
+		margin: 5px 5px;
+	}
+}
+@media screen and (max-width: 510px) {
+	main .container-cat .cat_nome{text-align: center;padding:5px 8px;color:#d4d4d4;}
+	main .container-cat .list-films{justify-content: center;}
+	.filme{
+		border:1px solid green;
+		height: 280px;
+		width: 50%;
+		position: relative;
+		border:none;
+		box-shadow: 0 0 1px 1px rgba(255,0,0,0.5);
+	}
+}
+/*aqui*/
+.filme img{
+	max-width: 100%;max-height: 100%;
+	width: 100%;height: 100%;
+}
+.filme .info{
+	position: absolute;top:0%;left:0%;bottom:0%;right:0%;
+	opacity:0;transition:opacity 0.3s;
+	background: rgba(0,0,0, 0.8);
+}
+.filme .info .dadosFilm{
+	border:none;padding: 2px 7px;
+	height: calc(100% - 55px);overflow: hidden;
+}
+.filme .info .InfTitulo{
+	padding: 5px 2px;text-align: center;
+	text-shadow: 1px 1px 2px green;
+	font-size: 20px;
+}
+.filme .info .mininfo{font-size: 13px;}
+.filme .info .InfoSinopse{
+	font-size: 14px;margin: 5px 0px;display: block;
+    overflow: hidden;
+    line-height: 1.3;
+}
+.filme .info .overflowDark{
+	height: 50px;
+	position:absolute;bottom: 50px;left:0;right:0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(0,0,0,1));
+}
+.filme .info .ver{
+	background: rgba(0,0,0,1);
+	border:none;position: absolute;bottom:0;left:0;right:0;height: 50px;
+}
+.filme .info .ver a{
+	background: transparent;border:none;margin:4px auto;display: table;cursor:pointer;text-align:center;
+}
+.filme .info .ver a i{
+	font-size: 35px;color:#fff;transition: transform 0.1s linear;
+}
+.filme .info .ver a:hover i{
+	-ms-transform: scale(0.8, 0.8)); /* IE 9 */
+    -webkit-transform: scale(0.8, 0.8)); /* Safari */
+    transform: scale(0.8, 0.8);
+}
+.filme:hover .info{opacity:1;}
+@media screen and (max-width: 375px) {
+	main .links_categoria a {
+	    font-size: 16px;
+	    padding: 4px 16px 4px 0px;
+	}
+	main .container-cat .cat_nome {
+	    font-size: 34px;
+	}
+	main .container-cat .cat-conteudo{
+		max-width: 340px;width: 100%;
+	}
+	.filme{width: 100%;height: 380px;}
+	.filme .info .InfTitulo {
+	    font-size: 30px;
+	}
+	.filme .info .mininfo {font-size: 16px;}
+	.filme .info .InfoSinopse {
+	    font-size: 18px;
+	    line-height: 1.3;
+	}
+	.filme .info .dadosFilm {height: calc(100% - 105px);}
+	.filme .info .overflowDark {
+	    height: 100px;
+	    bottom: 50px;
+	}
+	.filme .info .ver {height: 100px;}
+	.filme .info .ver a i {font-size: 75px;}
+
+
+
+	header .menu .show_menu a {
+	    padding: 4px 13px;
+	    font-size: 25px;
+	}
+	header .menu .menu_user a {
+	    padding: 7px 5px;
+	    font-size: 20px;
+	}
+	header .menu .menu_user .teste{font-size: 20px;}
+}
+/**** FOOOTER ****/
+footer{
+	background:#130707;
+	padding: 30px 10% 10px 10%;
+}
+footer ul{
+	display: inline-block;
+}
+footer ul li{padding: 8px 50px;display: block;}
+footer ul:first-child li{padding-left:0px;}
+footer ul:last-child li{padding-right:0px;}
+footer ul li a{display: block;color:#808080;}
+footer a:hover{text-decoration:underline;}
+footer .coping{
+	text-align: center;color: #808080;margin:20px 3px 10px 3px;font-size: 14px;
+}
+@media screen and (max-width: 800px) {
+	footer{padding: 30px 5% 10px 5%;}
+	footer ul li{padding: 8px 35px;}
+}
+@media screen and (max-width: 600px) {
+	footer{padding: 30px 4% 10px 4%;}
+	footer ul li{padding: 8px 25px;}
+}
+@media screen and (min-width: 311px) and (max-width: 510px) {
+	footer{padding: 30px 3% 10px 3%;}
+	footer ul{width: 49%;margin:0;}
+	footer ul li{padding: 8px 0px;}
+	footer ul:first-child li{padding-left:0px;}
+	footer ul:last-child li{padding-right:0px;}
+}
+@media screen and (max-width: 310px) {
+	footer ul{
+		display: block;
+	}
+	footer{padding: 30px 3% 10px 3%;}
+	footer ul li{padding: 8px 0px;}
+
