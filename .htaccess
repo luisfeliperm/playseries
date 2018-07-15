@@ -4,9 +4,9 @@ Options -Indexes
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   #RewriteRule ^cadastro/?$ ./index.php [NC,L,QSA]
-  RewriteRule ^categoria\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=categoria/$1.php [NC,L,QSA]
-  RewriteRule ^watch/filme\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=watch-filme.php&midia_code=$1 [NC,L,QSA]
-  RewriteRule ^watch/serie\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=watch-serie.php&midia_code=$1 [NC,L,QSA]
+  RewriteRule ^categoria\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=categoria.php&cat=$1 [NC,L,QSA]
+  RewriteRule ^busca\/?$ /index.php?p=busca.php [NC,L,QSA]
+  RewriteRule ^watch\/?serie\/?([a-z,0-9,A-Z,_-]+)\/?$ /index.php?p=watch-serie.php&id_serie=$1 [NC,L,QSA]
   
 </IfModule>
-#ErrorDocument 404 /404.html
+ErrorDocument 404 /paginas/404.html

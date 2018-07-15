@@ -1,7 +1,21 @@
-<div class="watch_section">
+<?php
+$id_serie = anti_injection(intval($_GET['id_serie'])) / 77;
+// Verifica se existe
+$ler_ep = ler_db("series", "WHERE id = '".$id_serie."' ");
+if (empty($ler_ep)) { // O link não existe
+	echo "<div class='notfound'>Não encontrado</div>";exit();
+}
+foreach ($ler_ep as $ep_array) {
+ 	$dados_ep = array('titulo' => $ep_array['titulo'], 'info' => $ep_array['info'],'sinopse' => $ep_array['sinopse'] ,'miniatura' => $ep_array['miniatura'],'background' =>  $ep_array['background'],'tags' => $ep_array['tags'] );
+}
+$dados_ep['info'] = str_replace(' ','&',$dados_ep['info']);
+$dados_ep['info'] = str_replace('_',' ',$dados_ep['info']);
+parse_str($dados_ep['info'], $info_ep);
+?>
+<div class="watch_section width-90">
 	<div class="thumb">
-		<div class="w_titulo">The Walking Dead</div>
-		<span class="qualy">720p</span>
+		<div class="w_titulo"><?php echo $dados_ep['titulo']; ?></div>
+		<span class="qualy"><?php echo $info_ep['qualy'];?></span>
 	</div>
 	<div class="assistir">
 		<div class="w_eps">
@@ -18,9 +32,10 @@
 			<button class="w_input"><i class="fas fa-chevron-right"></i></button>
 		</div>
 		<div class="players_alt">
-			<a href="#" class="active">Principal</a>
+			<a href="#" class="bug">Relatar erro</a>
 			<a href="#">Vid</a>
 			<a href="#">OpenLoad</a>
+			<a href="#" class="active">Principal</a>
 		</div>
 		<div class="video">
 			<video class="vjs-tech vsc-initialized" preload="none" poster="http://digitalspyuk.cdnds.net/16/07/980x490/landscape-1455811108-ustv-the-walking-dead-s06e10-still-01.jpg" controls="" >
@@ -36,7 +51,8 @@
 <style>
 	.watch_section{margin-bottom: 35px;}
 	.thumb{
-		background-image: url(https://image.tmdb.org/t/p/w780/mkmB5hAJFb0xnOhu8cLRJqX3ZAQ.jpg);
+		#background-image: url(https://image.tmdb.org/t/p/w780/mkmB5hAJFb0xnOhu8cLRJqX3ZAQ.jpg);
+		background-image: url(<?php echo $dados_ep['background']; ?>);
 		width: 100%;
 	    height: 280px;
 	    background-color: #000;
@@ -94,10 +110,14 @@
 	}
 	/* PLAYERS */
 	.assistir .players_alt{
-		width: 90%;margin:10px auto;text-align: right;
+		width: 90%;margin:10px auto;overflow:auto;
 	}
-	.assistir .players_alt a{
-		opacity: 0.3;border:1px solid #fff;padding:5px;font-size: 14px;
+	.assistir .players_alt a:not(.bug){
+		opacity: 0.3;border:1px solid #fff;padding:5px;font-size: 14px;float: right;
+		margin-left: 5px;
+	}
+	.assistir .players_alt a.bug{
+		opacity: 0.3;border:1px solid #fff;padding:5px;font-size: 14px;float: left;
 	}
 	.assistir .players_alt a:hover{
 		opacity: 0.5;

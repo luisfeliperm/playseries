@@ -229,7 +229,6 @@ main aside ul li:hover a{
 }
 
 
-
 @media screen and (min-width: 840px) {
 	main section.conteudo{
 		width: 75%;float: left;
@@ -237,8 +236,14 @@ main aside ul li:hover a{
 	main aside{display: block;}
 
 }
-main .links_categoria{
-	width: 90%;margin:10px auto;
+main .width-90{
+	margin: 0px auto;
+	width: 90%;
+}
+main  .notfound{
+	width: 90%;margin:15px auto;
+	text-shadow: 0px 0px 1px rgba(255,0,0,0.5);
+	font-size: 26px;
 }
 main .links_categoria a{
 	font-size: 14px;color: #ddd;padding: 4px 16px 4px 0px;
@@ -249,10 +254,7 @@ main .links_categoria a:hover{text-decoration:underline;}
 main .container-cat{
 	margin-bottom: 35px;text-shadow: 0px 0px 9px rgba(255, 0, 0, 0.42);
 }
-main .container-cat .cat-conteudo, .watch_section{
-	margin: 0px auto;
-	width: 90%;
-}
+
 main .container-cat .cat_nome{font-size: 24px;margin:5px 0px;}
 main .container-cat .list-films{
 	display: flex;
@@ -409,3 +411,4 @@ footer .coping{
 	footer{padding: 30px 3% 10px 3%;}
 	footer ul li{padding: 8px 0px;}
 
+/* GERAIS */

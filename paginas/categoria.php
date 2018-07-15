@@ -1,7 +1,6 @@
-<!-- Filmes -->
 <div class="container-cat oculto_mobile">
-	<div class="cat-conteudo">
-		<div class="cat_nome">Filmes</div>
+	<div class="cat-conteudo width-90">
+		<div class="cat_nome" style="text-transform: uppercase;"><?php echo $_GET['cat'];?></div>
 		<div class="list-films">
 			<div class="filme">
 				<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">

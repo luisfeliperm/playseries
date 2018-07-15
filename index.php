@@ -1,6 +1,10 @@
+<!-- luisfeliperm -->
+<?php
+include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
+?>
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="pt-br">
 	<title>PlaySeries</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
@@ -21,8 +25,8 @@
 		<nav id="nav_menu">
 			<ul class="menu_desk">
 				<li><a href="/">Inicio</a></li>
-				<li><a href="/categoria/series/">Series</a></li>
-				<li><a href="/categoria/filmes/">Filmes</a></li>
+				<li><a href="/categoria/series/">Lançamentos</a></li>
+				<li><a href="/categoria/documentario/">Documentarios</a></li>
 				<li><a href="/categoria/animes/">Animes</a></li>
 			</ul>
 
@@ -30,13 +34,13 @@
 				<li id="close_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'none');document.body.style.overflow = 'auto';"><i class="fas fa-times"></i></a></li>
 				<li><a href="/">Inicio</a></li>
 				<li><a href="/categoria/series/">Series</a></li>
-				<li><a href="/categoria/filmes/">Filmes</a></li>
+				<li><a href="/categoria/documentario/">Documentarios</a></li>
 				<li><a href="/categoria/animes/">Animes</a></li>
 			</ul>
 		</nav>
 		<div class="menu_dir">
 			<div class="menu_user">
-				<form class="busc_desk" method="get" action="/procurar/">
+				<form class="busc_desk" method="get" action="/busca/">
 					<a href="#" style="padding-left: 2px;padding-right: 2px;"><i class="fas fa-search"></i></a>
 					<input name="key" type="search" name="" placeholder="Pesquisar">
 				</form>
@@ -47,7 +51,7 @@
 		<div id="fundo_preto">
 			<span class="close_fp" title="Fechar" onclick="display_edit('fundo_preto', 'none');">×</span>
 			<div class="fundo_p-content">
-				<form class="busca" method="get" action="/procurar/">
+				<form class="busca" method="get" action="/busca/">
 					<input type="text" name="key">
 					<button type="submit"><i class="fas fa-search"></i></button>
 				</form>
@@ -80,16 +84,16 @@
 	</ul>
 </aside>
 <section class="conteudo">
-	<div class="links_categoria">
-		<a href="/categoria/filmes/">Filmes</a>
-		<a href="/categoria/series/">Series</a>
+	<div class="links_categoria width-90">
+		<a href="/categoria/drama/">Drama</a>
+		<a href="/categoria/terror/">Terror</a>
 		<a href="/categoria/animes/">Animes</a>
 		<a href="/categoria/desenhos/">Desenhos</a>
+		<a href="/categoria/suspense/">Suspense</a>
 		<a href="/categoria/romance/">Romance</a>
 		<a href="/categoria/acao/">Ação</a>
 		<a href="/categoria/aventura/">Aventura</a>
 		<a href="/categoria/comedia/">Comedia</a>
-		<a href="/categoria/documentario/">Documentario</a>
 	</div>
 	<!-- Inclui PÁGINAS -->
 	<?php
@@ -111,7 +115,7 @@
 <footer>
 	<ul>
 		<li><a href="/contato/">Contato</a></li>
-		<li><a href="/contato/">Sugerir Filmes</a></li>
+		<li><a href="/contato/">Sugerir Series</a></li>
 		<li><a href="/sobre/">Sobre</a></li>
 	</ul>
 	<ul>

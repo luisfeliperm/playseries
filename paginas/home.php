@@ -1,6 +1,6 @@
 <!-- Recomendados -->
 	<div class="container-cat">
-		<div class="cat-conteudo">
+		<div class="cat-conteudo width-90">
 			<div class="cat_nome">Recomendados</div>
 			<div class="list-films">
 				<div class="filme">
@@ -50,7 +50,7 @@
 
 	<!-- Series -->
 	<div class="container-cat oculto_mobile">
-		<div class="cat-conteudo">
+		<div class="cat-conteudo width-90">
 			<div class="cat_nome">Series</div>
 			<div class="list-films">
 				<div class="filme">
