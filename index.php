@@ -64,23 +64,32 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 <main>
 <aside>
 	<ul>
-		<li>Top 5 series</li>
-		<li><a href="#">Prison Break</a></li>
-		<li><a href="#">Sobrenatural</a></li>
-		<li><a href="#">The Walking Dead</a></li>
-		<li><a href="#">Breaking Bad</a></li>
-		<li><a href="#">Game Of Thrones</a></li>
-		<li><a href="#">Stranger Things</a></li>
-		<li><a href="#">Vikings</a></li>
+		<li>Top 6 series</li>
+		<li><a href="/watch/serie/prison-break/">Prison Break</a></li>
+		<li><a href="/watch/serie/sobrenatural/">Sobrenatural</a></li>
+		<li><a href="/watch/serie/the-walking-dead/">The Walking Dead</a></li>
+		<li><a href="/watch/serie/Breaking-bad/">Breaking Bad</a></li>
+		<li><a href="/watch/serie/game-of-thrones">Game Of Thrones</a></li>
+		<li><a href="/watch/serie/stranger-things/">Stranger Things</a></li>
 	</ul>
 	<ul>
-		<li>Filmes</li>
-		<li><a href="#">As cronicas de narnia</a></li>
-		<li><a href="#">Harry Potter</a></li>
-		<li><a href="#">It a coisa</a></li>
-		<li><a href="#">O exterminador do futuro</a></li>
-		<li><a href="#">Divirgente</a></li>
-		<li><a href="#">Maze Runner</a></li>
+		<li>Recomendados</li>
+		<li><a href="/watch/serie/la-casa-de-papel/">Lá Casa de Papel</a></li>
+		<li><a href="/watch/serie/naruto/">Naruto</a></li>
+		<li><a href="/watch/serie/the-flash/">The Flash</a></li>
+		<li><a href="/watch/serie/arrow/">Arrow</a></li>
+		<li><a href="/watch/serie/riverdale/">Riverdale</a></li>
+		<li><a href="/watch/serie/lucifer/">Lúcifer</a></li>
+		<li><a href="/watch/serie/13-reasons-why/">13 Reasons Why</a></li>
+		<li><a href="/watch/serie/naruto-shippuden/">Naruto Shippuden</a></li>
+		<li><a href="/watch/serie/3-por-cento/">3%</a></li>
+		<li><a href="/watch/serie/death-note/">Death Note</a></li>
+		<li><a href="/watch/serie/the-100/">The100</a></li>
+		<li><a href="/watch/serie/the-originals/">The Originals</a></li>
+		<li><a href="/watch/serie/o-atirador/">O Atirador</a></li>
+		<li><a href="/watch/serie/the-vampire-diaries/">The Vampire Diaries</a></li>
+		<li><a href="/watch/serie/american-horror-story/">American Horror Story</a></li>
+		<li><a href="/watch/serie/os-simpsons/">Os simpsons</a></li>
 	</ul>
 </aside>
 <section class="conteudo">
@@ -114,19 +123,19 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 
 <footer>
 	<ul>
-		<li><a href="/contato/">Contato</a></li>
-		<li><a href="/contato/">Sugerir Series</a></li>
+		<li><a target="_blank" href="http://www.facebook.com/">Contato</a></li>
+		<li><a target="_blank" href="http://facebook.com/">Sugerir Series</a></li>
 		<li><a href="/sobre/">Sobre</a></li>
 	</ul>
 	<ul>
-		<li><a href="/ajuda/#anuncios">Anuncios</a></li>
-		<li><a href="/ajuda/#playmobile">Assistir no celular</a></li>
-		<li><a href="/ajuda/#dicas">Dicas</a></li>
+		<li><a href="https://ouo.io/BfKHcS">Anuncios</a></li>
+		<li><a href="#">Assistir no celular</a></li>
+		<li><a href="#">Dicas</a></li>
 	</ul>
 	<ul>
-		<li><a href="/ajuda/#travando">Travando?</a></li>
-		<li><a target="_blank" href="https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom?hl=pt-BR">AdBlock</a></li>
-		<li><a href="/ajuda/#players">Players</a></li>
+		<li><a target="_blank" href="https://ouo.io/n0g60">Travando?</a></li>
+		<li><a target="_blank" href="https://ouo.io/BfKHcS">AdBlock</a></li>
+		<li><a href="#">Players</a></li>
 	</ul>
 	<div class="coping">
 		PlaySeries 2018 - Criado por <i>luisfeliperm</i>

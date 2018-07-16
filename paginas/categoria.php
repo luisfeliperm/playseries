@@ -4,7 +4,7 @@
 		<div class="list-films">
 			<?php
 			$cat = @anti_injection($_GET['cat']);
-			$total_exib = "2"; // número de registros por página
+			$total_exib = "10"; // número de registros por página
 			$pagina = @anti_injection(intval($_GET['p']));
 			if (!isset($pagina) || $pagina < 1) {
 				$pag_n = "1";
@@ -13,9 +13,11 @@
 			}
 			$inicio = $pag_n - 1;
 			$inicio = $inicio * $total_exib;
-
-
 			$ler = ler_db("series", "WHERE (cat1 = '".$cat."' OR cat2 = '".$cat."' OR cat3 = '".$cat."' OR cat4 = '".$cat."' )  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
+
+			if ($cat == "mais-visitados") {
+				$ler = ler_db("series", "  ORDER BY viwer DESC,id DESC LIMIT ".$inicio.",".$total_exib.";");
+			}
 			if (!empty($ler)) {
 				foreach ($ler as $lers) { 
 					$lers['info'] = str_replace(' ','&',$lers['info']);
@@ -46,7 +48,7 @@
 				}
 			}else{
 				?>
-				<div class="width-90" style="font-size: 25px;text-shadow:none;">Sem resultados</div>
+				<div style="font-size: 25px;text-shadow:none;margin: 10px 0px;">Sem resultados</div>
 				<?php
 			}
 			?>
@@ -56,6 +58,9 @@
 	<div class="paginacao">
 		<?php 
 		$tr = mysqli_num_rows(executa_query("SELECT * FROM series WHERE (cat1 = '".$cat."' OR cat2 = '".$cat."' OR cat3 = '".$cat."' OR cat4 = '".$cat."' ) ;")); // verifica o número total de registros
+		if ($cat == "mais-visitados"){
+			$tr = mysqli_num_rows(executa_query("SELECT * FROM series"));
+		}
 		$tp = $tr / $total_exib; // verifica o número total de páginas
 		if ($pag_n>1) {
 			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a> ";

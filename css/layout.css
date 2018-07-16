@@ -102,12 +102,17 @@ header .menu nav ul li:hover a{
 }
 /* MENU MOBI */
 header .menu nav .menu_mob{
-	position: fixed;top:0;left:0;bottom:0;display:none;
-	background: rgba(35,0,0,0.9);border-right: 2px solid #980f0f;
-	width: 90%;
-	max-width: 230px;
-	min-width: 190px;
-	z-index: 2;
+	position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    display: none;
+    background: rgba(0, 0, 0, 0.9);
+    border-right: 2px solid #37557b;
+    width: 90%;
+    max-width: 230px;
+    min-width: 190px;
+    z-index: 2;
 }
 header .menu nav .menu_mob li{display: block;float:none;}
 header .menu nav .menu_mob li a{
@@ -117,9 +122,9 @@ header .menu nav .menu_mob li a{
 header .menu nav .menu_mob li:hover a{
 	text-decoration: underline;
 }
-header .menu nav li#close_menu{background: #980f0f;text-align: center;}
+header .menu nav li#close_menu{background: #3b608e;text-align: center;}
 header .menu nav li#close_menu a{color:#fbfbfb;padding: 4px;font-size: 22px;}
-header .menu nav li#close_menu a:hover{color:#f59b9b;}
+header .menu nav li#close_menu a:hover{color:#7f9dc1;}
 @media screen and (max-width: 910px) {
 	header .menu .show_menu{display: block;}
 	.menu_desk{display: none;}

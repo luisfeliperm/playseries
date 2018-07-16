@@ -4,7 +4,7 @@
 		<div class="cat_nome">Novos</div>
 		<div class="list-films">
 			<?php
-			$ler = ler_db("series", "ORDER BY id DESC LIMIT 10;");
+			$ler = ler_db("series", "ORDER BY id DESC LIMIT 30;");
 			if (!empty($ler)) {
 				foreach ($ler as $lers) { 
 					$lers['info'] = str_replace(' ','&',$lers['info']);

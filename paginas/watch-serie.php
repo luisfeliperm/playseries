@@ -32,14 +32,12 @@ parse_str($dados_ep['info'], $info_ep);
 			<button class="w_input"><i class="fas fa-chevron-right"></i></button>
 		</div>
 		<div class="players_alt">
-			<a href="#" class="bug">Relatar erro</a>
-			<a href="#">Vid</a>
-			<a href="#">OpenLoad</a>
+			<a href="#" class="bug">Erro?</a>
 			<a href="#" class="active">Principal</a>
 		</div>
 		<div class="video">
 			<video class="vjs-tech vsc-initialized" preload="none" poster="http://digitalspyuk.cdnds.net/16/07/980x490/landscape-1455811108-ustv-the-walking-dead-s06e10-still-01.jpg" controls="" >
-				<source src="https://www.blogger.com/video-play.mp4?contentId=447192dfa35e6e9b" type="video/mp4">
+				<source src="https://pgli3j.oloadcdn.net/dl/l/wX3dLAdDW1E4RpIp/DAPU607OeWE/S3R13.Pr1s0n.Br34k+S01+x+E01+-+Dub.mp4" type="video/mp4">
 			</video>
 		</div>
 		<div class="controles">
