@@ -1,35 +1,81 @@
-<div class="container-cat oculto_mobile">
+<div class="container-cat">
 	<div class="cat-conteudo width-90">
 		<div class="cat_nome" style="text-transform: uppercase;"><?php echo $_GET['cat'];?></div>
 		<div class="list-films">
-			<div class="filme">
-				<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-				<div class="info">
-					<div class="dadosFilm">
-						<div class="InfTitulo">Stranger Things</div>
-						<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> 1h 44min 2018</div>
-						<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> Serie - Drama</div>
-						<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
-						<div class="InfoSinopse" title="Sinopse">Um garoto de 12 anos desaparece misteriosamente. Sua mãetorna-se frenética e tenta encontrar Will enquanto o chefe de polícia Jim Hopper começa a investigar, e assim fazem também seus amigos. </div>
+			<?php
+			$cat = @anti_injection($_GET['cat']);
+			$total_exib = "2"; // número de registros por página
+			$pagina = @anti_injection(intval($_GET['p']));
+			if (!isset($pagina) || $pagina < 1) {
+				$pag_n = "1";
+			} else {
+				$pag_n = $pagina;
+			}
+			$inicio = $pag_n - 1;
+			$inicio = $inicio * $total_exib;
+
+
+			$ler = ler_db("series", "WHERE (cat1 = '".$cat."' OR cat2 = '".$cat."' OR cat3 = '".$cat."' OR cat4 = '".$cat."' )  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
+			if (!empty($ler)) {
+				foreach ($ler as $lers) { 
+					$lers['info'] = str_replace(' ','&',$lers['info']);
+					$lers['info'] = str_replace('_',' ',$lers['info']);
+					parse_str($lers['info'], $info_serie);
+					?>
+					<div class="filme">
+						<img src="<?php echo $lers['miniatura'];?>">
+						<div class="info">
+							<div class="dadosFilm">
+								<div class="InfTitulo"><?php echo $lers['titulo'];?></div>
+								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
+								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
+									<?php 
+									echo "<span class='capitalize'>".$lers['cat1']."</span> "."<span class='capitalize'>".$lers['cat2']."</span> "."<span class='capitalize'>".$lers['cat3']."</span> "."<span class='capitalize'>".$lers['cat4']."</span> ";
+									?>
+								</div>							
+								<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
+								<div class="InfoSinopse" title="<?php echo $lers['sinopse'];?>"><?php echo $lers['sinopse'];?> </div>
+							</div>
+							<div class="overflowDark"></div>
+							<div class="ver">
+								<a href="/watch/serie/<?php echo $lers['nome'];?>/"><i class="far fa-play-circle"></i></a>
+							</div>
+						</div>
 					</div>
-					<div class="overflowDark"></div>
-					<div class="ver">
-						<a href="#"><i class="far fa-play-circle"></i></a>
-					</div>
-				</div>
-			</div>
-			<div class="filme">
-				<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-				<div class="info">
-					<div class="InfTitulo">Stranger Things</div>
-				</div>
-			</div>
-			<div class="filme">
-				<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-				<div class="info">
-					<div class="InfTitulo">Stranger Things</div>
-				</div>
-			</div>
+				<?php 
+				}
+			}else{
+				?>
+				<div class="width-90" style="font-size: 25px;text-shadow:none;">Sem resultados</div>
+				<?php
+			}
+			?>
 		</div>
+		
 	</div>
+	<div class="paginacao">
+		<?php 
+		$tr = mysqli_num_rows(executa_query("SELECT * FROM series WHERE (cat1 = '".$cat."' OR cat2 = '".$cat."' OR cat3 = '".$cat."' OR cat4 = '".$cat."' ) ;")); // verifica o número total de registros
+		$tp = $tr / $total_exib; // verifica o número total de páginas
+		if ($pag_n>1) {
+			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a> ";
+		}else{
+			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-left'></i></a> ";
+		}
+		if ($pag_n<$tp) {
+			echo "<a href='?p=".($pag_n +1)."'><i class='fas fa-angle-double-right'></i></a>";
+		}else{
+			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-right'></i></a> ";
+		}
+		?>
+	</div>
+	<style>
+				.paginacao{margin:20px 0px;text-align: center;display:block;}
+				.paginacao a{
+					font-size: 15px;color:#968484;;
+				    text-shadow: none;
+				    padding: 5px 5px;
+				    margin: 0px 5px;
+				}
+	</style>
 </div>

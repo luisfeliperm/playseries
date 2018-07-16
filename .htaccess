@@ -3,10 +3,9 @@ Options -Indexes
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  #RewriteRule ^cadastro/?$ ./index.php [NC,L,QSA]
-  RewriteRule ^categoria\/?([a-z,0-9,A-Z,_-]+)\/$ /index.php?p=categoria.php&cat=$1 [NC,L,QSA]
-  RewriteRule ^busca\/?$ /index.php?p=busca.php [NC,L,QSA]
-  RewriteRule ^watch\/?serie\/?([a-z,0-9,A-Z,_-]+)\/?$ /index.php?p=watch-serie.php&id_serie=$1 [NC,L,QSA]
+  RewriteRule ^categoria\/?([a-z,0-9,A-Z,_-]+)\/?$ /index.php?pi=categoria.php&cat=$1 [NC,L,QSA]
+  RewriteRule ^busca\/?$ /index.php?pi=busca.php [NC,L,QSA]
+  RewriteRule ^watch\/?serie\/?([a-z,0-9,A-Z,_-]+)\/?$ /index.php?pi=watch-serie.php&url_serie=$1 [NC,L,QSA]
   
 </IfModule>
 ErrorDocument 404 /paginas/404.html

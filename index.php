@@ -25,17 +25,17 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 		<nav id="nav_menu">
 			<ul class="menu_desk">
 				<li><a href="/">Inicio</a></li>
-				<li><a href="/categoria/series/">Lançamentos</a></li>
 				<li><a href="/categoria/documentario/">Documentarios</a></li>
 				<li><a href="/categoria/animes/">Animes</a></li>
+				<li><a href="/categoria/mais-visitados/">Mais vistos</a></li>
 			</ul>
 
 			<ul class="menu_mob" id="menu_mob">
 				<li id="close_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'none');document.body.style.overflow = 'auto';"><i class="fas fa-times"></i></a></li>
 				<li><a href="/">Inicio</a></li>
-				<li><a href="/categoria/series/">Series</a></li>
 				<li><a href="/categoria/documentario/">Documentarios</a></li>
 				<li><a href="/categoria/animes/">Animes</a></li>
+				<li><a href="/categoria/mais-visitados/">Mais vistos</a></li>
 			</ul>
 		</nav>
 		<div class="menu_dir">
@@ -87,7 +87,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 	<div class="links_categoria width-90">
 		<a href="/categoria/drama/">Drama</a>
 		<a href="/categoria/terror/">Terror</a>
-		<a href="/categoria/animes/">Animes</a>
+		<a href="/categoria/ficcao/">Ficção</a>
 		<a href="/categoria/desenhos/">Desenhos</a>
 		<a href="/categoria/suspense/">Suspense</a>
 		<a href="/categoria/romance/">Romance</a>
@@ -97,7 +97,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 	</div>
 	<!-- Inclui PÁGINAS -->
 	<?php
-	$pagina = @$_GET['p'];
+	$pagina = @$_GET['pi'];
 	if (isset($pagina)) {
 		$file_pagina = $_SERVER['DOCUMENT_ROOT']."/paginas/".$pagina;
 		if(file_exists(stream_resolve_include_path($file_pagina))){

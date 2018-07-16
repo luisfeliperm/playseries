@@ -1,7 +1,7 @@
 <?php
-$id_serie = anti_injection(intval($_GET['id_serie'])) / 77;
+$url_serie = anti_injection($_GET['url_serie']);
 // Verifica se existe
-$ler_ep = ler_db("series", "WHERE id = '".$id_serie."' ");
+$ler_ep = ler_db("series", "WHERE nome = '".$url_serie."' ");
 if (empty($ler_ep)) { // O link não existe
 	echo "<div class='notfound'>Não encontrado</div>";exit();
 }

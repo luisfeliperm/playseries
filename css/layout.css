@@ -1,5 +1,6 @@
 /* ESTILIZAÇÕES GLOBAIS */
 .oculto{display: none !important;}
+.capitalize{text-transform: capitalize;}
 @media screen and (max-width: 530px) {
 	.oculto_mobile{display: none !important;}
 }

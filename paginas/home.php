@@ -1,87 +1,40 @@
 <!-- Recomendados -->
-	<div class="container-cat">
-		<div class="cat-conteudo width-90">
-			<div class="cat_nome">Recomendados</div>
-			<div class="list-films">
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="dadosFilm">
-							<div class="InfTitulo">Stranger Things</div>
-							<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> 1h 44min 2018</div>
-							<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> Serie - Drama</div>
-							<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
-							<div class="InfoSinopse" title="Sinopse">Um garoto de 12 anos desaparece misteriosamente. Sua mãetorna-se frenética e tenta encontrar Will enquanto o chefe de polícia Jim Hopper começa a investigar, e assim fazem também seus amigos. </div>
+<div class="container-cat">
+	<div class="cat-conteudo width-90">
+		<div class="cat_nome">Novos</div>
+		<div class="list-films">
+			<?php
+			$ler = ler_db("series", "ORDER BY id DESC LIMIT 10;");
+			if (!empty($ler)) {
+				foreach ($ler as $lers) { 
+					$lers['info'] = str_replace(' ','&',$lers['info']);
+					$lers['info'] = str_replace('_',' ',$lers['info']);
+					parse_str($lers['info'], $info_serie);
+					?>
+					<div class="filme">
+						<img src="<?php echo $lers['miniatura'];?>">
+						<div class="info">
+							<div class="dadosFilm">
+								<div class="InfTitulo"><?php echo $lers['titulo'];?></div>
+								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
+								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
+									<?php 
+									echo "<span class='capitalize'>".$lers['cat1']."</span> "."<span class='capitalize'>".$lers['cat2']."</span> "."<span class='capitalize'>".$lers['cat3']."</span> "."<span class='capitalize'>".$lers['cat4']."</span> ";
+									?>
+								</div>
+								<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
+								<div class="InfoSinopse" title="<?php echo $lers['sinopse'];?>"><?php echo $lers['sinopse'];?></div>
+								</div>
+							<div class="overflowDark"></div>
+							<div class="ver">
+								<a href="/watch/serie/<?php echo $lers['nome'];?>/"><i class="far fa-play-circle"></i></a>
+							</div>
 						</div>
-						<div class="overflowDark"></div>
-						<div class="ver">
-							<a href="/watch/serie/dfs/"><i class="far fa-play-circle"></i></a>
-						</div>
 					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-
-			</div>
+			<?php 
+				}
+			} 
+			?>
 		</div>
 	</div>
-
-	<!-- Series -->
-	<div class="container-cat oculto_mobile">
-		<div class="cat-conteudo width-90">
-			<div class="cat_nome">Series</div>
-			<div class="list-films">
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="dadosFilm">
-							<div class="InfTitulo">Stranger Things</div>
-							<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> 1h 44min 2018</div>
-							<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> Serie - Drama</div>
-							<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
-							<div class="InfoSinopse" title="Sinopse">Um garoto de 12 anos desaparece misteriosamente. Sua mãetorna-se frenética e tenta encontrar Will enquanto o chefe de polícia Jim Hopper começa a investigar, e assim fazem também seus amigos. </div>
-						</div>
-						<div class="overflowDark"></div>
-						<div class="ver">
-							<a href="#"><i class="far fa-play-circle"></i></a>
-						</div>
-					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-				<div class="filme">
-					<img src="http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg">
-					<div class="info">
-						<div class="InfTitulo">Stranger Things</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
+</div>
