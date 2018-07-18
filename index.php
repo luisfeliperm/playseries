@@ -15,10 +15,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 <body>
 <header>
 	<div class="title_site">
-		<figure>
-			<img src="/logo.png">
-			<figcaption></figcaption>
-		</figure>
+		<figure><img src="/logo.png"></figure>
 	</div>
 	<div class="menu">
 		<div class="show_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'block');document.body.style.overflow = 'hidden';"><i class="fas fa-bars"></i></a></div>

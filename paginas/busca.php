@@ -1,6 +1,6 @@
 <div class="container-cat">
 	<div class="cat-conteudo width-90">
-		<h1>Resultados para: <?php echo $_GET['key']; ?></h1>
+		<h1>Resultados para: <?php echo charsEspe($_GET['key']); ?></h1>
 		<div class="list-films">
 			<?php
 			$key = @anti_injection(charsEspe($_GET['key']));
