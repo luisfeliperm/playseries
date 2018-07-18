@@ -1,11 +1,82 @@
 <!-- luisfeliperm -->
 <?php
-include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 ?>
 <!DOCTYPE html>
 <html>
 <head lang="pt-br">
-	<title>PlaySeries</title>
+	<!-- SEO -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta property="og:locale" content="pt_BR">
+	<meta property="og:type" content="website"/>
+	<meta property="og:site_name" content="Xploitvid">
+	<meta http-equiv="content-language" content="pt-br">
+	<?php 
+	/**** SEO **/
+	if (!empty($url_serie)) {
+		$seo_ler_serie = ler_db("series", "WHERE nome = '".$url_serie."' ");
+		if (!empty($seo_ler_serie)) { // O link existe
+			foreach ($seo_ler_serie as $seo_array) {
+			 	$seo_serie = array('titulo' => $seo_array['titulo'], 'info' => $seo_array['info'],'background' =>  $seo_array['background'],'tags' => $seo_array['tags'] );
+			}
+			if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0 && isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
+				$season = anti_injection(intval($_GET['s']));
+				$ep = anti_injection(intval($_GET['e']));
+				$query = "SELECT * FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."' ";
+				if (mysqli_num_rows(executa_query($query))) {
+					// O EP EXISTE
+					$titulo_meta = $seo_serie['titulo']." ".$season." Temporada Episódio ".$ep;
+					?>
+					<title>Assistir <?php echo $titulo_meta?></title>
+					<meta property="og:title" content="Assista <?php echo $titulo_meta;?>" />
+					<meta name="twitter:title" content="Assista <?php echo $titulo_meta; ?>">
+					<meta name="description" content="Assistir <?php echo $titulo_meta;?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+					<meta property="og:description" content="Assistir <?php echo $titulo_meta;?>"/>
+					<meta name="twitter:description" content="Assistir <?php echo $titulo_meta;?>">
+					<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
+					<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
+					<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
+					<meta property="article:section" content="<?php echo $seo_serie['titulo'];?>"/>
+					<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/?s=".$season."&e=".$ep; ?>
+					<meta property="og:url" content="<?php echo $meta_url;?>">
+					<?php
+				}else{// O EP NÃO EXISTE
+					echo "Episódio não encontrado";
+				}
+			}else{// Apenas info da serie, não do ep
+				?>
+				<title>Assistir <?php echo $seo_serie['titulo'];?></title>
+				<meta property="og:title" content="Assista <?php echo $seo_serie['titulo'];?>" />
+				<meta name="twitter:title" content="Assista <?php echo $seo_serie['titulo']; ?>">
+				<meta name="description" content="Assistir <?php echo $seo_serie['titulo'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+				<meta property="og:description" content="Assistir <?php echo $seo_serie['titulo'];?>"/>
+				<meta name="twitter:description" content="Assistir <?php echo $seo_serie['titulo'];?>">
+				<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
+				<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
+				<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
+				<meta property="article:section" content="<?php echo $seo_serie['titulo'];?>"/>
+				<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/";?>
+				<meta property="og:url" content="<?php echo $meta_url;?>">
+				<?php
+			}
+		}else{ /* Link não existe */ echo "<title>Não encontrado</title>";}
+	}else{ // padrão
+		?>
+		<title>PlaySeries</title>
+		<meta property="og:title" content="PlaySeries" />
+		<meta name="twitter:title" content="PlaySeries">
+		<meta name="description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+		<meta property="og:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. "/>
+		<meta name="twitter:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. ">
+		<meta property="og:image" content="/img/logo.png"/>
+		<meta name="twitter:image" content="/img/logo.png">
+		<meta name="Keywords" content="series,assistir,de graça,hd,720p,dublado,pirata,sem anuncios,site de filmes,online,playseries">
+		<meta property="article:section" content="Home"/>
+		<meta property="og:url" content="http://<?php echo $_SERVER['SERVER_NAME'] ?>/ ">
+		<?php
+	}
+	?>
+
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">

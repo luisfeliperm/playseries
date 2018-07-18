@@ -1,5 +1,5 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT']."/config.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 $email = "luisfelipermx3401@gmail.com"; // EMAIL DE QUEM ENVIA
 $mensagem = $_POST['msg'];
 $destino = "luisfelipepoint@gmail.com";

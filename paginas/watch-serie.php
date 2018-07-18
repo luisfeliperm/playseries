@@ -1,5 +1,4 @@
 <?php
-$url_serie = anti_injection($_GET['url_serie']);
 // Verifica se existe
 $ler_ep = ler_db("series", "WHERE nome = '".$url_serie."' ");
 if (empty($ler_ep)) { // O link não existe
@@ -272,7 +271,6 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 		$(".s"+temporada).css("display", "block");
 
 		document.getElementById("s"+temporada+"e1").selected = "true";
-		// "s"+temporada+"e1";
 	}
 	function troca(){
 		var temporada =document.getElementById('temp_select').value;
@@ -283,7 +281,7 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 	function enviar(){
 		var msg = document.getElementById("report_msg").value;
 		var url =  window.location.href;
-		$.post('/paginas/mail/report.php',{msg: msg, url: url},function(data){
+		$.post('/config/report.php',{msg: msg, url: url},function(data){
 		 //mostrando o retorno do post		
 		 if (data == 1 || data == 0) {
 		 	display_edit('report', 'none');

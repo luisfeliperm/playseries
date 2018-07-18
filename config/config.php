@@ -47,4 +47,6 @@ function ler_db($tabela, $params = null, $fields = '*'){
 		return $data;
 	}
 }
+// var SITE
+$url_serie = @anti_injection($_GET['url_serie']);
 ?>
