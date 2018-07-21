@@ -22,7 +22,7 @@ function charsEspe($str){
 }
 function fecha_conexao($conn){mysqli_close($conn) or die (mysqli_error());}
 function connect_db(){
-	$conn = mysqli_connect('localhost', 'luisfeliperm', '22082000', 'playseries');
+	$conn = mysqli_connect('localhost', 'luisfeliperm', '@Naruto123', 'playseries');
 	mysqli_set_charset($conn, "utf8") or die (mysqli_error($conn));
 	if (mysqli_connect_errno()) {
 		$conn = "Erro no banco de dados!";exit();
