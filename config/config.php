@@ -49,4 +49,16 @@ function ler_db($tabela, $params = null, $fields = '*'){
 }
 // var SITE
 $url_serie = @anti_injection($_GET['url_serie']);
+session_start();
+// Verifica a conta de admin
+if (isset($_SESSION['user'],$_SESSION['pass']) && !empty($_SESSION['user']) && !empty($_SESSION['pass'])) {
+	$query = "SELECT * FROM admin WHERE user = '".$_SESSION['user']."' AND pass = '".$_SESSION['pass']."' AND nivel > 0";
+	$result = executa_query($query);
+	if (!mysqli_num_rows($result)) {
+		$_SESSION['user'] = null;$_SESSION['pass'] = null;
+		session_destroy();
+		echo "<script>window.location.href='/admin/';</script>";;exit();
+	}
+}
+
 ?>

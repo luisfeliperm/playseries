@@ -86,7 +86,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 <body>
 <header>
 	<div class="title_site">
-		<figure><img src="/logo.png"></figure>
+		<figure><img src="/img/logo.png"></figure>
 	</div>
 	<div class="menu">
 		<div class="show_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'block');document.body.style.overflow = 'hidden';"><i class="fas fa-bars"></i></a></div>
@@ -94,7 +94,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 			<ul class="menu_desk">
 				<li><a href="/">Inicio</a></li>
 				<li><a href="/categoria/documentario/">Documentarios</a></li>
-				<li><a href="/categoria/animes/">Animes</a></li>
+				<li><a href="/categoria/anime/">Animes</a></li>
 				<li><a href="/categoria/mais-visitados/">Mais vistos</a></li>
 			</ul>
 
@@ -102,7 +102,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 				<li id="close_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'none');document.body.style.overflow = 'auto';"><i class="fas fa-times"></i></a></li>
 				<li><a href="/">Inicio</a></li>
 				<li><a href="/categoria/documentario/">Documentarios</a></li>
-				<li><a href="/categoria/animes/">Animes</a></li>
+				<li><a href="/categoria/anime/">Animes</a></li>
 				<li><a href="/categoria/mais-visitados/">Mais vistos</a></li>
 			</ul>
 		</nav>

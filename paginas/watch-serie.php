@@ -45,9 +45,8 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 					echo "<option>Sem temporada</option>";
 				}else{
 					foreach ($ler_temp as $temp_array) {
-					 	$list_temp = array('temp' => $temp_array['temporada'] );
 						?>
-						<option <?php if(@$_GET['s']== $list_temp['temp']){echo "selected";} ?> value="<?php echo $list_temp['temp']; ?>"> <?php echo $list_temp['temp']; ?>º Temporada</option>
+						<option <?php if(@$_GET['s']== $temp_array['temporada']){echo "selected";} ?> value="<?php echo $temp_array['temporada']; ?>"> <?php echo $temp_array['temporada']; ?>º Temporada</option>
 						<?php
 					}
 				}
