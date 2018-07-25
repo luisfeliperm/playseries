@@ -13,7 +13,7 @@
 			}
 			$inicio = $pag_n - 1;
 			$inicio = $inicio * $total_exib;
-			$ler = ler_db("series", "WHERE (titulo LIKE '%".$key."%' OR tags LIKE '%".$key."%')  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
+			$ler = ler_db("series", "WHERE (nome LIKE '%".$key."%' OR tags LIKE '%".$key."%')  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
 
 			if (!empty($ler)) {
 				foreach ($ler as $lers) { 
@@ -25,7 +25,7 @@
 						<img src="<?php echo $lers['miniatura'];?>">
 						<div class="info">
 							<div class="dadosFilm">
-								<div class="InfTitulo"><?php echo $lers['titulo'];?></div>
+								<div class="InfTitulo"><?php echo $lers['nome'];?></div>
 								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
 								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
 									<?php 
@@ -37,7 +37,7 @@
 							</div>
 							<div class="overflowDark"></div>
 							<div class="ver">
-								<a href="/watch/serie/<?php echo $lers['nome'];?>/"><i class="far fa-play-circle"></i></a>
+								<a href="/watch/serie/<?php echo $lers['identificador'];?>/"><i class="far fa-play-circle"></i></a>
 							</div>
 						</div>
 					</div>
@@ -53,7 +53,7 @@
 	</div>
 	<div class="paginacao">
 		<?php 
-		$tr = mysqli_num_rows(executa_query("SELECT * FROM series WHERE (titulo LIKE '%".$key."%' OR tags LIKE '%".$key."%') ;")); // verifica o número total de registros
+		$tr = mysqli_num_rows(executa_query("SELECT * FROM series WHERE (nome LIKE '%".$key."%' OR tags LIKE '%".$key."%') ;")); // verifica o número total de registros
 		$tp = $tr / $total_exib; // verifica o número total de páginas
 		if ($pag_n>1) {
 			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a> ";

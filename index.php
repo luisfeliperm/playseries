@@ -14,10 +14,10 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 	<?php 
 	/**** SEO **/
 	if (!empty($url_serie)) {
-		$seo_ler_serie = ler_db("series", "WHERE nome = '".$url_serie."' ");
+		$seo_ler_serie = ler_db("series", "WHERE identificador = '".$url_serie."' ");
 		if (!empty($seo_ler_serie)) { // O link existe
 			foreach ($seo_ler_serie as $seo_array) {
-			 	$seo_serie = array('titulo' => $seo_array['titulo'], 'info' => $seo_array['info'],'background' =>  $seo_array['background'],'tags' => $seo_array['tags'] );
+			 	$seo_serie = array('nome' => $seo_array['nome'], 'info' => $seo_array['info'],'background' =>  $seo_array['background'],'tags' => $seo_array['tags'] );
 			}
 			if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0 && isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 				$season = anti_injection(intval($_GET['s']));
@@ -25,7 +25,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 				$query = "SELECT * FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."' ";
 				if (mysqli_num_rows(executa_query($query))) {
 					// O EP EXISTE
-					$titulo_meta = $seo_serie['titulo']." ".$season." Temporada Episódio ".$ep;
+					$titulo_meta = $seo_serie['nome']." ".$season." Temporada Episódio ".$ep;
 					?>
 					<title>Assistir <?php echo $titulo_meta?></title>
 					<meta property="og:title" content="Assista <?php echo $titulo_meta;?>" />
@@ -36,7 +36,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 					<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
 					<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
 					<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
-					<meta property="article:section" content="<?php echo $seo_serie['titulo'];?>"/>
+					<meta property="article:section" content="<?php echo $seo_serie['nome'];?>"/>
 					<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/?s=".$season."&e=".$ep; ?>
 					<meta property="og:url" content="<?php echo $meta_url;?>">
 					<?php
@@ -45,16 +45,16 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 				}
 			}else{// Apenas info da serie, não do ep
 				?>
-				<title>Assistir <?php echo $seo_serie['titulo'];?></title>
-				<meta property="og:title" content="Assista <?php echo $seo_serie['titulo'];?>" />
-				<meta name="twitter:title" content="Assista <?php echo $seo_serie['titulo']; ?>">
-				<meta name="description" content="Assistir <?php echo $seo_serie['titulo'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
-				<meta property="og:description" content="Assistir <?php echo $seo_serie['titulo'];?>"/>
-				<meta name="twitter:description" content="Assistir <?php echo $seo_serie['titulo'];?>">
+				<title>Assistir <?php echo $seo_serie['nome'];?></title>
+				<meta property="og:title" content="Assista <?php echo $seo_serie['nome'];?>" />
+				<meta name="twitter:title" content="Assista <?php echo $seo_serie['nome']; ?>">
+				<meta name="description" content="Assistir <?php echo $seo_serie['nome'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+				<meta property="og:description" content="Assistir <?php echo $seo_serie['nome'];?>"/>
+				<meta name="twitter:description" content="Assistir <?php echo $seo_serie['nome'];?>">
 				<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
 				<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
 				<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
-				<meta property="article:section" content="<?php echo $seo_serie['titulo'];?>"/>
+				<meta property="article:section" content="<?php echo $seo_serie['nome'];?>"/>
 				<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/";?>
 				<meta property="og:url" content="<?php echo $meta_url;?>">
 				<?php
@@ -191,13 +191,13 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 
 <footer>
 	<ul>
+		<li><a target="_blank" href="/admin/">Login</a></li>
 		<li><a target="_blank" href="http://www.facebook.com/">Contato</a></li>
 		<li><a target="_blank" href="http://facebook.com/">Sugerir Series</a></li>
-		<li><a href="/sobre/">Sobre</a></li>
 	</ul>
 	<ul>
+		<li><a href="/sobre/">Sobre</a></li>
 		<li><a href="https://ouo.io/BfKHcS">Anuncios</a></li>
-		<li><a href="#">Assistir no celular</a></li>
 		<li><a href="#">Dicas</a></li>
 	</ul>
 	<ul>

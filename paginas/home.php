@@ -15,7 +15,7 @@
 						<img src="<?php echo $lers['miniatura'];?>">
 						<div class="info">
 							<div class="dadosFilm">
-								<div class="InfTitulo"><?php echo $lers['titulo'];?></div>
+								<div class="InfTitulo"><?php echo $lers['nome'];?></div>
 								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
 								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
 									<?php 
@@ -27,7 +27,7 @@
 								</div>
 							<div class="overflowDark"></div>
 							<div class="ver">
-								<a href="/watch/serie/<?php echo $lers['nome'];?>/"><i class="far fa-play-circle"></i></a>
+								<a href="/watch/serie/<?php echo $lers['identificador'];?>/"><i class="far fa-play-circle"></i></a>
 							</div>
 						</div>
 					</div>

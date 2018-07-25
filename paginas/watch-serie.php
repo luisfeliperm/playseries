@@ -1,22 +1,22 @@
 <?php
 // Verifica se existe
-$ler_ep = ler_db("series", "WHERE nome = '".$url_serie."' ");
+$ler_ep = ler_db("series", "WHERE identificador = '".$url_serie."' ");
 if (empty($ler_ep)) { // O link não existe
 	echo "<div class='notfound'>Não encontrado</div>";exit();
 }
 foreach ($ler_ep as $ep_array) {
- 	$dados_ep = array('titulo' => $ep_array['titulo'], 'info' => $ep_array['info'],'sinopse' => $ep_array['sinopse'] ,'miniatura' => $ep_array['miniatura'],'background' =>  $ep_array['background'],'tags' => $ep_array['tags'], 'viwer' => $ep_array['viwer'] );
+ 	$dados_ep = array('nome' => $ep_array['nome'], 'info' => $ep_array['info'],'sinopse' => $ep_array['sinopse'] ,'miniatura' => $ep_array['miniatura'],'background' =>  $ep_array['background'],'tags' => $ep_array['tags'], 'viwer' => $ep_array['viwer'] );
 }
 $dados_ep['info'] = str_replace(' ','&',$dados_ep['info']);
 $dados_ep['info'] = str_replace('_',' ',$dados_ep['info']);
 parse_str($dados_ep['info'], $info_ep);
 $viwer = $dados_ep['viwer'] + 1;
-$query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  ";
+$query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_serie."'  ";
 @executa_query($query);
 ?>
 <div class="watch_section width-90">
 	<div class="thumb">
-		<div class="w_titulo"><?php echo $dados_ep['titulo']; ?></div>
+		<div class="w_nome"><?php echo $dados_ep['nome']; ?></div>
 		<span class="qualy"><?php echo $info_ep['qualy'];?></span>
 	</div>
 	<div class="assistir">
@@ -92,20 +92,20 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 			$ler_players = ler_db("eps", "WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."'  ");
 			if (!empty($ler_players)) {
 				foreach ($ler_players as $play_array) {
-				 	$list_play = array('1_src' => $play_array['src_principal'],'2_nome' => $play_array['second_nome'], '2_src' => $play_array['src_second'],'3_nome' => $play_array['terceiro_nome'], '3_src' => $play_array['src_terceiro'],'poster' => $play_array['poster']);
+				 	$list_play = array('1_src' => $play_array['src_1'],'nome_2' => $play_array['nome_2'], 'src_2' => $play_array['src_2'],'nome_3' => $play_array['nome_3'], '3_src' => $play_array['src_3'],'poster' => $play_array['poster']);
 
-				 	if (!empty($list_play['3_nome'])) {
-				 		if ($get_play == 2) {
-				 			echo "<a href='?s=".$season."&e=".$ep."&player=3' class='active'>".$list_play['3_nome']."</a>";
+				 	if (!empty($list_play['nome_3'])) {
+				 		if ($get_play == 3) {
+				 			echo "<a href='?s=".$season."&e=".$ep."&player=3' class='active'>".$list_play['nome_3']."</a>";
 				 		}else{
-				 			echo "<a href='?s=".$season."&e=".$ep."&player=3'>".$list_play['3_nome']."</a>";
+				 			echo "<a href='?s=".$season."&e=".$ep."&player=3'>".$list_play['nome_3']."</a>";
 				 		}
 				 	}
-				 	if (!empty($list_play['2_nome'])) {
+				 	if (!empty($list_play['nome_2'])) {
 				 		if ($get_play == 2) {
-				 			echo "<a href='?s=".$season."&e=".$ep."&player=2' class='active'>".$list_play['2_nome']."</a>";
+				 			echo "<a href='?s=".$season."&e=".$ep."&player=2' class='active'>".$list_play['nome_2']."</a>";
 				 		}else{
-				 			echo "<a href='?s=".$season."&e=".$ep."&player=2'>".$list_play['2_nome']."</a>";
+				 			echo "<a href='?s=".$season."&e=".$ep."&player=2'>".$list_play['nome_2']."</a>";
 				 		}
 				 	}
 				 	if (!empty($list_play['1_src'])) {
@@ -123,9 +123,10 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 		</div>
 		<?php 
 		if ($get_play != "1") {
+			
 			?>
 			<div class="diframePlay">
-				<iframe class="iframePlay" src="https://openload.co/embed/Rl63D8L4UeQ"></iframe>
+				<iframe class="iframePlay" src="<?php echo $play_array['src_'.$get_play];?>"></iframe>
 			</div>
 			<?php 
 		}else{
@@ -168,7 +169,7 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 	<div id="resultado" style="text-align: center;"></div>
 </div>
 <style>
-	.watch_section{margin-bottom: 35px;}
+	.watch_section.width-90{margin-bottom: 35px;    margin-top: 12px;}
 	.thumb{
 		background-image: url(<?php echo $dados_ep['background']; ?>);
 		width: 100%;height: 280px;
@@ -178,7 +179,7 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 	    position: relative;
 	    border-bottom: solid 1px #000;
 	}
-	.w_titulo{
+	.w_nome{
 		font-size: 30px;
 	    color: #a97272;    background: rgba(27, 27, 27, 0.7);
 	    font-weight: 300;
@@ -220,7 +221,7 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE nome = '".$url_serie."'  
 	.assistir .players_alt a.active{opacity: 0.1;cursor: default;}
 	.assistir .video,.assistir .diframePlay{margin: 10px auto;display: block;width: 90%;}
 	.assistir .video video{width: 100%;;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);}
-	.assistir .diframePlay iframe.iframePlay{width: 100%;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);}
+	.assistir .diframePlay iframe.iframePlay{width: 100%;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);border:1px solid #211b1b;}
 	@media screen and (min-width: 670px) {
 		.assistir .diframePlay iframe.iframePlay{height: 400px;}
 	}

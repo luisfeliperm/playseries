@@ -47,6 +47,7 @@ function ler_db($tabela, $params = null, $fields = '*'){
 		return $data;
 	}
 }
+$admin = 0;
 // var SITE
 $url_serie = @anti_injection($_GET['url_serie']);
 session_start();
@@ -58,7 +59,7 @@ if (isset($_SESSION['user'],$_SESSION['pass']) && !empty($_SESSION['user']) && !
 		$_SESSION['user'] = null;$_SESSION['pass'] = null;
 		session_destroy();
 		echo "<script>window.location.href='/admin/';</script>";;exit();
-	}
+	}else{$admin = 1;}
 }
 
 ?>

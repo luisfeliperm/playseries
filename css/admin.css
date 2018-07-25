@@ -18,8 +18,6 @@ form.recup button{font-size: 16px;padding:6px 1px;float: left;width: 85px;text-a
 
 
 
-
-
 .adm{
 	overflow:auto;margin:20px auto;max-width: 850px;color: #111;
 }
@@ -30,46 +28,75 @@ form.recup button{font-size: 16px;padding:6px 1px;float: left;width: 85px;text-a
 
 .add .add_titulo{
 margin:0 auto;width: 100%;margin-top:10px;padding: 8px;
-background:#f3f3f3;
+background:#983e3e;overflow: auto;color:#fff;text-shadow:0px 0px 1px black;
 }
+.add .add_titulo a{color:#fff;}
+.add .add_titulo .right a{margin-left: 5px;}
+.add .add_titulo .left a{margin-right: 5px;}
 .add form{
 	margin:0 auto;width: 100%;padding: 0px 10px;
-	border:1px solid #bac0c3;background: #fff;
+	border:1px solid #983e3e;background: #f3e7e7;color:#983e3e;
 }
 .add form div{margin:10px 0px;}
 .add form div label{
 	margin:1px 0px;font-size: 18px;display:block;
 }
 .add form div input{
-	width: 100%;padding: 4px 5px;font-size: 14.5px;
+	width: 100%;padding: 4px 5px;font-size: 14.5px;border: 1px solid #983e3e;color: #983e3e;background: #f3e7e7;
 }
 .add form div textarea{
-	width: 100%;padding: 4px 5px;font-size: 16px;height: 60px;
+	width: 100%;padding: 4px 5px;font-size: 15px;height: 60px;border: 1px solid;color: #983e3e;background: #f3e7e7;
 }
 .add form div .input_status{text-align: right;font-size: 14px;display: none;}
 .add form fieldset input{
-	width: 60px;border: none;padding:2px 2px;
+	width: 60px;border: none;padding:2px 2px;background:#f3e7e7;
+	border: 1px solid;color: #983e3e;text-align:center;
 }
-.add form fieldset select{
-	padding: 2.5px;background: #fff;color:#111;
+.add form select{
+	padding: 2.5px;background: #f3e7e7;color:#983e3e;border:1px solid;
 }
-.add form .add_submit{text-align: right;}
+.add form select.cat{
+	margin: 4px 0px;
+}
+.add form .add_submit{overflow: auto;}
 .add form .add_submit button{
+	background:transparent;color:#983e3e;border:1px solid;cursor:pointer;
 	padding: 6px 8px;
 }
-
+.add form .add_submit #carregando{display:none}
+.add form .add_submit #carregando img{width: 29px;}
+#resultado{
+	position: fixed;top:0;bottom:0;left:0;right:0;
+	display:none;background:rgba(0,0,0,0.7);
+}
+#resultado .sub_result{
+	padding: 10px;display:none;
+	border-radius: 10px;
+	width: 240px;margin:60px auto;
+	background:#ffff;
+	border:1px solid #sss;color:#111;
+}
+#resultado .sub_result  .result_title{font-size: 26px;}
+#resultado .sub_result  .result_msg{font: 15px;}
+#resultado .sub_result  .result_msg a{color:#6D0000;}
+#resultado .sub_result  .result_close{text-align:center;margin-top:10px;}
+#resultado .sub_result  .result_close a{color:red;}
 
 
 
 .container_adm{
 	color:#fff;
-	border:1px solid red;
 	margin: 0 auto;
     width: 100%;
     margin-top: 10px;
     padding: 8px;
 }
 .container_adm.account{
-	text-align: right;overflow:auto;
+	text-align: right;overflow:auto;background: #983e3e;
+	border-bottom-left-radius: 20px;text-shadow:0px 0px 1px black;
 }
 .container_adm.account a{margin-left: 10px;text-decoration:underline;}
+.container_adm.links a{
+	display: block;border:1px solid red;font-size: 18px;
+	padding: 8px 10px;text-align: center;
+}
