@@ -14,6 +14,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 	<?php 
 	/**** SEO **/
 	if (!empty($url_serie)) {
+		if (isset($_GET['player'])) {echo "<meta name='robots' content='noindex,follow'>";}
 		$seo_ler_serie = ler_db("series", "WHERE identificador = '".$url_serie."' ");
 		if (!empty($seo_ler_serie)) { // O link existe
 			foreach ($seo_ler_serie as $seo_array) {
@@ -41,7 +42,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 					<meta property="og:url" content="<?php echo $meta_url;?>">
 					<?php
 				}else{// O EP NÃO EXISTE
-					echo "Episódio não encontrado";
+					echo "<title>Episódio não encontrado</title>";
 				}
 			}else{// Apenas info da serie, não do ep
 				?>
@@ -191,7 +192,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 
 <footer>
 	<ul>
-		<li><a target="_blank" href="/admin/">Login</a></li>
+		<li><a href="/admin/">Login</a></li>
 		<li><a target="_blank" href="http://www.facebook.com/">Contato</a></li>
 		<li><a target="_blank" href="http://facebook.com/">Sugerir Series</a></li>
 	</ul>

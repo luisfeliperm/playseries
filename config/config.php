@@ -61,5 +61,5 @@ if (isset($_SESSION['user'],$_SESSION['pass']) && !empty($_SESSION['user']) && !
 		echo "<script>window.location.href='/admin/';</script>";;exit();
 	}else{$admin = 1;}
 }
-
+if (isset($_GET['sair'])){session_destroy();header('Location: /');exit();}
 ?>

@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/css/admin.css">
+<?php $mod_edit='0';?><link rel="stylesheet" type="text/css" href="/css/admin.css">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Recomendados -->
 <div class="container-cat" style="text-shadow:none;">
@@ -8,10 +8,7 @@
 		$user = anti_injection($_POST['user']);$pass = anti_injection($_POST['pass']);
 		$query = "SELECT * FROM admin WHERE user = '".$user."' AND pass = '".$pass."' AND nivel > 0";
 		$result = executa_query($query);
-		if (mysqli_num_rows($result)) {
-			echo "<br><br><br><br>=> LOGADO";
-			$_SESSION['user'] = $user;$_SESSION['pass'] = $pass;
-		}
+		if (mysqli_num_rows($result)) {$_SESSION['user'] = $user;$_SESSION['pass'] = $pass;}
 	}
 	if (!isset($_SESSION['user'],$_SESSION['pass']) || empty($_SESSION['user']) || empty($_SESSION['pass'])) {
 		// Não está logado
@@ -43,19 +40,17 @@
 	}else{ /******  TÁ LOGADO */
 		?>
 		<div class="adm">
-
 		<div class="adm_aside a-1 left">
 			<?php 
-			if (!isset($_GET['pag']) OR $_GET['pag'] == "serie") { ?>
+			if (!isset($_GET['pag']) OR @$_GET['pag'] == "serie") { ?>
 				<div class="add add-serie">
 					<?php 
-					$mod_edit=0;
 					if (isset($_GET['edit']) && !empty($_GET['edit'])) {
 						$edit=anti_injection($_GET['edit']);
 						$query = "SELECT identificador FROM series WHERE identificador = '".$edit."' ";
 						$result = executa_query($query);
 						if (mysqli_num_rows($result)) {
-							$mod_edit=1;
+							$mod_edit='serie';
 
 							$ler_edit = ler_db("series", "WHERE identificador = '".$edit."' ");
 							if (!empty($ler_edit)) { // O link existe
@@ -72,8 +67,8 @@
 						}
 					}
 					?>
-					<div class="add_titulo"><?php if($mod_edit==1){echo "<span class='left'>Editar Série</span><span class='right'><a href='/admin/'><i class='fas fa-chevron-left'></i></a> <a title='Excluir série' href='#''><i class='fas fa-trash-alt'></i></a></span>";}else{echo "Adicionar Série";}?></div>
-					<form method="post">
+					<div class="add_titulo"><?php if($mod_edit=='serie'){echo "<span class='left'>Editar Série</span><span class='right'><a href='/admin/'><i class='fas fa-chevron-left'></i></a> <a title='Excluir série' href='#''><i class='fas fa-trash-alt'></i></a></span>";}else{echo "Adicionar Série";}?></div>
+					<div class="form">
 						<div>
 							<label for="form_adm_id">Identificador</label>
 							<input value="<?php echo @$d_edit['id'];?>" required type="text" name="form_adm_id" id="form_adm_id" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();" onblur="valida('form_adm_id')">
@@ -184,10 +179,10 @@
 						
 						<div class="add_submit">
 							
-							<button type='submit' class="right" onclick="return enviar();"><?php if ($mod_edit==1) {echo "Salvar";}else{echo"Adicionar";}?></button>
-							<span id="carregando" class="right"><img src="http://gifimage.net/wp-content/uploads/2018/04/loading-gif-animado-11.gif"></span>
+							<button type='submit' class="right" onclick="return enviar();"><?php if ($mod_edit=='serie') {echo "Salvar";}else{echo"Adicionar";}?></button>
+							<span id="carregando" class="right"><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
 						</div>
-					</form>
+					</div>
 					<script type="text/javascript">
 						function enviar(){
 							display_edit('carregando', 'block');
@@ -204,7 +199,7 @@
 							var cat2 = document.getElementById('cat2').value;
 							var cat3 = document.getElementById('cat3').value;
 							var cat4 = document.getElementById('cat4').value;
-							$.post('/config/admin/valida_add_serie.php',{<?php if($mod_edit==1){echo "id_real: ".$d_edit['id_real'].",";}?>add: '<?php if($mod_edit==1){echo "update";}else{echo "1";}?>', id: Identificador, nome: nome,sinopse: sinopse,backg: backg,minia: minia, tag: tag, ano: ano,min: min,qualy: qualy,cat1: cat1,cat2: cat2,cat3: cat3,cat4: cat4},function(data){
+							$.post('/config/admin/valida_add_serie.php',{<?php if($mod_edit=='serie'){echo "id_real: ".$d_edit['id_real'].",";}?>add_serie: '<?php if($mod_edit=='serie'){echo "update";}else{echo "1";}?>', id: Identificador, nome: nome,sinopse: sinopse,backg: backg,minia: minia, tag: tag, ano: ano,min: min,qualy: qualy,cat1: cat1,cat2: cat2,cat3: cat3,cat4: cat4},function(data){
 							 //mostrando o retorno do post		
 							 if (data == "erro2") {
 							 	display_edit('resultado','block');
@@ -232,26 +227,205 @@
 					</script>
 				</div>
 			<?php
-			} ?>
+			}
+			if (isset($_GET['pag']) && @$_GET['pag'] == "ep") { ?>
+			<div class="add add-serie">
+				<?php // Verifica se a serie existe
+				
+				$ep_id = @anti_injection($_GET['id']);
+				$ler_serie = ler_db("series", "WHERE identificador = '".$ep_id."' ");
+				if (empty($ler_serie) || !isset($_GET['id']) || empty($_GET['id'])) { ?>
+					<div class="add_titulo">Adicionar Episódio <b>1ª Etapa</b></div>
+					<div class="form" id="addEpETAPA1">
+						<div>
+							<label for="idSerieForAddEP">Qual o ID da série ?</label>
+							<input required type="text" id="idSerieForAddEP" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();edita_texto('statusidSerieForAddEP','');">
+							<div class="add_submit">
+								<button onclick="valida('idSerieForAddEP')" class="left">Verificar</button>
+								<span style="padding: 6px 8px;display:block;" id="statusidSerieForAddEP"></span>
+							</div>
+						</div>
+					</div> <?php
+				}else{
+					foreach ($ler_serie as $serie_array) {
+					 	$serie = array('nome' => $serie_array['nome']);
+					}
+					// $ler_temp = ler_db("eps", "WHERE identificador = '".$ep_id."' ORDER BY temporada ASC ", "DISTINCT temporada");
+					// foreach ($ler_temp as $serie_array) {
+					//  	#$serie = array('nome' => $serie_array['temporada']);
+					// }
+					$last_temp = "1";$last_ep = "0";
+					?>
+
+					<div class="add_titulo">Adicionar Episódio <b><?php echo $serie['nome'];?></b></div>
+					<div class="form" id="addEpETAPA1">
+						<div>
+							<b>Total:</b>
+							<span><?php $last_temp=mysqli_num_rows(executa_query("SELECT DISTINCT temporada FROM eps WHERE identificador = '".$ep_id."' ORDER BY temporada ASC ")) ?? 1;echo $last_temp;?> Temporadas</span>
+							<span><?php echo mysqli_num_rows(executa_query("SELECT id FROM eps WHERE  identificador = '".$ep_id."' "));?> Epísódios</span>
+							<?php 
+							$ler_temp = @ler_db("eps", "WHERE identificador = '".$ep_id."' AND temporada = '".$last_temp."' ORDER BY ep DESC LIMIT 1 ");
+							if (!empty($ler_temp)) { 
+								foreach ($ler_temp as $ep_array) {$last_ep =$ep_array['ep'];}
+							}
+							?>
+						</div>
+						<div><b>Parou em: </b><?php echo $last_temp." Temporada Ep ".$last_ep;?></div>
+						<div class="junto">
+							<label>Season:</label>
+							<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="season" min="1" max="<?php echo ($last_temp+1);?>" value="<?php if ($last_temp=="0") {echo "1";}else{echo $last_temp;}?>">
+							<label>Ep:</label>
+							<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="ep" min="1" value="<?php echo ($last_ep+1);?>">
+							<div style="padding:6px;color:#111;background-color: #ffffcc;border-left: 6px solid #ffeb3b;display:none" id="status_select_ep">O ep já existe</div>
+						</div>
+						<div>
+							<label>Poster</label>
+							<input type="url" id="poster">
+						</div>
+
+						<div style="border:1px solid #929191;padding-bottom: 5;">
+							<div style="background: #983e3e;overflow: auto;color: #fff;text-shadow: 0px 0px 1px black;margin:0;padding:5px;">Players (No minímo 1 player)</div>
+							<div style="margin:10px;" id="src_1">
+								<label for="input_src1">Link direito</label>
+								<input type="url" id="input_src1">
+							</div>
+							<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_2">
+								<label for="input_src_n2" style="margin:0">Nome</label>
+								<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n2">
+								<label for="input_src2" style="margin:0">Embed</label>
+								<input style="margin-bottom:10px" type="url" id="input_src2">
+							</div>
+							<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_3">
+								<label for="input_src_n3" style="margin:0">Nome</label>
+								<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n3">
+								<label for="input_src3" style="margin:0">Embed</label>
+								<input style="margin-bottom:10px" type="url" id="input_src3">
+							</div>
+
+							<div style="margin:10px;">
+								<button id="add_buton" onclick="add_src('add')" style="display:inline-block;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-plus"></i></button>
+
+								<button id="remove_button" onclick="add_src('remove')" style="display:none;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-minus"></i></button>
+							</div>
+							
+						</div>
+						<input type="hidden" id="erros_ep">
+						<div class="add_submit">
+								<button type='submit' class="right" onclick="return add_ep();"><?php if ($mod_edit=='serie') {echo "Salvar";}else{echo"Adicionar";}?></button>
+								<span id="carregando" class="right"><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
+							</div>
+						<script>
+							function add_ep(){
+								var season = document.getElementById('season').value;
+								var ep = document.getElementById('ep').value;
+								var poster = document.getElementById('poster').value;
+								var input_src1 = document.getElementById('input_src1').value;
+								var name_src2 = document.getElementById('input_src_n2').value;
+								var input_src2 = document.getElementById('input_src2').value;
+								var name_src3 = document.getElementById('input_src_n3').value;
+								var input_src3 = document.getElementById('input_src3').value;
+								var erros_ep = document.getElementById('erros_ep').value;
+								if (erros_ep == "1") {alert('O ep já existe!');return false;}
+								function is_url(str){
+								    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+								    //Retorna true en caso de que la url sea valida o false en caso contrario
+								    return regexp.test(str);
+								}
+								if(!is_url(poster) && poster.length > 0 ){// URL valida 
+									alert('A url do POSTER não é válida!');return false;
+								}
+
+								if (input_src1.length < 1 && input_src2.length < 1 && input_src3.length < 1) {
+									alert('Adicione no pelo menos 1 player');
+									return false;
+								}
+								if(!is_url(input_src1) && input_src1.length > 0 ){// URL valida 
+									alert('Player 1, verifique!');return false;
+								}
+								if(!is_url(input_src2) && input_src2.length > 0 ){// URL valida 
+									alert('Player 2, verifique!');return false;
+								}
+								if(!is_url(input_src3) && input_src3.length > 0 ){// URL valida 
+									alert('Player 3, verifique!');return false;
+								}
+
+								$.post('/config/admin/valida_add_serie.php',{add_ep: '1',id: '<?php echo $ep_id;?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
+									
+								 if (data == "1") {
+								 	display_edit('resultado','block');
+								 	display_edit('sub_result5','block');
+								 }else{
+								 	alert(data);
+								 }
+								})
+								
+							}
+							function add_src(acao){
+								if (acao == "add") {
+									if (document.getElementById('src_2').style.display != "block") {
+										display_edit('src_2', 'block');
+										display_edit('remove_button', 'inline-block');
+									}else {
+										display_edit('src_3', 'block');
+										display_edit('add_buton', 'none');
+									}
+								}
+								if (acao == "remove") {
+									if (document.getElementById('src_3').style.display == "block") {
+										display_edit('src_3', 'none');
+										display_edit('add_buton', 'inline-block');
+										document.getElementById('input_src_n3').value="";
+										document.getElementById('input_src3').value="";
+									}else {
+										display_edit('src_2', 'none');
+										display_edit('remove_button', 'none');
+										document.getElementById('input_src_n2').value="";
+										document.getElementById('input_src2').value="";
+									}
+								}
+							}
+						</script>
+					</div>
+					
+				<?php }
+				?>
+				
+			</div>
+			<?php } ?>
+
+
+
 		</div>
-	
 		<div class="adm_aside a-2 right">
 			<div class="container_adm account">
 				<span>Admin <i>luisfeliperm</i> <b>NIVEL: #1</b></span>
 				<a href="#">Editar</a>
-				<a href="#">Sair</a>
+				<a href="/config/config.php?sair=1">Sair</a>
 			</div>
 			<div class="container_adm sql">
-				<label>Query SQL:</label>
-				<input type="text" name="">
-				<button>exc</button>
+				<label class="left">SQL:</label>
+				<input class="left" type="text" name="">
+				<button class="left" >exc</button> <span><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
 			</div>
 			<div class="container_adm links">
-				<a href="#">Adicionar Série</a>
-				<a href="#">Editar Série</a>
-				<a href="#">Adicionar Epsódio</a>
-				<a href="#">Editar Epsódio</a>
-				<a href="#">Usuarios</a>
+				<div class="link"><a href="/admin/?pag=serie">Adicionar Série</a></div>
+				<div class="link">
+					<a href="javascript:void(0);" onclick="
+					if (document.getElementById('DivSearchSerieforEdit').style.display != 'block'){
+						display_edit('DivSearchSerieforEdit','block');
+					}else{
+						display_edit('DivSearchSerieforEdit','none');
+					}
+					">Editar Série</a>
+					<div id="DivSearchSerieforEdit" class="sub_link">
+						<input id="SearchSerieforEdit" type="text" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();">
+						<button onclick="valida('SearchSerieforEdit')">Check</button>
+						<div id="StatusSearchSerieforEdit" class="status"></div>
+					</div>
+				</div>
+				<div class="link"><a href="/admin/?pag=ep">Adicionar Epsódio</a></div>
+				<div class="link"><a href="#">Editar Epsódio</a></div>
+				<div class="link"><a href="#">Usuarios</a></div>
 			</div>
 		</div>
 
@@ -289,6 +463,14 @@
 				</div>
 				<div class="result_close" onclick="display_edit('resultado','none');display_edit('sub_result1','none');display_edit('sub_result2','none');display_edit('sub_result3','none');display_edit('sub_result4','none');"><a href="javascript:void(0);">[Fechar]</a></div>
 			</div>
+			<!-- EP -->
+			<div class="sub_result" id="sub_result5">
+				<div class="result_title">Ok, de F5!</div>
+				<div class="result_msg">
+					Epísódio adicionado!
+				</div>
+				<div class="result_close" onclick="display_edit('resultado','none');display_edit('sub_result5','none');"><a href="javascript:void(0);">[Fechar]</a></div>
+			</div>
 			
 		</div>
 
@@ -301,20 +483,43 @@
 <script>
 function valida(campo){
 	var elemento = document.getElementById(campo);
-	if (campo == "form_adm_id"){
-		if (<?php echo $mod_edit;?> == 1 && elemento.value == "<?php echo @$edit; ?>") {
+	if (campo == "form_adm_id" || campo == "SearchSerieforEdit" || campo == "idSerieForAddEP"){
+		if ('<?php echo $mod_edit;?>' == 'serie' && elemento.value == "<?php echo @$edit; ?>" && campo != "SearchSerieforEdit" && campo != "idSerieForAddEP") {
 			display_edit('status_id','none');
 			return false;
 		}
+		if (campo == "SearchSerieforEdit") {
+		 	edita_texto("StatusSearchSerieforEdit","<img style='width:29px;margin-top:5px;' src='http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif' >");
+		}
+		if (campo == "idSerieForAddEP") {
+		 	edita_texto("statusidSerieForAddEP","<img style='width:13px;margin-left:10px;' src='http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif' >");
+		}
 		$.post('/config/admin/valida_add_serie.php',{valida: 1, valor_id: elemento.value},function(data){
 		 if (data == 1) {
-		 	document.getElementById('status_id').style.display = 'block';
-		 	document.getElementById('status_id').innerHTML = "<span style=color:#6b7b1a><i style='color:#6b7b1a' class='fas fa-exclamation-triangle'></i> ATENÇÃO: Essa serie já existe! <a href='./?pag=serie&edit="+elemento.value+"' style='color:#0061ff;'>[EDITAR]</a></span>";
-		 }else{document.getElementById('status_id').style.display = 'none';}
+		 	if(campo == "SearchSerieforEdit") {
+		 		edita_texto("StatusSearchSerieforEdit","<a href='./?pag=serie&edit="+elemento.value+"'>EDITAR</a> ");
+		 	}if(campo == "form_adm_id"){
+		 		document.getElementById('status_id').style.display = 'block';
+		 		document.getElementById('status_id').innerHTML = "<span style=color:#6b7b1a><i style='color:#6b7b1a' class='fas fa-exclamation-triangle'></i> ATENÇÃO: Essa serie já existe! <a href='./?pag=serie&edit="+elemento.value+"' style='color:#0061ff;'>[EDITAR]</a></span>";
+		 	}if(campo == "idSerieForAddEP") {
+		 		edita_texto("statusidSerieForAddEP","<a class='right' href='./?pag=ep&id="+elemento.value+"'>Continuar</a> ");
+		 	}
+		 }else{
+		 	if (campo == "SearchSerieforEdit") {
+		 		edita_texto("StatusSearchSerieforEdit","<span style='color:red;margin-top:5px;display:block;'>Não encontrado</span>");
+		 		if (elemento.value.length < 1) {
+		 			edita_texto("StatusSearchSerieforEdit","");
+		 		}
+		 	}if(campo == "form_adm_id"){
+		 		document.getElementById('status_id').style.display = 'none';
+		 	}if(campo == "idSerieForAddEP") {
+		 		edita_texto("statusidSerieForAddEP","<span style='margin-left:10px;'>Não encontrado</span>");
+		 	}
+		 }
 		})
 	}
 	if (campo == "form_adm_name"){
-		if (<?php echo $mod_edit;?> == 1 && elemento.value.replace(/\s+/g, '').toLowerCase() == "<?php echo strtolower(str_replace(" ","",@$d_edit['nome'])); ?>") {
+		if ('<?php echo $mod_edit;?>' == 'serie' && elemento.value.replace(/\s+/g, '').toLowerCase() == "<?php echo strtolower(str_replace(" ","",@$d_edit['nome'])); ?>") {
 			display_edit('status_title','none');
 			return false;
 		}
@@ -324,20 +529,18 @@ function valida(campo){
 		 	document.getElementById('status_title').innerHTML = "<span style=color:#a50924>Este nome já existe (ignore)</span>";
 		 }else{document.getElementById('status_title').style.display = 'none';}
 		})
-	}
-	if (campo == "form_adm_backg") {
-		function is_url(str) {
+	}if (campo == "form_adm_backg") {
+		function is_url(str){
 		    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 		    //Retorna true en caso de que la url sea valida o false en caso contrario
 		    return regexp.test(str);
-		 }
+		}
 		var Url = elemento.value;
 		if(!is_url(Url)){// URL valida 
 			document.getElementById('status_backg').style.display = 'block';
 		 	document.getElementById('status_backg').innerHTML = "<span style=color:red>URL incorreta!</span>";
 		}else{document.getElementById('status_backg').style.display = 'none';}
-	}
-	if (campo == "form_adm_minia") {
+	}if (campo == "form_adm_minia") {
 		function is_url(str) {
 		    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 		    //Retorna true en caso de que la url sea valida o false en caso contrario
@@ -348,6 +551,15 @@ function valida(campo){
 			document.getElementById('status_minia').style.display = 'block';
 		 	document.getElementById('status_minia').innerHTML = "<span style=color:red>URL incorreta!</span>";
 		}else{document.getElementById('status_minia').style.display = 'none';}
+	}if (campo == "status_select_ep") {
+		var season = document.getElementById('season');
+		var ep = document.getElementById('ep');
+		$.post('/config/admin/valida_add_serie.php',{valida: '3', id: '<?php echo @$ep_id;?>', season: season.value, ep: ep.value},function(data){
+		 if (data == 1) {
+		 	display_edit('status_select_ep','block');
+		 	document.getElementById('erros_ep').value = "1";
+		 }else{display_edit('status_select_ep','none');document.getElementById('erros_ep').value = "";}
+		})
 	}
 }
 function removeAcento(text){

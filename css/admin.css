@@ -33,38 +33,48 @@ background:#983e3e;overflow: auto;color:#fff;text-shadow:0px 0px 1px black;
 .add .add_titulo a{color:#fff;}
 .add .add_titulo .right a{margin-left: 5px;}
 .add .add_titulo .left a{margin-right: 5px;}
-.add form{
+.add .form{
 	margin:0 auto;width: 100%;padding: 0px 10px;
 	border:1px solid #983e3e;background: #f3e7e7;color:#983e3e;
 }
-.add form div{margin:10px 0px;}
-.add form div label{
+.add .form div{margin:10px 0px;}
+.add .form div label{
 	margin:1px 0px;font-size: 18px;display:block;
 }
-.add form div input{
+.add .form div input{
 	width: 100%;padding: 4px 5px;font-size: 14.5px;border: 1px solid #983e3e;color: #983e3e;background: #f3e7e7;
 }
-.add form div textarea{
+
+
+.add .form div.junto label{
+	font-size: 16px;display:inline;padding: 1px 0px;
+}
+.add .form div.junto input[type="number"]{width: 60px;padding: 1px 2px;text-align:center;}
+
+
+
+.add .form div textarea{
 	width: 100%;padding: 4px 5px;font-size: 15px;height: 60px;border: 1px solid;color: #983e3e;background: #f3e7e7;
 }
-.add form div .input_status{text-align: right;font-size: 14px;display: none;}
-.add form fieldset input{
+.add .form div .input_status{text-align: right;font-size: 14px;display: none;}
+.add .form fieldset input{
 	width: 60px;border: none;padding:2px 2px;background:#f3e7e7;
 	border: 1px solid;color: #983e3e;text-align:center;
 }
-.add form select{
+.add .form select{
 	padding: 2.5px;background: #f3e7e7;color:#983e3e;border:1px solid;
 }
-.add form select.cat{
+.add .form select.cat{
 	margin: 4px 0px;
 }
-.add form .add_submit{overflow: auto;}
-.add form .add_submit button{
+.add .form .add_submit{overflow: auto;}
+.add .form .add_submit button{
 	background:transparent;color:#983e3e;border:1px solid;cursor:pointer;
 	padding: 6px 8px;
 }
-.add form .add_submit #carregando{display:none}
-.add form .add_submit #carregando img{width: 29px;}
+.add .form .add_submit a{color:#983e3e;text-decoration:underline;}
+.add .form .add_submit #carregando{display:none}
+.add .form .add_submit #carregando img{width: 29px;}
 #resultado{
 	position: fixed;top:0;bottom:0;left:0;right:0;
 	display:none;background:rgba(0,0,0,0.7);
@@ -82,8 +92,7 @@ background:#983e3e;overflow: auto;color:#fff;text-shadow:0px 0px 1px black;
 #resultado .sub_result  .result_close{text-align:center;margin-top:10px;}
 #resultado .sub_result  .result_close a{color:red;}
 
-
-
+/*aside*/
 .container_adm{
 	color:#fff;
 	margin: 0 auto;
@@ -96,7 +105,28 @@ background:#983e3e;overflow: auto;color:#fff;text-shadow:0px 0px 1px black;
 	border-bottom-left-radius: 20px;text-shadow:0px 0px 1px black;
 }
 .container_adm.account a{margin-left: 10px;text-decoration:underline;}
+.container_adm.sql{
+	border:1px solid #a03d1e;background:#fdfdfd;
+	border-left-width: 4px;overflow:auto;color:#904e4e;
+}
+.container_adm.sql label{padding:6px 8px;}
+.container_adm.sql input,.container_adm.sql button{background:transparent;border:1px solid;padding:6px 8px;color:#904e4e;}
+.container_adm.sql img{width: 20px;margin:3.5px 3px;}
+.container_adm.links{padding:0;background: #fdfdfd;border:1px solid #983e3e;}
+.container_adm.links .link{margin:0;display:block;width: 100%;}
 .container_adm.links a{
-	display: block;border:1px solid red;font-size: 18px;
-	padding: 8px 10px;text-align: center;
+	display: block;font-size: 18px;color: #7d2b2b;
+	padding: 8px 10px;text-align: center;margin:0;
+}
+.container_adm.links .link{border-bottom:1px solid #d2a4a4;}
+.container_adm.links .link:last-child{border-bottom:none}
+
+.container_adm.links .link .sub_link{display:none;
+	background: #fff;padding:0px 5px 5px 5px;text-align:center;
+}
+.container_adm.links .link .sub_link input,.container_adm.links .link .sub_link button{
+	padding:3px 6px;background:transparent;color:#bf1a1a;border:1px solid;
+}
+.container_adm.links .link .sub_link .status a{
+	font-size: 14px;text-decoration:underline;
 }

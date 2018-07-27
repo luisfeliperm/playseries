@@ -21,7 +21,8 @@ box-shadow: 0px 1px 5px 0px rgba(100,0,0,0.75);
 	background: #3b608e;margin-bottom: 50px;
 	position: relative;
 	height: 380px;
-	background: url(https://wallpaper29.files.wordpress.com/2016/11/filmes-2017-lanc3a7amentos-de-filmes-liga-da-justic3a7a.jpg) no-repeat center center fixed; 
+	/*background: url(https://wallpaper29.files.wordpress.com/2016/11/filmes-2017-lanc3a7amentos-de-filmes-liga-da-justic3a7a.jpg) no-repeat center center fixed; */
+	background: url(/img/background.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
