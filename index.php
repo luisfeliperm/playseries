@@ -1,6 +1,7 @@
 <!-- luisfeliperm -->
 <?php
 include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,0 +1,11 @@
+Nome do ep
+Adicionar nome ao ep
+se player principal for vazio, então seleciona iframe
+sistema de comentários
+Adicionar outros players de link direto
+
+Procurar por erros no site{
+	eps de série q ñ existe
+	Series sem EP
+	
+}

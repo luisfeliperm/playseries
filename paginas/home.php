@@ -4,7 +4,16 @@
 		<div class="cat_nome">Novos</div>
 		<div class="list-films">
 			<?php
-			$ler = ler_db("series", "ORDER BY id DESC LIMIT 30;");
+			$total_exib = "25"; // número de registros por página
+			$pagina = @anti_injection(intval($_GET['p']));
+			if (!isset($pagina) || $pagina < 1) {
+				$pag_n = "1";
+			} else {
+				$pag_n = $pagina;
+			}
+			$inicio = $pag_n - 1;
+			$inicio = $inicio * $total_exib;
+			$ler = ler_db("series", "ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
 			if (!empty($ler)) {
 				foreach ($ler as $lers) { 
 					$lers['info'] = str_replace(' ','&',$lers['info']);
@@ -33,8 +42,55 @@
 					</div>
 			<?php 
 				}
-			} 
+			}else{
+				?>
+				<div style="font-size: 25px;text-shadow:none;margin: 10px 0px;">Sem resultados</div>
+				<?php
+			}
 			?>
 		</div>
 	</div>
+	<div class="paginacao">
+		<?php 
+		$tr = mysqli_num_rows(executa_query("SELECT * FROM series ")); // verifica o número total de registros
+		$tp = $tr / $total_exib; // verifica o número total de páginas
+		if ($pag_n>1) {
+			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a>";
+		}else{
+			echo "<a href='javascript:void(0)' ><i class='fas fa-angle-double-left'></i></a>";
+		}
+		// http://rberaldo.com.br/limitando-o-numero-de-links-em-uma-paginacao/
+		$tp2 = $tp;
+		if (is_float($tp)) {
+			$tp2 = ($tp2+1);
+		}
+		$max_links = 10;
+
+		$links_laterais = ceil($max_links / 2);
+
+		$inicio = $pag_n - $links_laterais;
+		$limite = $pag_n + $links_laterais;
+
+		for ($i = $inicio; $i <= $limite; $i++){
+			if ($i == $pag_n){
+				echo "<a class='active' href='./?p=".$i."'>".$i."</a>";
+		 	}else{
+				if ($i >= 1 && $i <= $tp2){
+			   		echo "<a href='./?p=".$i."'>".$i."</a>";
+			  	}
+		 	}
+		}
+		if ($pag_n<$tp) {
+			echo "<a href='?p=".($pag_n +1)."'><i class='fas fa-angle-double-right'></i></a>";
+		}else{
+			echo "<a href='javascript:void(0)' ><i class='fas fa-angle-double-right'></i></a>";
+		}
+		?>
+	</div>
 </div>
+<?php
+// total de páginas
+
+
+
+?>

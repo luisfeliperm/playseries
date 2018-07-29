@@ -4,6 +4,18 @@ if ($admin == 0) {
 	exit();
 }
 $valor = @anti_injection($_POST['valor_id']) ?? NULL;
+if (isset($_POST['dell'])) {
+	if ($_POST['dell'] == "ep") {
+		$id = @anti_injection($_POST['id']);
+		$query = "DELETE FROM eps WHERE id = '".@$id."' ";
+		if (executa_query($query) === TRUE) {
+			echo "SUCESSO! Episódio excluido.";
+		}else{
+			echo "Erro ao deletar.";
+		}
+	}
+	exit();
+}
 if (isset($_POST['valida']) && $_POST['valida'] == '1') {
 	$query = "SELECT * FROM series WHERE identificador = '".$valor."' ";
 	if (mysqli_num_rows(executa_query($query))) {
@@ -17,7 +29,11 @@ if (isset($_POST['valida']) && $_POST['valida'] == '2') {
 	}
 }
 if (isset($_POST['valida']) && $_POST['valida'] == '3') {
-	$query = "SELECT * FROM eps WHERE identificador = '".@anti_injection($_POST['id'])."' AND temporada = '".@anti_injection($_POST['season'])."' AND ep = '".@anti_injection($_POST['ep'])."' ";
+	$id = @anti_injection($_POST['id']);
+	if (empty($id)) {
+		$id = @anti_injection($_POST['id2']);
+	}
+	$query = "SELECT * FROM eps WHERE identificador = '".$id."' AND temporada = '".@anti_injection($_POST['season'])."' AND ep = '".@anti_injection($_POST['ep'])."' ";
 	if (mysqli_num_rows(executa_query($query))) {
 		echo 1;
 	}
@@ -75,17 +91,18 @@ if (isset($_POST['add_serie'])) {
 
 
 			executa_query($query);
-			echo "update";exit();
+			if (executa_query($query) == 1) {
+				echo "update";exit();
+			}
+
+			
 		}else{
 			echo "erro2";exit();
 		}
-		
 	}
 	if (empty($post['id']) || empty($post['nome']) || empty($post['backg']) || empty($post['minia']) || empty($post['ano']) || empty($post['min']) || empty($post['qualy'])) {
 		echo "erro3";exit();
 	}
-	
-
 	$query = "INSERT INTO series (identificador,nome,info, sinopse, miniatura, background, tags, cat1, cat2, cat3,cat4) VALUES ('".$post['id']."', '".$post['nome']."', '".$info."', '".$post['sinopse']."', '".$post['backg']."', '".$post['minia']."', '".$post['tag']."', '".$post['cat1']."', '".$post['cat2']."', '".$post['cat3']."', '".$post['cat4']."') ";
 
 	if (executa_query($query) == 1) {// Sucesso
@@ -93,7 +110,6 @@ if (isset($_POST['add_serie'])) {
 	}else{
 		echo "erro3";
 	}
-
 }
 if (isset($_POST['add_ep'])){
 	$post = array(
@@ -137,18 +153,29 @@ if (isset($_POST['add_ep'])){
 	}
 	$query = "SELECT * FROM eps WHERE identificador = '".$_POST['id']."' AND temporada = '".$_POST['season']."' AND ep = '".($_POST['ep'])."' ";
 	if (mysqli_num_rows(executa_query($query))) {
-		echo "O episódio já existe !";exit();
+		if ($_POST['add_ep'] == "update") {
+			$query = " UPDATE eps SET 
+				poster              = '".$post['poster']."', 
+				src_1               = '".$post['src1']."', 
+				nome_2              = '".$post['name_src2']."', 
+				src_2               = '".$post['src2']."', 
+				nome_3              = '".$post['name_src3']."', 
+				src_3               = '".$post['src3']."'
+				WHERE identificador = '".$post['id']."' ";
+			if (executa_query($query) == 1) {
+				echo "SUCESSO! Atualizado";exit();
+			}
+
+			echo "Erro!";exit();
+		}else{
+			echo "O episódio já existe !";exit();
+		}
 	}
-
-
-
-	$query = "INSERT INTO eps (identificador,temporada,ep, sinopse, miniatura, background, tags, cat1, cat2, cat3,cat4) VALUES ('".$post['id']."', '".$post['nome']."', '".$info."', '".$post['sinopse']."', '".$post['backg']."', '".$post['minia']."', '".$post['tag']."', '".$post['cat1']."', '".$post['cat2']."', '".$post['cat3']."', '".$post['cat4']."') ";
+	$query = "INSERT INTO eps (identificador,temporada,ep, poster, src_1, nome_2,src_2,nome_3,src_3) VALUES ('".$post['id']."', '".$post['season']."', '".$post['ep']."', '".$post['poster']."', '".$post['src1']."', '".$post['name_src2']."', '".$post['src2']."', '".$post['name_src3']."', '".$post['src3']."') ";
 
 	if (executa_query($query) == 1) {// Sucesso
-		echo "sucesso";
+		echo "1";
 	}else{
-		echo "erro3";
+		echo "Erro!";
 	}
-	echo "1";
-
 }

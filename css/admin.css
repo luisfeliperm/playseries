@@ -37,6 +37,10 @@ background:#983e3e;overflow: auto;color:#fff;text-shadow:0px 0px 1px black;
 	margin:0 auto;width: 100%;padding: 0px 10px;
 	border:1px solid #983e3e;background: #f3e7e7;color:#983e3e;
 }
+.add .form a{
+	color: #983e3e;
+    text-decoration: underline;
+}
 .add .form div{margin:10px 0px;}
 .add .form div label{
 	margin:1px 0px;font-size: 18px;display:block;

@@ -228,172 +228,257 @@
 				</div>
 			<?php
 			}
-			if (isset($_GET['pag']) && @$_GET['pag'] == "ep") { ?>
+			if (isset($_GET['pag']) && @$_GET['pag'] == "ep") { 
+				if (isset($_GET['mod_edit']) && @$_GET['mod_edit'] == "ep") {
+					$mod_edit = "ep";
+				}
+				?>
 			<div class="add add-serie">
 				<?php // Verifica se a serie existe
-				
 				$ep_id = @anti_injection($_GET['id']);
 				$ler_serie = ler_db("series", "WHERE identificador = '".$ep_id."' ");
 				if (empty($ler_serie) || !isset($_GET['id']) || empty($_GET['id'])) { ?>
-					<div class="add_titulo">Adicionar Episódio <b>1ª Etapa</b></div>
+					<div class="add_titulo">
+						<?php 
+						if (isset($_GET['select_edit'])){echo"[EDITAR] EPISÓDIO";}else{echo "Adicionar Episódio <b>1ª Etapa</b>";}?>
+						
+					</div>
 					<div class="form" id="addEpETAPA1">
 						<div>
-							<label for="idSerieForAddEP">Qual o ID da série ?</label>
-							<input required type="text" id="idSerieForAddEP" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();edita_texto('statusidSerieForAddEP','');">
-							<div class="add_submit">
-								<button onclick="valida('idSerieForAddEP')" class="left">Verificar</button>
-								<span style="padding: 6px 8px;display:block;" id="statusidSerieForAddEP"></span>
-							</div>
+							
+							
+							<?php 
+							if (isset($_GET['select_edit'])){
+								?>
+								<label for="upEpSelect">Qual o ID da série ?</label>
+								<input required type="text" id="upEpSelect" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();edita_texto('status_upEpSelect','');">
+								<div class="junto">
+									<label>Temporada:</label>
+									<input type="number" id="season">
+									<label>Episódio:</label>
+									<input type="number" id="ep">
+								</div>
+
+								<div class="add_submit">
+									<button onclick="valida('upEpSelect')" class="right">Editar</button>
+									<span style="padding: 6px 8px;display:block;" id="status_upEpSelect">AA</span>
+								</div>
+								<?php
+							}else{
+								?>
+								<label for="idSerieForAddEP">Qual o ID da série ?</label>
+								<input required type="text" id="idSerieForAddEP" onkeyup="limiteCaract(this, 200);this.value = this.value.replace(/[^a-zA-Z1-9. -]/g,'').replace(/\s+/g, '-').replace('--', '-').toLowerCase();edita_texto('statusidSerieForAddEP','');">
+
+								<div class="add_submit">
+									<button onclick="valida('idSerieForAddEP')" class="left">Verificar</button>
+									<span style="padding: 6px 8px;display:block;" id="statusidSerieForAddEP"></span>
+								</div>
+								<?php
+							}
+							?>
+							
 						</div>
 					</div> <?php
 				}else{
 					foreach ($ler_serie as $serie_array) {
 					 	$serie = array('nome' => $serie_array['nome']);
 					}
-					// $ler_temp = ler_db("eps", "WHERE identificador = '".$ep_id."' ORDER BY temporada ASC ", "DISTINCT temporada");
-					// foreach ($ler_temp as $serie_array) {
-					//  	#$serie = array('nome' => $serie_array['temporada']);
-					// }
+					
 					$last_temp = "1";$last_ep = "0";
-					?>
 
-					<div class="add_titulo">Adicionar Episódio <b><?php echo $serie['nome'];?></b></div>
-					<div class="form" id="addEpETAPA1">
-						<div>
-							<b>Total:</b>
-							<span><?php $last_temp=mysqli_num_rows(executa_query("SELECT DISTINCT temporada FROM eps WHERE identificador = '".$ep_id."' ORDER BY temporada ASC ")) ?? 1;echo $last_temp;?> Temporadas</span>
-							<span><?php echo mysqli_num_rows(executa_query("SELECT id FROM eps WHERE  identificador = '".$ep_id."' "));?> Epísódios</span>
-							<?php 
-							$ler_temp = @ler_db("eps", "WHERE identificador = '".$ep_id."' AND temporada = '".$last_temp."' ORDER BY ep DESC LIMIT 1 ");
-							if (!empty($ler_temp)) { 
-								foreach ($ler_temp as $ep_array) {$last_ep =$ep_array['ep'];}
+					if ($mod_edit == "ep") {
+						$season = @anti_injection($_GET['s']);
+						$ep = @anti_injection($_GET['e']);
+						$ler_ep = ler_db("eps", "WHERE identificador = '".$ep_id."' AND temporada = '".$season."' AND ep = '".$ep."' ");
+						if (!empty($ler_ep)){ // Md editar
+							$ler_ep = ler_db("eps", "WHERE identificador = '".$ep_id."' AND temporada = '".$season."' AND ep = '".$ep."' ");
+							foreach ($ler_ep as $serie_array) {
+							 	$epArray = array('idReal' => $serie_array['id'],'poster' => $serie_array['poster'], 'src1' => $serie_array['src_1'], 'nsrc2' => $serie_array['nome_2'], 'src2' => $serie_array['src_2'], 'nsrc3' => $serie_array['nome_3'],'src3' => $serie_array['src_3']);
 							}
 							?>
-						</div>
-						<div><b>Parou em: </b><?php echo $last_temp." Temporada Ep ".$last_ep;?></div>
-						<div class="junto">
-							<label>Season:</label>
-							<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="season" min="1" max="<?php echo ($last_temp+1);?>" value="<?php if ($last_temp=="0") {echo "1";}else{echo $last_temp;}?>">
-							<label>Ep:</label>
-							<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="ep" min="1" value="<?php echo ($last_ep+1);?>">
-							<div style="padding:6px;color:#111;background-color: #ffffcc;border-left: 6px solid #ffeb3b;display:none" id="status_select_ep">O ep já existe</div>
-						</div>
-						<div>
-							<label>Poster</label>
-							<input type="url" id="poster">
-						</div>
+							<div class="add_titulo"><b>[EDITAR] </b><?php echo $serie['nome']." S".$season."E".$ep;?></div>
+							<div class="form">
+								<div style="overflow:auto">
+									<a onclick="dell('ep','<?php echo $epArray['idReal'];?>',null);" href="javascript:void(0)" style="font-size: 14px;" class="right">EXCLUIR</a>
+								</div>
+								<div>
+									<label>Poster</label>
+									<input type="url" id="poster" value="<?php echo $epArray['poster'];?>">
+								</div>
+								<div style="border:1px solid #929191;padding-bottom: 5;">
+									<div style="background: #983e3e;overflow: auto;color: #fff;text-shadow: 0px 0px 1px black;margin:0;padding:5px;">Players (No minímo 1 player)</div>
+									<div style="margin:10px;" id="src_1">
+										<label for="input_src1">Link direito</label>
+										<input type="url" id="input_src1" value="<?php echo $epArray['src1'];?>">
+									</div>
+									<div style="margin:10px;border:1px solid #929191;padding:8px;" id="src_2">
+										<label for="input_src_n2" style="margin:0">Nome</label>
+										<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n2" value="<?php echo $epArray['nsrc2'];?>">
+										<label for="input_src2" style="margin:0">Embed</label>
+										<input style="margin-bottom:10px" type="url" id="input_src2" value="<?php echo $epArray['src2'];?>">
+									</div>
+									<div style="margin:10px;border:1px solid #929191;padding:8px;" id="src_3">
+										<label for="input_src_n3" style="margin:0">Nome</label>
+										<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n3" value="<?php echo $epArray['nsrc3'];?>">
+										<label for="input_src3" style="margin:0">Embed</label>
+										<input style="margin-bottom:10px" type="url" id="input_src3" value="<?php echo $epArray['src3'];?>">
+									</div>
+								</div>
+								<div class="add_submit">
+									<button type='submit' class="right" onclick="return add_ep();">Salvar</button>
+									<span id="carregando" class="right"><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
+								</div>
+								<script>
+								function add_ep(){
+									var season = '<?php echo $season;?>';
+									var ep = "<?php echo $ep;?>";
+									var poster = document.getElementById('poster').value;
+									var input_src1 = document.getElementById('input_src1').value;
+									var name_src2 = document.getElementById('input_src_n2').value;
+									var input_src2 = document.getElementById('input_src2').value;
+									var name_src3 = document.getElementById('input_src_n3').value;
+									var input_src3 = document.getElementById('input_src3').value;
 
-						<div style="border:1px solid #929191;padding-bottom: 5;">
-							<div style="background: #983e3e;overflow: auto;color: #fff;text-shadow: 0px 0px 1px black;margin:0;padding:5px;">Players (No minímo 1 player)</div>
-							<div style="margin:10px;" id="src_1">
-								<label for="input_src1">Link direito</label>
-								<input type="url" id="input_src1">
-							</div>
-							<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_2">
-								<label for="input_src_n2" style="margin:0">Nome</label>
-								<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n2">
-								<label for="input_src2" style="margin:0">Embed</label>
-								<input style="margin-bottom:10px" type="url" id="input_src2">
-							</div>
-							<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_3">
-								<label for="input_src_n3" style="margin:0">Nome</label>
-								<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n3">
-								<label for="input_src3" style="margin:0">Embed</label>
-								<input style="margin-bottom:10px" type="url" id="input_src3">
-							</div>
+									if(!is_url(poster) && poster.length > 0 ){// URL valida 
+										alert('A url do POSTER não é válida!');return false;
+									}
+									if (input_src1.length < 1 && input_src2.length < 1 && input_src3.length < 1) {
+										alert('Adicione no pelo menos 1 player');
+										return false;
+									}
+									if(!is_url(input_src1) && input_src1.length > 0 ){// URL valida 
+										alert('Player 1, verifique!');return false;
+									}
+										if(!is_url(input_src2) && input_src2.length > 0 ){// URL valida 
+										alert('Player 2, verifique!');return false;
+									}
+									if(!is_url(input_src3) && input_src3.length > 0 ){// URL valida 
+										alert('Player 3, verifique!');return false;
+									}
 
-							<div style="margin:10px;">
-								<button id="add_buton" onclick="add_src('add')" style="display:inline-block;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-plus"></i></button>
-
-								<button id="remove_button" onclick="add_src('remove')" style="display:none;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-minus"></i></button>
+									$.post('/config/admin/valida_add_serie.php',{add_ep: 'update',id: '<?php echo $ep_id;?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
+										
+									 alert(data);
+									})
+								}
+							</script>
 							</div>
-							
-						</div>
-						<input type="hidden" id="erros_ep">
-						<div class="add_submit">
-								<button type='submit' class="right" onclick="return add_ep();"><?php if ($mod_edit=='serie') {echo "Salvar";}else{echo"Adicionar";}?></button>
+							<?php
+						}else{$mod_edit = '0';}
+					}
+					if ($mod_edit != "ep") { // ADD
+						?>
+						<div class="add_titulo">Adicionar Episódio <b><?php echo $serie['nome'];?></b></div>
+						<div class="form" id="addEpETAPA1">
+							<div>
+								<b>Total:</b>
+								<span><?php $last_temp=mysqli_num_rows(executa_query("SELECT DISTINCT temporada FROM eps WHERE identificador = '".$ep_id."' ORDER BY temporada ASC ")) ?? 1;echo $last_temp;?> Temporadas</span>
+								<span><?php echo mysqli_num_rows(executa_query("SELECT id FROM eps WHERE  identificador = '".$ep_id."' "));?> Epísódios</span>
+								<?php 
+								$ler_temp = @ler_db("eps", "WHERE identificador = '".$ep_id."' AND temporada = '".$last_temp."' ORDER BY ep DESC LIMIT 1 ");
+								if (!empty($ler_temp)) { 
+									foreach ($ler_temp as $ep_array) {$last_ep =$ep_array['ep'];}
+								}
+								?>
+							</div>
+							<div><b>Parou em: </b><?php echo $last_temp." Temporada Ep ".$last_ep;?></div>
+							<div class="junto">
+								<label>Season:</label>
+								<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="season" min="1" max="<?php echo ($last_temp+1);?>" value="<?php if ($last_temp=="0") {echo "1";}else{echo $last_temp;}?>">
+								<label>Ep:</label>
+								<input onclick="valida('status_select_ep');" onkeyup="valida('status_select_ep');" type="number" id="ep" min="1" value="<?php echo ($last_ep+1);?>">
+								<div style="padding:6px;color:#111;background-color: #ffffcc;border-left: 6px solid #ffeb3b;display:none" id="status_select_ep">O ep já existe</div>
+							</div>
+							<div>
+								<label>Poster</label>
+								<input type="url" id="poster">
+							</div>
+							<div style="border:1px solid #929191;padding-bottom: 5;">
+								<div style="background: #983e3e;overflow: auto;color: #fff;text-shadow: 0px 0px 1px black;margin:0;padding:5px;">Players (No minímo 1 player)</div>
+								<div style="margin:10px;" id="src_1">
+									<label for="input_src1">Link direito</label>
+									<input type="url" id="input_src1">
+								</div>
+								<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_2">
+									<label for="input_src_n2" style="margin:0">Nome</label>
+									<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n2">
+									<label for="input_src2" style="margin:0">Embed</label>
+									<input style="margin-bottom:10px" type="url" id="input_src2">
+								</div>
+								<div style="margin:10px;display:none;border:1px solid #929191;padding:8px;" id="src_3">
+									<label for="input_src_n3" style="margin:0">Nome</label>
+									<input style="margin-bottom:10px" maxlength="15" placeholder="YouTube,RedeCanais, etc..." type="text" id="input_src_n3">
+									<label for="input_src3" style="margin:0">Embed</label>
+									<input style="margin-bottom:10px" type="url" id="input_src3">
+								</div>
+								<div style="margin:10px;">
+									<button id="add_buton" onclick="add_src('add')" style="display:inline-block;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-plus"></i></button>
+
+									<button id="remove_button" onclick="add_src('remove')" style="display:none;background:transparent;border:1px solid;color:#774646;cursor:pointer;padding:2px 4px;"><i class="fas fa-minus"></i></button>
+								</div>
+								
+							</div>
+							<input type="hidden" id="erros_ep">
+							<div class="add_submit">
+								<button type='submit' class="right" onclick="return add_ep();">Adicionar</button>
 								<span id="carregando" class="right"><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
 							</div>
-						<script>
-							function add_ep(){
-								var season = document.getElementById('season').value;
-								var ep = document.getElementById('ep').value;
-								var poster = document.getElementById('poster').value;
-								var input_src1 = document.getElementById('input_src1').value;
-								var name_src2 = document.getElementById('input_src_n2').value;
-								var input_src2 = document.getElementById('input_src2').value;
-								var name_src3 = document.getElementById('input_src_n3').value;
-								var input_src3 = document.getElementById('input_src3').value;
-								var erros_ep = document.getElementById('erros_ep').value;
-								if (erros_ep == "1") {alert('O ep já existe!');return false;}
-								function is_url(str){
-								    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-								    //Retorna true en caso de que la url sea valida o false en caso contrario
-								    return regexp.test(str);
-								}
-								if(!is_url(poster) && poster.length > 0 ){// URL valida 
-									alert('A url do POSTER não é válida!');return false;
-								}
+							<script>
+								function add_ep(){
+									var season = document.getElementById('season').value;
+									var ep = document.getElementById('ep').value;
+									var poster = document.getElementById('poster').value;
+									var input_src1 = document.getElementById('input_src1').value;
+									var name_src2 = document.getElementById('input_src_n2').value;
+									var input_src2 = document.getElementById('input_src2').value;
+									var name_src3 = document.getElementById('input_src_n3').value;
+									var input_src3 = document.getElementById('input_src3').value;
+									var erros_ep = document.getElementById('erros_ep').value;
+									if (erros_ep == "1") {alert('O ep já existe!');return false;}
+									function is_url(str){
+									    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+									    //Retorna true en caso de que la url sea valida o false en caso contrario
+									    return regexp.test(str);
+									}
+									if(!is_url(poster) && poster.length > 0 ){// URL valida 
+										alert('A url do POSTER não é válida!');return false;
+									}
+									if (input_src1.length < 1 && input_src2.length < 1 && input_src3.length < 1) {
+										alert('Adicione no pelo menos 1 player');
+										return false;
+									}
+									if(!is_url(input_src1) && input_src1.length > 0 ){// URL valida 
+										alert('Player 1, verifique!');return false;
+									}
+										if(!is_url(input_src2) && input_src2.length > 0 ){// URL valida 
+										alert('Player 2, verifique!');return false;
+									}
+									if(!is_url(input_src3) && input_src3.length > 0 ){// URL valida 
+										alert('Player 3, verifique!');return false;
+									}
 
-								if (input_src1.length < 1 && input_src2.length < 1 && input_src3.length < 1) {
-									alert('Adicione no pelo menos 1 player');
-									return false;
+									$.post('/config/admin/valida_add_serie.php',{add_ep: '1',id: '<?php echo $ep_id;?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
+										
+									 if (data == "1") {
+									 	display_edit('resultado','block');
+									 	display_edit('sub_result5','block');
+									 }else{
+									 	alert(data);
+									 }
+									})
 								}
-								if(!is_url(input_src1) && input_src1.length > 0 ){// URL valida 
-									alert('Player 1, verifique!');return false;
-								}
-								if(!is_url(input_src2) && input_src2.length > 0 ){// URL valida 
-									alert('Player 2, verifique!');return false;
-								}
-								if(!is_url(input_src3) && input_src3.length > 0 ){// URL valida 
-									alert('Player 3, verifique!');return false;
-								}
-
-								$.post('/config/admin/valida_add_serie.php',{add_ep: '1',id: '<?php echo $ep_id;?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
-									
-								 if (data == "1") {
-								 	display_edit('resultado','block');
-								 	display_edit('sub_result5','block');
-								 }else{
-								 	alert(data);
-								 }
-								})
 								
-							}
-							function add_src(acao){
-								if (acao == "add") {
-									if (document.getElementById('src_2').style.display != "block") {
-										display_edit('src_2', 'block');
-										display_edit('remove_button', 'inline-block');
-									}else {
-										display_edit('src_3', 'block');
-										display_edit('add_buton', 'none');
-									}
-								}
-								if (acao == "remove") {
-									if (document.getElementById('src_3').style.display == "block") {
-										display_edit('src_3', 'none');
-										display_edit('add_buton', 'inline-block');
-										document.getElementById('input_src_n3').value="";
-										document.getElementById('input_src3').value="";
-									}else {
-										display_edit('src_2', 'none');
-										display_edit('remove_button', 'none');
-										document.getElementById('input_src_n2').value="";
-										document.getElementById('input_src2').value="";
-									}
-								}
-							}
-						</script>
-					</div>
+							</script>
+						</div>
+						<?php 
+					}
+					?>
 					
 				<?php }
 				?>
 				
 			</div>
 			<?php } ?>
-
-
 
 		</div>
 		<div class="adm_aside a-2 right">
@@ -424,7 +509,7 @@
 					</div>
 				</div>
 				<div class="link"><a href="/admin/?pag=ep">Adicionar Epsódio</a></div>
-				<div class="link"><a href="#">Editar Epsódio</a></div>
+				<div class="link"><a href="/admin/?pag=ep&select_edit">Editar Epsódio</a></div>
 				<div class="link"><a href="#">Usuarios</a></div>
 			</div>
 		</div>
@@ -481,6 +566,16 @@
 </div>
 
 <script>
+function dell(oq,id,identificador) {
+    var r = confirm("Deseja excluir!");
+    if (r == true) {
+        $.post('/config/admin/valida_add_serie.php',{dell: oq, id: id,identificador: identificador},function(data){
+		 	alert(data);
+		})
+    }else{
+        return false;
+    }
+}
 function valida(campo){
 	var elemento = document.getElementById(campo);
 	if (campo == "form_adm_id" || campo == "SearchSerieforEdit" || campo == "idSerieForAddEP"){
@@ -551,14 +646,31 @@ function valida(campo){
 			document.getElementById('status_minia').style.display = 'block';
 		 	document.getElementById('status_minia').innerHTML = "<span style=color:red>URL incorreta!</span>";
 		}else{document.getElementById('status_minia').style.display = 'none';}
-	}if (campo == "status_select_ep") {
-		var season = document.getElementById('season');
-		var ep = document.getElementById('ep');
-		$.post('/config/admin/valida_add_serie.php',{valida: '3', id: '<?php echo @$ep_id;?>', season: season.value, ep: ep.value},function(data){
+	}if (campo == "status_select_ep" || campo == "upEpSelect") {
+		var season = document.getElementById('season').value;
+		var ep = document.getElementById('ep').value;
+		if (campo == "upEpSelect") {
+			var id2 = document.getElementById('upEpSelect').value;
+		}
+		$.post('/config/admin/valida_add_serie.php',{valida: '3', id: '<?php echo @$ep_id;?>',id2:id2, season: season, ep: ep},function(data){
 		 if (data == 1) {
-		 	display_edit('status_select_ep','block');
-		 	document.getElementById('erros_ep').value = "1";
-		 }else{display_edit('status_select_ep','none');document.getElementById('erros_ep').value = "";}
+		 	if (campo == "status_select_ep") {
+		 		display_edit('status_select_ep','block');
+		 		document.getElementById('erros_ep').value = "1";
+		 	}
+		 	if (campo == "upEpSelect") {
+		 		edita_texto("status_upEpSelect","<a href='./?pag=ep&id="+id2+"&mod_edit=ep&s="+season+"&e="+ep+"'>EDITAR</a> ");
+		 	}
+		 	
+		 }else{
+		 	if (campo == "status_select_ep") {
+		 		display_edit('status_select_ep','none');document.getElementById('erros_ep').value = "";
+		 	}
+		 	if (campo == "upEpSelect") {
+		 		edita_texto("status_upEpSelect","O <a target='blank' href='/watch/serie/"+id2+"/?s="+season+"&e="+ep+"'>ep</a> não existe! ");
+		 	}
+		 	
+		 }
 		})
 	}
 }
@@ -570,5 +682,29 @@ function removeAcento(text){
     text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
     text = text.replace(new RegExp('[Ç]','gi'), 'c');
     return text;                 
+}
+function add_src(acao){
+	if (acao == "add") {
+		if (document.getElementById('src_2').style.display != "block") {
+			display_edit('src_2', 'block');
+			display_edit('remove_button', 'inline-block');
+		}else {
+			display_edit('src_3', 'block');
+			display_edit('add_buton', 'none');
+		}
+	}
+	if (acao == "remove") {
+		if (document.getElementById('src_3').style.display == "block") {
+			display_edit('src_3', 'none');
+			display_edit('add_buton', 'inline-block');
+			document.getElementById('input_src_n3').value="";
+			document.getElementById('input_src3').value="";
+		}else {
+			display_edit('src_2', 'none');
+			display_edit('remove_button', 'none');
+			document.getElementById('input_src_n2').value="";
+			document.getElementById('input_src2').value="";
+		}
+	}
 }
 </script>

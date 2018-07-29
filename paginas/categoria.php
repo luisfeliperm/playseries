@@ -63,24 +63,36 @@
 		}
 		$tp = $tr / $total_exib; // verifica o número total de páginas
 		if ($pag_n>1) {
-			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a> ";
+			echo "<a href='?p=".($pag_n -1)."'><i class='fas fa-angle-double-left'></i></a>";
 		}else{
-			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-left'></i></a> ";
+			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-left'></i></a>";
+		}
+		// http://rberaldo.com.br/limitando-o-numero-de-links-em-uma-paginacao/
+		$tp2 = $tp;
+		if (is_float($tp)) {
+			$tp2 = ($tp2+1);
+		}
+		$max_links = 10;
+
+		$links_laterais = ceil($max_links / 2);
+
+		$inicio = $pag_n - $links_laterais;
+		$limite = $pag_n + $links_laterais;
+
+		for ($i = $inicio; $i <= $limite; $i++){
+			if ($i == $pag_n){
+				echo "<a class='active' href='./?p=".$i."'>".$i."</a>";
+		 	}else{
+				if ($i >= 1 && $i <= $tp2){
+			   		echo "<a href='./?p=".$i."'>".$i."</a>";
+			  	}
+		 	}
 		}
 		if ($pag_n<$tp) {
 			echo "<a href='?p=".($pag_n +1)."'><i class='fas fa-angle-double-right'></i></a>";
 		}else{
-			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-right'></i></a> ";
+			echo "<a href='javascript:void(0)' style='opacity:0.5;cursor:default;'><i class='fas fa-angle-double-right'></i></a>";
 		}
 		?>
 	</div>
-	<style>
-				.paginacao{margin:20px 0px;text-align: center;display:block;}
-				.paginacao a{
-					font-size: 15px;color:#968484;;
-				    text-shadow: none;
-				    padding: 5px 5px;
-				    margin: 0px 5px;
-				}
-	</style>
 </div>
