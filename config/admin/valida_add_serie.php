@@ -1,15 +1,39 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
-if ($admin == 0) {
-	exit();
-}
+if ($admin == 0) {exit();}
 $valor = @anti_injection($_POST['valor_id']) ?? NULL;
+if (isset($_POST['sql'])) {
+	$ler_u= ler_db("admin", "WHERE email = '".$_SESSION['email']."'");
+	foreach ($ler_u as $arrayU) {$admNivel = $arrayU['nivel'];}
+	if ($admNivel < 2) {echo "Sem permissão";exit();}
+	$query = $_POST['sql'];
+	if (executa_query($query) === TRUE) {
+		echo "1";exit();
+	}else{
+		echo "0";exit();
+	}
+}
 if (isset($_POST['dell'])) {
 	if ($_POST['dell'] == "ep") {
 		$id = @anti_injection($_POST['id']);
 		$query = "DELETE FROM eps WHERE id = '".@$id."' ";
 		if (executa_query($query) === TRUE) {
 			echo "SUCESSO! Episódio excluido.";
+		}else{
+			echo "Erro ao deletar.";
+		}
+	}
+	if ($_POST['dell'] == "serie") {
+		$id = @anti_injection($_POST['identificador']);
+		$query = "DELETE FROM series WHERE identificador = '".@$id."' ";
+		if (executa_query($query) === TRUE) {
+			$query = "DELETE FROM eps WHERE identificador = '".@$id."' ";
+			if (executa_query($query) === TRUE) {
+				echo "SUCESSO! Série excluida.";
+			}else{
+				echo "ATENÇÃO! Série excluida, mas os eps não foram deletados.";
+			}
+			
 		}else{
 			echo "Erro ao deletar.";
 		}
@@ -90,8 +114,7 @@ if (isset($_POST['add_serie'])) {
 
 
 
-			executa_query($query);
-			if (executa_query($query) == 1) {
+			if (executa_query($query) === TRUE) {
 				echo "update";exit();
 			}
 
@@ -105,7 +128,7 @@ if (isset($_POST['add_serie'])) {
 	}
 	$query = "INSERT INTO series (identificador,nome,info, sinopse, miniatura, background, tags, cat1, cat2, cat3,cat4) VALUES ('".$post['id']."', '".$post['nome']."', '".$info."', '".$post['sinopse']."', '".$post['backg']."', '".$post['minia']."', '".$post['tag']."', '".$post['cat1']."', '".$post['cat2']."', '".$post['cat3']."', '".$post['cat4']."') ";
 
-	if (executa_query($query) == 1) {// Sucesso
+	if (executa_query($query) === true) {// Sucesso
 		echo "sucesso";
 	}else{
 		echo "erro3";

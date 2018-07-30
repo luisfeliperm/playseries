@@ -1,4 +1,3 @@
-<!-- Recomendados -->
 <div class="container-cat">
 	<div class="cat-conteudo width-90">
 		<div class="cat_nome">Novos</div>

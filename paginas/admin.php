@@ -4,19 +4,19 @@
 <div class="container-cat" style="text-shadow:none;">
 <div class="cat-conteudo width-90">
 	<?php 
-	if (isset($_POST['user']) && isset($_POST['pass'])) {
-		$user = anti_injection($_POST['user']);$pass = anti_injection($_POST['pass']);
-		$query = "SELECT * FROM admin WHERE user = '".$user."' AND pass = '".$pass."' AND nivel > 0";
+	if (isset($_POST['Loginemail']) && isset($_POST['Loginpass'])) {
+		$email = anti_injection($_POST['Loginemail']);$pass = anti_injection($_POST['Loginpass']);
+		$query = "SELECT * FROM admin WHERE email = '".$email."' AND pass = '".$pass."' AND nivel > 0";
 		$result = executa_query($query);
-		if (mysqli_num_rows($result)) {$_SESSION['user'] = $user;$_SESSION['pass'] = $pass;}
+		if (mysqli_num_rows($result)) {$_SESSION['email'] = $email;$_SESSION['pass'] = $pass;}
 	}
-	if (!isset($_SESSION['user'],$_SESSION['pass']) || empty($_SESSION['user']) || empty($_SESSION['pass'])) {
+	if (!isset($_SESSION['email'],$_SESSION['pass']) || empty($_SESSION['email']) || empty($_SESSION['pass'])) {
 		// Não está logado
 		?>
 		<form class="login" method="post">
 			<h1>Painel de administração</h1>
-			<input type="text" name="user">
-			<input type="password" name="pass">
+			<input type="email" name="Loginemail">
+			<input type="password" name="Loginpass">
 			<a href="javascript:void(0);" onclick="display_edit('recup', 'block')">Recuperar</a>
 			<button type="submit">Entrar</button>
 		</form>
@@ -38,6 +38,9 @@
 		</script>
 		<?php
 	}else{ /******  TÁ LOGADO */
+		$ler_u= ler_db("admin", "WHERE email = '".$_SESSION['email']."'");
+		foreach ($ler_u as $arrayU) {$admNivel = $arrayU['nivel'];}
+		
 		?>
 		<div class="adm">
 		<div class="adm_aside a-1 left">
@@ -67,7 +70,7 @@
 						}
 					}
 					?>
-					<div class="add_titulo"><?php if($mod_edit=='serie'){echo "<span class='left'>Editar Série</span><span class='right'><a href='/admin/'><i class='fas fa-chevron-left'></i></a> <a title='Excluir série' href='#''><i class='fas fa-trash-alt'></i></a></span>";}else{echo "Adicionar Série";}?></div>
+					<div class="add_titulo"><?php if($mod_edit=='serie'){echo "<span class='left'>Editar Série</span><span class='right'><a href='/admin/'><i class='fas fa-chevron-left'></i></a> <a title='Excluir série' onclick=\"dell('serie',null,'".$d_edit['id']."' );\"  href='javascript:void(0);''><i class='fas fa-trash-alt'></i></a></span>";}else{echo "Adicionar Série";}?></div>
 					<div class="form">
 						<div>
 							<label for="form_adm_id">Identificador</label>
@@ -261,7 +264,7 @@
 
 								<div class="add_submit">
 									<button onclick="valida('upEpSelect')" class="right">Editar</button>
-									<span style="padding: 6px 8px;display:block;" id="status_upEpSelect">AA</span>
+									<span style="padding: 6px 8px;display:block;" id="status_upEpSelect"></span>
 								</div>
 								<?php
 							}else{
@@ -478,19 +481,147 @@
 				?>
 				
 			</div>
-			<?php } ?>
+			<?php } 
+			if (isset($_GET['pag']) && @$_GET['pag'] == "user" && $admNivel == '2') {?>
+				<div class="add" style="overflow:auto;margin-top: 10px;">
+					<button class="left" onclick="window.location.href='/admin/?pag=user&editar'">Novo</button>
+					<form method="get" action="./" class="right" style="max-width: 210px;width:100%;">
+						<input type="hidden" name="pag" value="user">
+						<input class="left" style="width: calc(100% - 61px);" type="text" name="b">
+						<button class="left" style="width: 60px;">Busca</button>
+					</form>
+				</div>
+				<?php 
+				if (isset($_GET['dell'])) {
+					$dell = anti_injection($_GET['dell']);
+					$query = "DELETE FROM admin WHERE id = '".$dell."'";
+					executa_query($query);
+				}
+				if (!isset($_GET['editar'])) {
+					if (isset($_GET['b']) && !empty($_GET['b'])) {
+						$key = anti_injection($_GET['b']);
+						$ler_u= ler_db("admin","WHERE email LIKE '%".$key."%' ORDER BY id ");
+						echo "<a style='display:table;margin:10px 0px;border:1px solid;padding:5px;' href='./'>Voltar</a>";
+					}else{$ler_u= ler_db("admin");}
+					?>
+					<ul class="list_user">
+					<?php 
+					if (!empty($ler_u)) {
+						foreach ($ler_u as $arrayU) {
+							$us = array('id'=>$arrayU['id'],'email' => $arrayU['email'],'pass' => $arrayU['pass'],'nivel' => $arrayU['nivel'] );
+							echo "<li><span class='nivel".$us['nivel']."'>#".$us['nivel']." </span>
+								".$us['email']." ".$us['pass']." <a href=\"./?pag=user&editar=".$us['email']."\">Editar</a> <a href='/admin/?pag=user&dell=".$us['id']."'>Delete</a></li>";
+						}
+					}
+					?>
+					</ul>
+					<style type="text/css">
+						.list_user{margin-top: 10px;}
+						.list_user li{padding: 5px 0px;color:#fff;}
+						.list_user li span.nivel0{color:#ce0000;}
+						.list_user li span.nivel1{color:#0050ff;}
+						.list_user li span.nivel2{color:#17e800;}
+						.list_user li a{text-decoration:underline;}
+					</style>
+				<?php 
+				}else{
+					echo "<a style='display:table;margin:10px 0px;border:1px solid;padding:5px;' href='./?pag=user'>Voltar</a>";
+					$us['nivel']='1';
+					if (isset($_GET['editar']) && !empty(@$_GET['editar'])) {
+						$ler_u= ler_db("admin","WHERE email = '".anti_injection($_GET['editar'])."' ");
+						if (!empty($ler_u)) {
+							foreach ($ler_u as $arrayU) {
+								$us = array('id' => $arrayU['id'],'email' => $arrayU['email'],'pass' => $arrayU['pass'],'nivel' => $arrayU['nivel'] );
+							}
+						}
+					}
+					?>
+					<form method="post" onsubmit="return validaUp();" class="adm_user">
+						<input required value="<?php echo @$us['email'];?>" type="email" name="Useremail" placeholder="email" id="useremail">
+						<input minlength="2" required value="<?php echo @$us['pass'];?>" type="text" name="Userpass" placeholder="Senha" id="userpass">
+						<div style="overflow:auto">
+							<select class="left" name="Usernivel" id="nivel">
+								<option value="0" <?php if($us['nivel']=="0"){echo "selected";};?>>Inativo</option>
+								<option value="1" <?php if($us['nivel']=="1"){echo "selected";};?>>Admin</option>
+								<option value="2" <?php if($us['nivel']=="2"){echo "selected";};?>>Master</option>
+							</select>
+							<button class="right" type="submit" >Update/Add</button>
+						</div>
+					</form>
+					<div style="color:#fff;text-align:center;margin:10px;">
+						<?php 
+						$email = @anti_injection($_POST['Useremail']);
+						$pass  = @anti_injection($_POST['Userpass']);
+						$nivel = @anti_injection($_POST['Usernivel']);
+						if (!empty($email) && !empty($pass) && isset($_POST['Usernivel']) && $nivel < 3 && $nivel >= 0 ) {
+							
+							if (isset($us['id'])) {
+								# atualiza
+								$query = "SELECT * FROM admin WHERE email = '".$email."' AND id <> '".$us['id']."' ";
+								if (!mysqli_num_rows(executa_query($query))) {
+									
+									$query = " UPDATE admin SET 
+									email    = '".$email."', 
+									pass     = '".$pass."', 
+									nivel    = '".$nivel."' 
+									WHERE id = ".$us['id']." ";
+
+									if (executa_query($query) == 1) {
+										echo "Pronto!";
+									}
+								}else{echo "O email já existe";}
+							}else{
+								$query = "SELECT * FROM admin WHERE email = '".$email."' ";
+								if (mysqli_num_rows(executa_query($query))) {
+									echo $email." Já existe";
+								}else{
+									$query = "INSERT INTO admin (email,pass,nivel) VALUES ('".$email."','".$pass."','".$nivel."') ";
+
+									if (executa_query($query) === true) {// Sucesso
+										echo "sucesso";
+									}else{
+										echo "Erro";
+									}
+								}
+							}
+
+						} 
+						?>
+					</div>
+					<script>
+						function validaUp(){
+							var email = document.getElementById('useremail').value;
+							var pass = document.getElementById('userpass').value;
+							var nivel = document.getElementById('nivel').value;
+							if (email == "" || pass.length < 5) {
+								alert('Verifique os campos');
+								return false;
+							}
+						}
+					</script>
+					<style>
+					form.adm_user{
+						max-width: 200px;display:block;margin:0 auto;
+					}
+					form.adm_user input{
+						display:block;margin:2px 0px;width: 100%;
+					}
+					</style>
+					<?php
+				}
+			}
+			?>
 
 		</div>
 		<div class="adm_aside a-2 right">
 			<div class="container_adm account">
-				<span>Admin <i>luisfeliperm</i> <b>NIVEL: #1</b></span>
-				<a href="#">Editar</a>
+				<span>Admin <i style="font-size: 15px;"><?php echo $_SESSION['email'];?></i> <b>NIVEL: #<?php echo $admNivel;?></b></span>
 				<a href="/config/config.php?sair=1">Sair</a>
 			</div>
 			<div class="container_adm sql">
 				<label class="left">SQL:</label>
-				<input class="left" type="text" name="">
-				<button class="left" >exc</button> <span><img src="http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif"></span>
+				<input class="left" type="text" id="sql">
+				<button class="left" onclick="sql();">exc</button> <div id="status_sql"></div>
 			</div>
 			<div class="container_adm links">
 				<div class="link"><a href="/admin/?pag=serie">Adicionar Série</a></div>
@@ -510,17 +641,21 @@
 				</div>
 				<div class="link"><a href="/admin/?pag=ep">Adicionar Epsódio</a></div>
 				<div class="link"><a href="/admin/?pag=ep&select_edit">Editar Epsódio</a></div>
-				<div class="link"><a href="#">Usuarios</a></div>
+				<div class="link"><a href="/admin/?pag=user">Usuarios</a></div>
+			</div>
+			<div class="container_adm" style="text-align:right;">
+				<span style="color:#ddd"><?php $ler_edit=ler_db("views","ORDER BY id DESC LIMIT 1");if(!empty($ler_edit)){foreach($ler_edit as $edit_array){echo$edit_array['total'];}}?> Vizualizações</span>
 			</div>
 		</div>
 
 
 		</div>
-		<div id="resultado">
+		<div id="resultado" >
 			<div class="sub_result" id="sub_result1">
 				<div class="result_title">Pronto!</div>
 				<div class="result_msg">
-					<a href="#" target="_blank">The Walking Dead</a>
+					<a href="#" target="_blank" onclick="this.href = '/watch/serie/'+document.getElementById('form_adm_id').value+'/'">Vizualizar</a>
+
 				</div>
 				<div class="result_close" onclick="display_edit('resultado','none');display_edit('sub_result1','none');display_edit('sub_result2','none');display_edit('sub_result3','none');display_edit('sub_result4','none');"><a href="javascript:void(0);">[Fechar]</a></div>
 			</div>
@@ -575,6 +710,21 @@ function dell(oq,id,identificador) {
     }else{
         return false;
     }
+}
+function sql(){
+	if (<?php echo $admNivel;?> < 2) {
+		edita_texto("status_sql", "Você não tem permissão!");
+		return false;
+	}
+	edita_texto("status_sql", "<img src='http://www.mytreedb.com/uploads/mytreedb/loader/ajax_loader_gray_32.gif'>");
+	var sql = document.getElementById('sql').value;
+	$.post('/config/admin/valida_add_serie.php',{sql: sql},function(data){
+	 if (data == 1) {
+	 	edita_texto("status_sql", "<span style='color:green;'>Sucesso</span>");
+	 }else{
+	 	edita_texto("status_sql", "Erro");
+	 }
+	})
 }
 function valida(campo){
 	var elemento = document.getElementById(campo);

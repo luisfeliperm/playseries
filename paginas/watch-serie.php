@@ -13,6 +13,16 @@ parse_str($dados_ep['info'], $info_ep);
 $viwer = $dados_ep['viwer'] + 1;
 $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_serie."'  ";
 @executa_query($query);
+if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0) {
+	$season = anti_injection(intval($_GET['s']));
+}else{
+	$season = 1;
+}
+if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
+	$ep = anti_injection(intval($_GET['e']));
+}else{
+	$ep = 1;
+}
 ?>
 <div class="watch_section width-90">
 	<div class="thumb">
@@ -20,18 +30,7 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 		<span class="qualy"><?php echo $info_ep['qualy'];?></span>
 	</div>
 	<div class="assistir">
-		<?php 
-		if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0) {
-			$season = anti_injection(intval($_GET['s']));
-		}else{
-			$season = 1;
-		}
-		if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
-			$ep = anti_injection(intval($_GET['e']));
-		}else{
-			$ep = 1;
-		}
-		?>
+		
 		<style>
 		.seasson {display:block;}
 		.optionep{display: none;}
@@ -89,12 +88,14 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 				$get_play = 1;
 			}
 			// Lista PLAYERS
+			$player1 = false;$player2 = false;$player3 = false;
 			$ler_players = ler_db("eps", "WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."'  ");
 			if (!empty($ler_players)) {
 				foreach ($ler_players as $play_array) {
-				 	$list_play = array('1_src' => $play_array['src_1'],'nome_2' => $play_array['nome_2'], 'src_2' => $play_array['src_2'],'nome_3' => $play_array['nome_3'], '3_src' => $play_array['src_3'],'poster' => $play_array['poster']);
+				 	$list_play = array('src_1' => $play_array['src_1'],'nome_2' => $play_array['nome_2'], 'src_2' => $play_array['src_2'],'nome_3' => $play_array['nome_3'], 'src_3' => $play_array['src_3'],'poster' => $play_array['poster']);
 
 				 	if (!empty($list_play['nome_3'])) {
+				 		$player3 = true;
 				 		if ($get_play == 3) {
 				 			echo "<a href='?s=".$season."&e=".$ep."&player=3' class='active'>".$list_play['nome_3']."</a>";
 				 		}else{
@@ -102,13 +103,15 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 				 		}
 				 	}
 				 	if (!empty($list_play['nome_2'])) {
+				 		$player = true;
 				 		if ($get_play == 2) {
 				 			echo "<a href='?s=".$season."&e=".$ep."&player=2' class='active'>".$list_play['nome_2']."</a>";
 				 		}else{
 				 			echo "<a href='?s=".$season."&e=".$ep."&player=2'>".$list_play['nome_2']."</a>";
 				 		}
 				 	}
-				 	if (!empty($list_play['1_src'])) {
+				 	if (!empty($list_play['src_1'])) {
+				 		$player1 = true;
 				 		if ($get_play == 1 || !isset($_GET['player']) || empty($get_play)) {
 					 		echo "<a href='?s=".$season."&e=".$ep."&player=1' class='active'>Principal</a>";
 					 	}else{
@@ -122,8 +125,19 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 			?>
 		</div>
 		<?php 
+		// Se o player for vazio seleciona IFRAME
+		if (!isset($_GET['player'])) {
+			if (empty($list_play['src_1'])) {
+				$get_play = 2;
+				if (empty($list_play['src_2'])) {
+					$get_play = 3;
+					if (empty($list_play['src_3'])) {
+						# REPORTA
+					}
+				}
+			}
+		}
 		if ($get_play != "1") {
-			
 			?>
 			<div class="diframePlay">
 				<iframe class="iframePlay" src="<?php echo $play_array['src_'.$get_play];?>"></iframe>
@@ -133,14 +147,14 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 			?>
 			<div class="video">
 				<video class="vjs-tech vsc-initialized" preload="none" poster="<?php echo @$list_play['poster']; ?>" controls="" >
-					<source src="<?php echo @$list_play['1_src']; ?>" type="video/mp4">
+					<source src="<?php echo @$list_play['src_1']; ?>" type="video/mp4">
 				</video>
 			</div>
 			<?php 
 		}
 		?>
 		
-		<div class="controles">
+		<div class="controles" >
 			<?php
 			if ($ep == 1) {
 				echo "<a href='javascript:void(0);'  style='float:left;opacity:0.4;cursor:default;'>Voltar</a>";
@@ -155,7 +169,18 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 				echo "<a href='?s=".$season."&e=".($ep + 1)."' style='float:right;'>Proximo</a>";
 			}
 			?>
+		</div>
 
+		<div class="comentarios">
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=1459113217499136';
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+			<div class="fb-comments" data-href="<?php echo "http://playseries.tk/watch/serie/".$url_serie."/?s=".$season."&e=".$ep;?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 		</div>
 	</div>
 </div>
@@ -194,7 +219,8 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 	    background-color: rgba(0, 0, 0, 0.5);
 	    padding: 4px 10px;color: rgba(255, 255, 255, 0.7);
 	}
-	.assistir{background: rgba(16, 0, 0, 0.75);overflow: auto;}
+	/*.assistir{background: rgba(16, 0, 0, 0.75);overflow: auto;}*/
+	.assistir{background: rgba(16, 0, 0, 0.75);overflow: hidden;}
 	.assistir .w_eps{
 		padding: 8px;border-bottom:1px solid #000;
 		box-shadow: 0px 1px 0px 0px rgba(100,0,0,0.2);
@@ -231,9 +257,15 @@ $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_s
 	@media screen and (max-width: 399px) {
 		.assistir .diframePlay iframe.iframePlay{height: 200px;}
 	}
-	.assistir .controles{width: 90%;margin:5px auto;}
+	/*.assistir .controles{width: 90%;margin:5px auto;}BACKUP OVERFLOW*/
+	.assistir .controles{width: 90%;margin:5px auto;overflow: hidden;}
 	.assistir .controles a{padding: 8px;border: 1px solid #fff;margin: 0px 0px 10px;}
 	.assistir .controles a:hover{opacity: 0.5;}
+	.assistir .comentarios{
+		width: 90%;margin:5px auto;margin-bottom:10px;clear: both;color:#fff;
+		background: #f1f1f1;
+		border-top:4px solid #ddd;border-radius: 6px;
+	}
 	.report{
 		height: 100%;
 	    width: 100%;
