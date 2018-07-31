@@ -7,6 +7,7 @@ Options -Indexes
   RewriteRule ^busca\/?$ /index.php?pi=busca.php [NC,L,QSA]
   RewriteRule ^admin\/?$ /index.php?pi=admin.php [NC,L,QSA]
   RewriteRule ^watch\/?serie\/?([a-z,0-9,A-Z,_-]+)\/?$ /index.php?pi=watch-serie.php&url_serie=$1 [NC,L,QSA]
+  RewriteRule ^sitemap([0-9]+).xml /sitemap$1.php [L]
   
 </IfModule>
 ErrorDocument 404 /paginas/404.html
