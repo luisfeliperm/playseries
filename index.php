@@ -18,19 +18,21 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 		if (isset($_GET['player'])) {echo "<meta name='robots' content='noindex,follow'>";}
 		$seo_ler_serie = ler_db("series", "WHERE identificador = '".$url_serie."' ");
 		if (!empty($seo_ler_serie)) { // O link existe
-			foreach ($seo_ler_serie as $seo_array) {
-			 	$seo_serie = array('nome' => $seo_array['nome'], 'info' => $seo_array['info'],'background' =>  $seo_array['background'],'tags' => $seo_array['tags'] );
+			foreach ($seo_ler_serie as $ep_array) {
+
+			 	$dados_ep = array('nome' => $ep_array['nome'], 'info' => $ep_array['info'],'sinopse' => $ep_array['sinopse'] ,'miniatura' => $ep_array['miniatura'],'background' =>  $ep_array['background'],'tags' => $ep_array['tags'], 'viwer' => $ep_array['viwer'],'data' => $ep_array['data'] );
 			}
-			$seo_serie['info'] = str_replace(' ','&',$seo_serie['info']);
-			$seo_serie['info'] = str_replace('_',' ',$seo_serie['info']);
-			parse_str($seo_serie['info'], $info_seo);
+			$dados_ep['info'] = str_replace(' ','&',$dados_ep['info']);
+			$dados_ep['info'] = str_replace('_',' ',$dados_ep['info']);
+			parse_str($dados_ep['info'], $info_ep);
+
 			if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0 && isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 				$season = anti_injection(intval($_GET['s']));
 				$ep = anti_injection(intval($_GET['e']));
 				$query = "SELECT * FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."' ";
 				if (mysqli_num_rows(executa_query($query))) {
 					// O EP EXISTE
-					$titulo_meta = $seo_serie['nome']." ".$season." Temporada Episódio ".$ep." dublado ".$info_seo['qualy'];
+					$titulo_meta = $dados_ep['nome']." ".$season." Temporada Episódio ".$ep." dublado ".$info_ep['qualy'];
 					?>
 					<title>Assistir <?php echo $titulo_meta?></title>
 					<meta property="og:title" content="Assista <?php echo $titulo_meta;?>" />
@@ -38,33 +40,44 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 					<meta name="description" content="Assistir <?php echo $titulo_meta;?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
 					<meta property="og:description" content="Assistir <?php echo $titulo_meta;?>"/>
 					<meta name="twitter:description" content="Assistir <?php echo $titulo_meta;?>">
-					<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
-					<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
-					<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
-					<meta property="article:section" content="<?php echo $seo_serie['nome'];?>"/>
+					<meta property="og:image" content="<?php echo $dados_ep['background']; ?>"/>
+					<meta name="twitter:image" content="<?php echo $dados_ep['background']; ?>">
+					<meta name="Keywords" content="<?php echo $dados_ep['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
+					<meta property="article:section" content="<?php echo $dados_ep['nome'];?>"/>
 					<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/?s=".$season."&e=".$ep; ?>
 					<meta property="og:url" content="<?php echo $meta_url;?>">
 					<?php
+					// Dados do EP em si 
+					$seo_ep = ler_db("eps", "WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."'  ");
+					if (!empty($seo_ep)) {
+						foreach ($seo_ep as $play_array) {
+							$list_play = array('data' => $play_array['data']);
+							echo "<meta name='date' content='". date('Y-m-d\TH:i:s',  strtotime($list_play['data']))."'>";
+						}
+					}else{
+						?><meta name='date' content="<?php echo date('Y-m-d\TH:i:s',  strtotime($dados_ep['data']));?>"><?php 
+					}
 				}else{// O EP NÃO EXISTE
 					echo "<title>Episódio não encontrado</title>";
 				}
 			}else{// Apenas info da serie, não do ep
 				?>
-				<title>Assistir <?php echo $seo_serie['nome'];?> dublado</title>
-				<meta property="og:title" content="Assista <?php echo $seo_serie['nome'];?>" />
-				<meta name="twitter:title" content="Assista <?php echo $seo_serie['nome']; ?>">
-				<meta name="description" content="Assistir <?php echo $seo_serie['nome'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
-				<meta property="og:description" content="Assistir <?php echo $seo_serie['nome'];?>"/>
-				<meta name="twitter:description" content="Assistir <?php echo $seo_serie['nome'];?>">
-				<meta property="og:image" content="<?php echo $seo_serie['background']; ?>"/>
-				<meta name="twitter:image" content="<?php echo $seo_serie['background']; ?>">
-				<meta name="Keywords" content="<?php echo $seo_serie['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
-				<meta property="article:section" content="<?php echo $seo_serie['nome'];?>"/>
+				<title>Assistir <?php echo $dados_ep['nome'];?> dublado</title>
+				<meta property="og:title" content="Assista <?php echo $dados_ep['nome'];?>" />
+				<meta name="twitter:title" content="Assista <?php echo $dados_ep['nome']; ?>">
+				<meta name="description" content="Assistir <?php echo $dados_ep['nome'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+				<meta property="og:description" content="Assistir <?php echo $dados_ep['nome'];?>"/>
+				<meta name="twitter:description" content="Assistir <?php echo $dados_ep['nome'];?>">
+				<meta property="og:image" content="<?php echo $dados_ep['background']; ?>"/>
+				<meta name="twitter:image" content="<?php echo $dados_ep['background']; ?>">
+				<meta name="Keywords" content="<?php echo $dados_ep['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
+				<meta property="article:section" content="<?php echo $dados_ep['nome'];?>"/>
 				<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/";?>
 				<meta property="og:url" content="<?php echo $meta_url;?>">
+				<meta name='date' content="<?php echo date('Y-m-d\TH:i:s',  strtotime($dados_ep['data']));?>">
 				<?php
 			}
-		}else{ /* Link não existe */ echo "<title>Não encontrado</title>";}
+		}else{$epNExiste=TRUE; /* Link não existe */ echo "<title>Não encontrado</title>";}
 	}else{ // padrão
 		?>
 		<title>PlaySeries</title>
@@ -170,7 +183,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 		<a href="/categoria/drama/">Drama</a>
 		<a href="/categoria/terror/">Terror</a>
 		<a href="/categoria/ficcao/">Ficção</a>
-		<a href="/categoria/desenhos/">Desenhos</a>
+		<a href="/categoria/desenho/">Desenhos</a>
 		<a href="/categoria/suspense/">Suspense</a>
 		<a href="/categoria/romance/">Romance</a>
 		<a href="/categoria/acao/">Ação</a>

@@ -13,60 +13,61 @@
 <url>
   <loc>http://playseries.tk/categoria/mais-visitados/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/drama/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/acao/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/ficcao/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>06</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/anime/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.7</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/desenho/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/suspense/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/romance/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/aventura/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/comedia/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.6</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/documentario/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.4</priority>
 </url>
 <url>
   <loc>http://playseries.tk/categoria/busca/</loc>
   <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
+  <priority>0.7</priority>
 </url>
+</urlset>

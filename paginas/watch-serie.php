@@ -1,15 +1,9 @@
 <?php
 // Verifica se existe
 $ler_ep = ler_db("series", "WHERE identificador = '".$url_serie."' ");
-if (empty($ler_ep)) { // O link não existe
+if (isset($epNExiste) && $epNExiste === TRUE) { // O link não existe
 	echo "<div class='notfound'>Não encontrado</div>";exit();
 }
-foreach ($ler_ep as $ep_array) {
- 	$dados_ep = array('nome' => $ep_array['nome'], 'info' => $ep_array['info'],'sinopse' => $ep_array['sinopse'] ,'miniatura' => $ep_array['miniatura'],'background' =>  $ep_array['background'],'tags' => $ep_array['tags'], 'viwer' => $ep_array['viwer'] );
-}
-$dados_ep['info'] = str_replace(' ','&',$dados_ep['info']);
-$dados_ep['info'] = str_replace('_',' ',$dados_ep['info']);
-parse_str($dados_ep['info'], $info_ep);
 $viwer = $dados_ep['viwer'] + 1;
 $query = "UPDATE series SET viwer = '".$viwer."' WHERE identificador = '".$url_serie."'  ";
 @executa_query($query);
@@ -140,7 +134,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 		if ($get_play != "1") {
 			?>
 			<div class="diframePlay">
-				<iframe class="iframePlay" src="<?php echo $play_array['src_'.$get_play];?>"></iframe>
+				<iframe class="iframePlay" src="<?php echo @$play_array['src_'.$get_play];?>"></iframe>
 			</div>
 			<?php 
 		}else{

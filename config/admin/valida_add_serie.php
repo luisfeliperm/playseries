@@ -109,16 +109,13 @@ if (isset($_POST['add_serie'])) {
 				cat1          = '".$post['cat1']."', 
 				cat2          = '".$post['cat2']."', 
 				cat3          = '".$post['cat3']."', 
-				cat4          = '".$post['cat4']."' 
+				cat4          = '".$post['cat4']."', 
+				data          = '".$dataLocal."' 
 				WHERE id      = ".$id_real." LIMIT 1  ";
-
-
 
 			if (executa_query($query) === TRUE) {
 				echo "update";exit();
 			}
-
-			
 		}else{
 			echo "erro2";exit();
 		}
@@ -126,7 +123,7 @@ if (isset($_POST['add_serie'])) {
 	if (empty($post['id']) || empty($post['nome']) || empty($post['backg']) || empty($post['minia']) || empty($post['ano']) || empty($post['min']) || empty($post['qualy'])) {
 		echo "erro3";exit();
 	}
-	$query = "INSERT INTO series (identificador,nome,info, sinopse, miniatura, background, tags, cat1, cat2, cat3,cat4) VALUES ('".$post['id']."', '".$post['nome']."', '".$info."', '".$post['sinopse']."', '".$post['minia']."', '".$post['backg']."', '".$post['tag']."', '".$post['cat1']."', '".$post['cat2']."', '".$post['cat3']."', '".$post['cat4']."') ";
+	$query = "INSERT INTO series (identificador,nome,info, sinopse, miniatura, background, tags, cat1, cat2, cat3,cat4,data) VALUES ('".$post['id']."', '".$post['nome']."', '".$info."', '".$post['sinopse']."', '".$post['minia']."', '".$post['backg']."', '".$post['tag']."', '".$post['cat1']."', '".$post['cat2']."', '".$post['cat3']."', '".$post['cat4']."', '".$dataLocal."') ";
 
 	if (executa_query($query) === true) {// Sucesso
 		echo "sucesso";
@@ -178,12 +175,13 @@ if (isset($_POST['add_ep'])){
 	if (mysqli_num_rows(executa_query($query))) {
 		if ($_POST['add_ep'] == "update") {
 			$query = " UPDATE eps SET 
-				poster              = '".$post['poster']."', 
-				src_1               = '".$post['src1']."', 
-				nome_2              = '".$post['name_src2']."', 
-				src_2               = '".$post['src2']."', 
-				nome_3              = '".$post['name_src3']."', 
-				src_3               = '".$post['src3']."'
+				poster = '".$post['poster']."', 
+				src_1  = '".$post['src1']."', 
+				nome_2 = '".$post['name_src2']."', 
+				src_2  = '".$post['src2']."', 
+				nome_3 = '".$post['name_src3']."', 
+				src_3  = '".$post['src3']."',
+				data   = '".$dataLocal."' 
 				WHERE identificador = '".$post['id']."' ";
 			if (executa_query($query) == 1) {
 				echo "SUCESSO! Atualizado";exit();
@@ -194,7 +192,7 @@ if (isset($_POST['add_ep'])){
 			echo "O episódio já existe !";exit();
 		}
 	}
-	$query = "INSERT INTO eps (identificador,temporada,ep, poster, src_1, nome_2,src_2,nome_3,src_3) VALUES ('".$post['id']."', '".$post['season']."', '".$post['ep']."', '".$post['poster']."', '".$post['src1']."', '".$post['name_src2']."', '".$post['src2']."', '".$post['name_src3']."', '".$post['src3']."') ";
+	$query = "INSERT INTO eps (identificador,temporada,ep, poster, src_1, nome_2,src_2,nome_3,src_3,data) VALUES ('".$post['id']."', '".$post['season']."', '".$post['ep']."', '".$post['poster']."', '".$post['src1']."', '".$post['name_src2']."', '".$post['src2']."', '".$post['name_src3']."', '".$post['src3']."', '".$dataLocal."') ";
 
 	if (executa_query($query) == 1) {// Sucesso
 		echo "SUCESSO! Ep adicionado.";
