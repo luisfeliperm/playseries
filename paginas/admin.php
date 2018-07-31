@@ -58,7 +58,7 @@
 							$ler_edit = ler_db("series", "WHERE identificador = '".$edit."' ");
 							if (!empty($ler_edit)) { // O link existe
 								foreach ($ler_edit as $edit_array) {
-								 	$d_edit = array('id_real' => $edit_array['id'],'id' => $edit_array['identificador'],'nome' => $edit_array['nome'], 'info' => $edit_array['info'], 'sinopse' => $edit_array['sinopse'], 'background' =>  $edit_array['background'],'miniatura' => $edit_array['miniatura'],'tags' => $edit_array['tags'] );
+								 	$d_edit = array('id_real' => $edit_array['id'],'id' => $edit_array['identificador'],'nome' => $edit_array['nome'], 'info' => $edit_array['info'], 'sinopse' => $edit_array['sinopse'], 'background' =>  $edit_array['background'],'miniatura' => $edit_array['miniatura'],'tags' => $edit_array['tags'],'cat1' => $edit_array['cat1'],'cat2' => $edit_array['cat2'],'cat3' => $edit_array['cat3'],'cat4' => $edit_array['cat4'] );
 
 								 	$d_edit['info'] = str_replace(' ','&',$d_edit['info']);
 									$d_edit['info'] = str_replace('_',' ',$d_edit['info']);
@@ -122,60 +122,60 @@
 						<div>
 							<label for="form_adm_">Categoria</label>
 							<select id="cat1" name="cat1" class="cat">
-								<option value="0">--</option>
-								<option value="anime">Animes</option>
-								<option value="acao">Ação</option>
-								<option value="aventura">Aventura</option>
-								<option value="drama">Drama</option>
-								<option value="documentario">Documentário</option>
-								<option value="terror">Terror</option>
-								<option value="ficcao">Ficção</option>
-								<option value="desenho">Desenho</option>
-								<option value="suspense">Suspense</option>
-								<option value="romance">Romance</option>
-								<option value="comedia">Comedia</option>
+								<option <?php if(@$d_edit['cat1'] == ""){echo " selected ";}?> value="0">--</option>
+								<option <?php if(@$d_edit['cat1'] == "anime"){echo " selected ";}?> value="anime">Animes</option>
+								<option <?php if(@$d_edit['cat1'] == "acao"){echo " selected ";}?> value="acao">Ação</option>
+								<option <?php if(@$d_edit['cat1'] == "aventura"){echo " selected ";}?> value="aventura">Aventura</option>
+								<option <?php if(@$d_edit['cat1'] == "drama"){echo " selected ";}?> value="drama">Drama</option>
+								<option <?php if(@$d_edit['cat1'] == "documentario"){echo " selected ";}?> value="documentario">Documentário</option>
+								<option <?php if(@$d_edit['cat1'] == "terror"){echo " selected ";}?>  value="terror">Terror</option>
+								<option <?php if(@$d_edit['cat1'] == "ficcao"){echo " selected ";}?> value="ficcao">Ficção</option>
+								<option <?php if(@$d_edit['cat1'] == "desenho"){echo " selected ";}?> value="desenho">Desenho</option>
+								<option <?php if(@$d_edit['cat1'] == "suspense"){echo " selected ";}?> value="suspense">Suspense</option>
+								<option <?php if(@$d_edit['cat1'] == "romance"){echo " selected ";}?> value="romance">Romance</option>
+								<option <?php if(@$d_edit['cat1'] == "comedia"){echo " selected ";}?> value="comedia">Comedia</option>
 							</select>
 							<select id="cat2" name="cat2" class="cat">
-								<option value="0">--</option>
-								<option value="anime">Animes</option>
-								<option value="acao">Ação</option>
-								<option value="aventura">Aventura</option>
-								<option value="drama">Drama</option>
-								<option value="documentario">Documentário</option>
-								<option value="terror">Terror</option>
-								<option value="ficcao">Ficção</option>
-								<option value="desenho">Desenho</option>
-								<option value="suspense">Suspense</option>
-								<option value="romance">Romance</option>
-								<option value="comedia">Comedia</option>
+								<option <?php if(@$d_edit['cat2'] == ""){echo " selected ";}?> value="0">--</option>
+								<option <?php if(@$d_edit['cat2'] == "anime"){echo " selected ";}?> value="anime">Animes</option>
+								<option <?php if(@$d_edit['cat2'] == "acao"){echo " selected ";}?> value="acao">Ação</option>
+								<option <?php if(@$d_edit['cat2'] == "aventura"){echo " selected ";}?> value="aventura">Aventura</option>
+								<option <?php if(@$d_edit['cat2'] == "drama"){echo " selected ";}?> value="drama">Drama</option>
+								<option <?php if(@$d_edit['cat2'] == "documentario"){echo " selected ";}?> value="documentario">Documentário</option>
+								<option <?php if(@$d_edit['cat2'] == "terror"){echo " selected ";}?>  value="terror">Terror</option>
+								<option <?php if(@$d_edit['cat2'] == "ficcao"){echo " selected ";}?> value="ficcao">Ficção</option>
+								<option <?php if(@$d_edit['cat2'] == "desenho"){echo " selected ";}?> value="desenho">Desenho</option>
+								<option <?php if(@$d_edit['cat2'] == "suspense"){echo " selected ";}?> value="suspense">Suspense</option>
+								<option <?php if(@$d_edit['cat2'] == "romance"){echo " selected ";}?> value="romance">Romance</option>
+								<option <?php if(@$d_edit['cat2'] == "comedia"){echo " selected ";}?> value="comedia">Comedia</option>
 							</select>
 							<select id="cat3" name="cat3" class="cat">
-								<option value="0">--</option>
-								<option value="anime">Animes</option>
-								<option value="acao">Ação</option>
-								<option value="aventura">Aventura</option>
-								<option value="drama">Drama</option>
-								<option value="documentario">Documentário</option>
-								<option value="terror">Terror</option>
-								<option value="ficcao">Ficção</option>
-								<option value="desenho">Desenho</option>
-								<option value="suspense">Suspense</option>
-								<option value="romance">Romance</option>
-								<option value="comedia">Comedia</option>
+								<option <?php if(@$d_edit['cat3'] == ""){echo " selected ";}?> value="0">--</option>
+								<option <?php if(@$d_edit['cat3'] == "anime"){echo " selected ";}?> value="anime">Animes</option>
+								<option <?php if(@$d_edit['cat3'] == "acao"){echo " selected ";}?> value="acao">Ação</option>
+								<option <?php if(@$d_edit['cat3'] == "aventura"){echo " selected ";}?> value="aventura">Aventura</option>
+								<option <?php if(@$d_edit['cat3'] == "drama"){echo " selected ";}?> value="drama">Drama</option>
+								<option <?php if(@$d_edit['cat3'] == "documentario"){echo " selected ";}?> value="documentario">Documentário</option>
+								<option <?php if(@$d_edit['cat3'] == "terror"){echo " selected ";}?>  value="terror">Terror</option>
+								<option <?php if(@$d_edit['cat3'] == "ficcao"){echo " selected ";}?> value="ficcao">Ficção</option>
+								<option <?php if(@$d_edit['cat3'] == "desenho"){echo " selected ";}?> value="desenho">Desenho</option>
+								<option <?php if(@$d_edit['cat3'] == "suspense"){echo " selected ";}?> value="suspense">Suspense</option>
+								<option <?php if(@$d_edit['cat3'] == "romance"){echo " selected ";}?> value="romance">Romance</option>
+								<option <?php if(@$d_edit['cat3'] == "comedia"){echo " selected ";}?> value="comedia">Comedia</option>
 							</select>
 							<select id="cat4" name="cat4" class="cat">
-								<option value="0">--</option>
-								<option value="anime">Animes</option>
-								<option value="acao">Ação</option>
-								<option value="aventura">Aventura</option>
-								<option value="drama">Drama</option>
-								<option value="documentario">Documentário</option>
-								<option value="terror">Terror</option>
-								<option value="ficcao">Ficção</option>
-								<option value="desenho">Desenho</option>
-								<option value="suspense">Suspense</option>
-								<option value="romance">Romance</option>
-								<option value="comedia">Comedia</option>
+								<option <?php if(@$d_edit['cat4'] == ""){echo " selected ";}?> value="0">--</option>
+								<option <?php if(@$d_edit['cat4'] == "anime"){echo " selected ";}?> value="anime">Animes</option>
+								<option <?php if(@$d_edit['cat4'] == "acao"){echo " selected ";}?> value="acao">Ação</option>
+								<option <?php if(@$d_edit['cat4'] == "aventura"){echo " selected ";}?> value="aventura">Aventura</option>
+								<option <?php if(@$d_edit['cat4'] == "drama"){echo " selected ";}?> value="drama">Drama</option>
+								<option <?php if(@$d_edit['cat4'] == "documentario"){echo " selected ";}?> value="documentario">Documentário</option>
+								<option <?php if(@$d_edit['cat4'] == "terror"){echo " selected ";}?>  value="terror">Terror</option>
+								<option <?php if(@$d_edit['cat4'] == "ficcao"){echo " selected ";}?> value="ficcao">Ficção</option>
+								<option <?php if(@$d_edit['cat4'] == "desenho"){echo " selected ";}?> value="desenho">Desenho</option>
+								<option <?php if(@$d_edit['cat4'] == "suspense"){echo " selected ";}?> value="suspense">Suspense</option>
+								<option <?php if(@$d_edit['cat4'] == "romance"){echo " selected ";}?> value="romance">Romance</option>
+								<option <?php if(@$d_edit['cat4'] == "comedia"){echo " selected ";}?> value="comedia">Comedia</option>
 							</select>
 							<div class="input_status" id="status_info">*Já existe</div>
 						</div>

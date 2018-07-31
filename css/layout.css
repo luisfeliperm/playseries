@@ -94,7 +94,7 @@ header .menu nav .menu_mob{
     bottom: 0;
     display: none;
     background: rgba(0, 0, 0, 0.9);
-    border-right: 2px solid #37557b;
+    border-right: 2px solid #fff;
     width: 90%;
     max-width: 230px;
     min-width: 190px;
@@ -108,9 +108,9 @@ header .menu nav .menu_mob li a{
 header .menu nav .menu_mob li:hover a{
 	text-decoration: underline;
 }
-header .menu nav li#close_menu{background: #3b608e;text-align: center;}
-header .menu nav li#close_menu a{color:#fbfbfb;padding: 4px;font-size: 22px;}
-header .menu nav li#close_menu a:hover{color:#7f9dc1;}
+header .menu nav li#close_menu{background: #fff;text-align: center;    margin-bottom: 5px;}
+header .menu nav li#close_menu a{color:#000;padding: 4px;font-size: 22px;}
+header .menu nav li#close_menu a:hover{color:#afa6a6;}
 @media screen and (max-width: 910px) {
 	header .menu .show_menu{display: block;}
 	.menu_desk{display: none;}
@@ -410,9 +410,9 @@ footer ul:first-child li{padding-left:0px;}
 footer ul:last-child li{padding-right:0px;}
 footer ul li a{display: block;color:#808080;}
 footer a:hover{text-decoration:underline;}
-footer .coping{
-	text-align: center;color: #808080;margin:20px 3px 10px 3px;font-size: 14px;
-}
+footer .coping{text-align: center;color: #808080;margin:20px 3px 10px 3px;font-size: 14px;}
+footer .coping a{color: #808080;text-decoration:underline;}
+
 @media screen and (max-width: 800px) {
 	footer{padding: 30px 5% 10px 5%;}
 	footer ul li{padding: 8px 35px;}

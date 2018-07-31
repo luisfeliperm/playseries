@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 30/07/2018 às 18:33
--- Versão do servidor: 5.7.22-0ubuntu18.04.1
+-- Tempo de geração: 30/07/2018 às 22:25
+-- Versão do servidor: 5.7.23-0ubuntu0.18.04.1
 -- Versão do PHP: 7.2.8-1+ubuntu18.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -38,8 +38,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `pass`, `nivel`) VALUES
-(1, 'luisfelipepoint@gmail.com', '22082000', 2),
-(4, 'luisfelipepoint2@gmail.com', '220820002', 1);
+(1, 'luisfelipepoint@gmail.com', 'admin123', 2),
+(5, 'joaovitorrodrigues988@gmail.com', 'admvitor', 1);
 
 -- --------------------------------------------------------
 
@@ -65,15 +65,7 @@ CREATE TABLE `eps` (
 --
 
 INSERT INTO `eps` (`id`, `identificador`, `temporada`, `ep`, `poster`, `src_1`, `nome_2`, `src_2`, `nome_3`, `src_3`) VALUES
-(4, 'rick-and-morty', 2, 2, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(2, 'rick-and-morty', 1, 1, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(9, 'rick-and-morty', 3, 5, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(3, 'rick-and-morty', 2, 1, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(5, 'rick-and-morty', 3, 1, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(10, 'naruto-filme-o-confronto-ninja-no-pais-da-neve', 1, 1, 'http://4.bp.blogspot.com/-mXRXSmZALlw/UyLgCQqitII/AAAAAAAAgeE/8wROrUD0MgM/s1600/Naruto+Movie+02.jpg', '', 'Ok [dub]', '//ok.ru/videoembed/92579629814', '', ''),
-(6, 'rick-and-morty', 3, 2, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(7, 'rick-and-morty', 3, 3, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', ''),
-(8, 'rick-and-morty', 3, 4, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', '', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', '');
+(1, 'rick-and-morty', 1, 1, 'https://s.aficionados.com.br/imagens/ep1-pilot.jpg', 'https://sv1.cometa.top/RedeCanais/RCServer11/ondemand/RCKANDMRTYT01EP01.mp4', 'YouTube', 'https://www.youtube.com/embed/w46bWxS9IjY', '', '');
 
 -- --------------------------------------------------------
 
@@ -102,16 +94,11 @@ CREATE TABLE `series` (
 --
 
 INSERT INTO `series` (`id`, `identificador`, `nome`, `info`, `sinopse`, `miniatura`, `background`, `tags`, `cat1`, `cat2`, `cat3`, `cat4`, `viwer`) VALUES
-(1, 'stranger-things', 'Stranger Things', 'data=2016 tempo=55min qualy=720p', 'Long Island, 1983. Um garoto de 12 anos desaparece misteriosamente. A família e a polícia procuram respostas, mas acabam se deparando com um experimento secreto do governo. Enquanto isso, os amigos do menino iniciam suas próprias investigações, o que os levam a um extraordinário mistério envolvendo forças sobrenaturais e uma garotinha muito, muito estranha.', 'http://s1.1zoom.me/big0/317/Winona_Ryder_Men_Stranger_Things_Millie_Bobby_524805_682x1024.jpg', 'https://conteudo.imguol.com.br/c/entretenimento/2e/2016/07/26/cena-da-serie-stranger-things-2016-1469567164429_1920x960.jpg', 'stranger things,st,eleven,coisas estranhas', 'terror', 'suspense', 'drama', '', 10),
-(2, 'the-walking-dead', 'The Walking Dead', 'data=2010 tempo=44min qualy=720p', 'Um apocalipse provoca uma infestação de zumbis na cidade de Cynthiana, em Kentucky, nos Estados Unidos, e o oficial de polícia Rick Grimes (Andrew Lincoln) descobre que os mortos&#45;vivos estão se propagando progressivamente. Ele decide unir&#45;se aos homens e mulheres sobreviventes para que tenham mais força para combater o fenômeno que os atinge. O grupo percorre diferentes lugares em busca de soluções para o problema.', 'http://i.imgur.com/bkA6I9H.jpg', 'https://discourse-cdn-sjc1.com/gearbox/uploads/default/863/c19c8b7927e630f7.jpg', 'twd,the walking dead,zumbi,apocalipse,mortos vivos', '0', '0', '0', '0', 0),
-(3, 'rick-and-morty', 'Rick and Morty', 'data=2010 tempo=44min qualy=720p', 'Uma série animada que acompanha as aventuras e os descobrimentos de um super cientista e seu neto não muito brilhante.', 'https://images-na.ssl-images-amazon.com/images/I/61rFf3FHRcL.jpg', 'http://br.web.img1.acsta.net/cx_980_340/seriesposter/11561/poster_large.jpg', 'ram,Rick and Morty,desenho,ficção ciêntifica,viajem no tempo,', 'ficcao', 'comedia', 'desenho', 'aventura', 117),
-(4, 'game-of-thrones', 'Game of Thrones', 'data=2011 tempo=52min qualy=720p', 'Há muito tempo, em um tempo esquecido, uma força destruiu o equilíbrio das estações. Em uma terra onde os verões podem durar vários anos e o inverno toda uma vida, as reivindicações e as forças sobrenaturais correm as portas do Reino dos Sete Reinos. A irmandade da Patrulha da Noite busca proteger o reino de cada criatura que pode vir de lá da Muralha, mas já não tem os recursos necessários para garantir a segurança de todos. Depois de um verão de dez anos, um inverno rigoroso promete chegar com um futuro mais sombrio. Enquanto isso, conspirações e rivalidades correm no jogo político pela disputa do Trono de Ferro, o símbolo do poder absoluto.', 'https://upload.wikimedia.org/wikipedia/en/thumb/9/92/Game_of_Thrones_Season_7.png/220px-Game_of_Thrones_Season_7.png', 'http://br.web.img1.acsta.net/cx_980_340/seriesposter/7157/poster_large.jpg', 'game of thrones, GOT', 'drama', 'aventura', '', '', 0),
-(5, 'prison-break', 'Prison Break', 'data=2005 tempo=42min qualy=720p', 'Após a prisão de Lincoln Burrows (Dominic Purcell), condenado por um crime que não cometeu, o engenheiro Michael Scofield (Wentworth Miller) bola um plano para tirar o irmão da cadeia. Enviado para Fox River ao lado de Lincoln, Michael começa a executar a sua estratégia, mas logo percebe que está no meio de uma perigosa conspiração. Para garantir a liberdade da sua família, ele precisará enganar a Dra. Sara Tancredi (Sarah Wayne Callies) e se associar a criminosos condenados, como Fernando Sucre (Amaury Nolasco), Theodore \'T-Bag\' Bagwell (Robert Knepper) e John Abruzzi (Peter Stormare).', 'https://i.pinimg.com/736x/a2/be/00/a2be0034b1942c5fb4f00d37f99f90fcwentworth-miller-prison-break.jpg', 'https://canecasdosnerds.com.br/blog/wp-content/uploads/2016/11/prison-break.jpg', 'PB, prison break,fox river,melhor serie,wentworth miller,em busca da verdade,prisao,cadeia', '', '', '', '', 0),
-(16, 'xxxxx', 'xxx', 'data=2018 tempo=40min qualy=720p', 'xxx', 'http://playseries.com:8080/admin/?pag=serie', 'http://playseries.com:8080/admin/?pag=serie', '', '', '', '', '', 3),
-(12, 'testes', 'ftess', 'data=2018 tempo=40min qualy=720p', 'sdfsd', 'http://playseries.com:8080/admin/?edit=prison-break', 'http://playseries.com:8080/admin/?edit=prison-break', 'fds', '', '', '', '', 1),
-(13, 'naruto-filme-o-confronto-ninja-no-pais-da-neve', 'Naruto Filme: O Confronto Ninja no Pais da Neve', 'data=2018 tempo=40min qualy=720p', 'Naruto é um ninja que tem por missão proteger Yukie Fujikaze, estrela de cinema que parte para filmar num lugar conhecido como Terra da Neve. Diante do plano sórdido dos ninjas da neve, Yukie deverá tomar difícil decisão, confrontando seu passado.', 'http://4.bp.blogspot.com/-mXRXSmZALlw/UyLgCQqitII/AAAAAAAAgeE/8wROrUD0MgM/s1600/Naruto+Movie+02.jpg', 'https://http2.mlstatic.com/dvd-naruto-o-filme-confronto-ninja-no-pais-da-neve-lacrado-D_NQ_NP_479511-MLB20576698561_022016-F.jpg', 'naruto,filme,o confronto no pais da neve,dublado,', 'anime', 'aventura', 'acao', '', 37),
-(14, 'testes2', 'teste 2', 'data=2018 tempo=40min qualy=720p', 'fdsfds', 'http://playseries.com:8080/admin/?edit=prison-break', 'http://playseries.com:8080/admin/?edit=prison-break', '', '', '', '', '', 2),
-(10, 'prison-break1', 'Prison Break1', 'data=2005 tempo=42min qualy=720p', '1Após a prisão de Lincoln Burrows (Dominic Purcell), condenado por um crime que não cometeu, o engenheiro Michael Scofield (Wentworth Miller) bola um plano para tirar o irmão da cadeia. Enviado para Fox River ao lado de Lincoln, Michael começa a executar a sua estratégia, mas logo percebe que está no meio de uma perigosa conspiração. Para garantir a liberdade da sua família, ele precisará enganar a Dra. Sara Tancredi (Sarah Wayne Callies) e se associar a criminosos condenados, como Fernando Sucre (Amaury Nolasco), Theodore &#92;&#39;T&#45;Bag&#92;&#39; Bagwell (Robert Knepper) e John Abruzzi (Peter Stormare).', 'https://canecasdosnerds.com.br/blog/wp-content/uploads/2016/11/prison-break.jpg', 'https://canecasdosnerds.com.br/blog/wp-content/uploads/2016/11/prison-break.jpg', 'PB, prison break,fox river,melhor serie,wentworth miller,em busca da verdade,prisao,cadeia', '0', '0', '0', '0', 1);
+(2, 'prison-break', 'Prison Break', 'data=2005 tempo=42min qualy=720p', 'Após a prisão de Lincoln Burrows (Dominic Purcell), condenado por um crime que não cometeu, o engenheiro Michael Scofield (Wentworth Miller) bola um plano para tirar o irmão da cadeia. Enviado para Fox River ao lado de Lincoln, Michael começa a executar a sua estratégia, mas logo percebe que está no meio de uma perigosa conspiração. Para garantir a liberdade da sua família, ele precisará enganar a Dra. Sara Tancredi (Sarah Wayne Callies) e se associar a criminosos condenados, como Fernando Sucre (Amaury Nolasco), Theodore \'T-Bag\' Bagwell (Robert Knepper) e John Abruzzi (Peter Stormare).', 'https://i.imgur.com/v3WyFbA.jpg', 'https://canecasdosnerds.com.br/blog/wp-content/uploads/2016/11/prison-break.jpg', 'PB, prison break,fox river,melhor serie,wentworth miller,em busca da verdade,prisao,cadeia', 'drama', 'suspense', 'acao', '', 4),
+(3, 'stranger-things', 'Stranger Things', 'data=2016 tempo=55min qualy=720p', 'Long Island, 1983. Um garoto de 12 anos desaparece misteriosamente. A família e a polícia procuram respostas, mas acabam se deparando com um experimento secreto do governo. Enquanto isso, os amigos do menino iniciam suas próprias investigações, o que os levam a um extraordinário mistério envolvendo forças sobrenaturais e uma garotinha muito, muito estranha.', 'https://i.imgur.com/vg7d6t1.jpg', 'https://conteudo.imguol.com.br/c/entretenimento/2e/2016/07/26/cena-da-serie-stranger-things-2016-1469567164429_1920x960.jpg', 'stranger things,st,eleven,coisas estranhas', 'drama', 'suspense', '', '', 1),
+(4, 'the-walking-dead', 'The Walking Dead', 'data=2010 tempo=44min qualy=720p', 'Um apocalipse provoca uma infestação de zumbis na cidade de Cynthiana, em Kentucky, nos Estados Unidos, e o oficial de polícia Rick Grimes (Andrew Lincoln) descobre que os mortos-vivos estão se propagando progressivamente. Ele decide unir-se aos homens e mulheres sobreviventes para que tenham mais força para combater o fenômeno que os atinge. O grupo percorre diferentes lugares em busca de soluções para o problema.', 'http://i.imgur.com/bkA6I9H.jpg', 'https://discourse-cdn-sjc1.com/gearbox/uploads/default/863/c19c8b7927e630f7.jpg', 'twd,the walking dead,zumbi,apocalipse,mortos vivos', 'terror', 'suspense', 'drama', '', 1),
+(5, 'game-of-thrones', 'Game of Thrones', 'data=2011 tempo=52min qualy=720p', 'Há muito tempo, em um tempo esquecido, uma força destruiu o equilíbrio das estações. Em uma terra onde os verões podem durar vários anos e o inverno toda uma vida, as reivindicações e as forças sobrenaturais correm as portas do Reino dos Sete Reinos. A irmandade da Patrulha da Noite busca proteger o reino de cada criatura que pode vir de lá da Muralha, mas já não tem os recursos necessários para garantir a segurança de todos. Depois de um verão de dez anos, um inverno rigoroso promete chegar com um futuro mais sombrio. Enquanto isso, conspirações e rivalidades correm no jogo político pela disputa do Trono de Ferro, o símbolo do poder absoluto.', 'https://i.imgur.com/z0uvObC.png', 'http://br.web.img1.acsta.net/cx_980_340/seriesposter/7157/poster_large.jpg', 'game of thrones,GOT', 'drama', '', '', '', 2),
+(6, 'rick-and-morty', 'Rick And Morty', 'data=2014 tempo=22min qualy=720p', 'Uma série animada que acompanha as aventuras e os descobrimentos de um super cientista e seu neto não muito brilhante.', 'https://i.imgur.com/EULZfNe.jpg', 'http://br.web.img1.acsta.net/cx_980_340/seriesposter/11561/poster_large.jpg', 'rick and morty,RAM,viagem no tempo,desenho', 'ficcao', 'desenho', 'aventura', 'comedia', 13);
 
 -- --------------------------------------------------------
 
@@ -167,17 +154,17 @@ ALTER TABLE `views`
 -- AUTO_INCREMENT de tabela `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de tabela `eps`
 --
 ALTER TABLE `eps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de tabela `series`
 --
 ALTER TABLE `series`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de tabela `views`
 --

@@ -1,10 +1,10 @@
 <div class="container-cat">
 	<div class="cat-conteudo width-90">
-		<h1>Resultados para: <?php echo charsEspe($_GET['key']); ?></h1>
+		<h1>Resultados para: <?php echo charsEspe(@$_GET['key']); ?></h1>
 		<div class="list-films">
 			<?php
 			$key = @anti_injection(charsEspe($_GET['key']));
-			$total_exib = "20"; // número de registros por página
+			$total_exib = "15"; // número de registros por página
 			$pagina = @anti_injection(intval($_GET['p']));
 			if (!isset($pagina) || $pagina < 1) {
 				$pag_n = "1";
@@ -13,8 +13,11 @@
 			}
 			$inicio = $pag_n - 1;
 			$inicio = $inicio * $total_exib;
-			$ler = ler_db("series", "WHERE (nome LIKE '%".$key."%' OR tags LIKE '%".$key."%')  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
 
+			$ler = ler_db("series", "WHERE (nome LIKE '%".$key."%' OR tags LIKE '%".$key."%')  ORDER BY id DESC LIMIT ".$inicio.",".$total_exib.";");
+			if (empty($key)) {
+				$ler = ler_db("series", "  ORDER BY id ASC LIMIT ".$inicio.",".$total_exib.";");
+			}
 			if (!empty($ler)) {
 				foreach ($ler as $lers) { 
 					$lers['info'] = str_replace(' ','&',$lers['info']);
@@ -29,7 +32,7 @@
 								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
 								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
 									<?php 
-									echo "<span class='capitalize'>".$lers['cat1']."</span> "."<span class='capitalize'>".$lers['cat2']."</span> "."<span class='capitalize'>".$lers['cat3']."</span> "."<span class='capitalize'>".$lers['cat4']."</span> ";
+									echo "<span class='capitalize'>".Charscategoria($lers['cat1'])."</span> "."<span class='capitalize'>".Charscategoria($lers['cat2'])."</span> "."<span class='capitalize'>".Charscategoria($lers['cat3'])."</span> "."<span class='capitalize'>".$lers['cat4']."</span> ";
 									?>
 								</div>							
 								<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>

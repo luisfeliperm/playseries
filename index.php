@@ -21,13 +21,16 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 			foreach ($seo_ler_serie as $seo_array) {
 			 	$seo_serie = array('nome' => $seo_array['nome'], 'info' => $seo_array['info'],'background' =>  $seo_array['background'],'tags' => $seo_array['tags'] );
 			}
+			$seo_serie['info'] = str_replace(' ','&',$seo_serie['info']);
+			$seo_serie['info'] = str_replace('_',' ',$seo_serie['info']);
+			parse_str($seo_serie['info'], $info_seo);
 			if (isset($_GET['s']) && !empty($_GET['s']) && $_GET['s'] > 0 && isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 				$season = anti_injection(intval($_GET['s']));
 				$ep = anti_injection(intval($_GET['e']));
 				$query = "SELECT * FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".$ep."' ";
 				if (mysqli_num_rows(executa_query($query))) {
 					// O EP EXISTE
-					$titulo_meta = $seo_serie['nome']." ".$season." Temporada Episódio ".$ep;
+					$titulo_meta = $seo_serie['nome']." ".$season." Temporada Episódio ".$ep." dublado ".$info_seo['qualy'];
 					?>
 					<title>Assistir <?php echo $titulo_meta?></title>
 					<meta property="og:title" content="Assista <?php echo $titulo_meta;?>" />
@@ -47,7 +50,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 				}
 			}else{// Apenas info da serie, não do ep
 				?>
-				<title>Assistir <?php echo $seo_serie['nome'];?></title>
+				<title>Assistir <?php echo $seo_serie['nome'];?> dublado</title>
 				<meta property="og:title" content="Assista <?php echo $seo_serie['nome'];?>" />
 				<meta name="twitter:title" content="Assista <?php echo $seo_serie['nome']; ?>">
 				<meta name="description" content="Assistir <?php echo $seo_serie['nome'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
@@ -78,7 +81,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 		<?php
 	}
 	?>
-
+	<link rel="icon" type="image/png" href="/img/favicon.png" />
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -176,6 +179,15 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 	</div>
 	<!-- Inclui PÁGINAS -->
 	<?php
+	function Charscategoria($char){
+	$char = str_replace("mais-visitados","Mais Vistos",$char);
+	$char = str_replace("ficcao","Ficção",$char);
+	$char = str_replace("acao","Ação",$char);
+	$char = str_replace("documentario","Documentário",$char);
+	$char = str_replace("/","&#47;",$char);
+	$char = str_replace("'","&#39;",$char);
+	return $char;
+	}
 	$pagina = @$_GET['pi'];
 	if (isset($pagina)) {
 		$file_pagina = $_SERVER['DOCUMENT_ROOT']."/paginas/".$pagina;
@@ -208,7 +220,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 		<li><a href="#">Players</a></li>
 	</ul>
 	<div class="coping">
-		PlaySeries 2018 - Criado por <i>luisfeliperm</i>
+		PlaySeries 2018 - Criado por <i><a target="_blank" title="Criador" href="https://www.facebook.com/luiss.felipe.16">luisfeliperm</a></i>
 	</div>
 </footer>
 </body>
