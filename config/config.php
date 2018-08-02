@@ -2,7 +2,7 @@
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('America/Sao_Paulo');
 $ip = $_SERVER['REMOTE_ADDR'];
-$dataLocal = date('d-m-Y H:i:s');
+$dataLocal = date('c');
 /** Funções **/
 function anti_injection($sql){$sql = preg_replace('/(index.php|config|.dat|.js|.css|from|select|insert|delete|where|drop table|show tables|#|\*|--|\\\\)/','',$sql);$sql = trim($sql);$sql = strip_tags($sql);$sql = addslashes($sql);return $sql;}
 function charsEspe($str){
@@ -23,6 +23,7 @@ function charsEspe($str){
 function fecha_conexao($conn){mysqli_close($conn) or die (mysqli_error());}
 function connect_db(){
 	$conn = mysqli_connect('localhost', 'luisfeliperm', '@Naruto123', 'playseries');
+	#$conn = mysqli_connect('localhost', 'id3901780_root', 'naruto123', 'id3901780_playseries');
 	mysqli_set_charset($conn, "utf8") or die (mysqli_error($conn));
 	if (mysqli_connect_errno()) {
 		$conn = "Erro no banco de dados!";exit();
@@ -50,7 +51,6 @@ function ler_db($tabela, $params = null, $fields = '*'){
 $admin = 0;
 // var SITE
 $url_serie = @anti_injection($_GET['url_serie']);
-session_start();
 // Verifica a conta de admin
 if (isset($_SESSION['email'],$_SESSION['pass']) && !empty($_SESSION['email']) && !empty($_SESSION['pass'])) {
 	$query = "SELECT * FROM admin WHERE email = '".$_SESSION['email']."' AND pass = '".$_SESSION['pass']."' AND nivel > 0";

@@ -12,12 +12,12 @@ $seo_ler_serie = ler_db("series", " ORDER BY id ASC");
 	if (!empty($seo_ler_serie)) { // O link existe
 		foreach ($seo_ler_serie as $seo_array) {
 		 	$array = array('id' => $seo_array['identificador'],'data' => $seo_array['data']);
-		 	$link = "http://plyseries.tk/watch/serie/".$array['id']."/";
-		 	$data = date('Y-m-d\TH:i:s',  strtotime($array['data']));
+		 	$link = "http://www.playseries-online.tk/watch/serie/".$array['id']."/";
+		 	$data = $array['data'];
 		 	echo "\t<url>\n";
 			echo "\t\t<loc>" . htmlentities($link) . "</loc>\n";
 			echo "\t\t<lastmod>{$data}</lastmod>\n";
-			echo "\t\t<changefreq>week</changefreq>\n";
+			echo "\t\t<changefreq>weekly</changefreq>\n";
 			echo "\t\t<priority>0.9</priority>\n";
 			echo "\t</url>\n";
 		}

@@ -4,69 +4,68 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 <url>
-  <loc>http://playseries.tk/</loc>
+  <loc>http://www.playseries-online.tk/</loc>
   <changefreq>weekly</changefreq>
   <priority>1</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/mais-visitados/</loc>
+  <loc>http://www.playseries-online.tk/categoria/mais-visitados/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/drama/</loc>
+  <loc>http://www.playseries-online.tk/categoria/drama/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/acao/</loc>
+  <loc>http://www.playseries-online.tk/categoria/acao/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/ficcao/</loc>
+  <loc>http://www.playseries-online.tk/categoria/ficcao/</loc>
   <changefreq>weekly</changefreq>
-  <priority>06</priority>
+  <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/anime/</loc>
+  <loc>http://www.playseries-online.tk/categoria/anime/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.7</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/desenho/</loc>
+  <loc>http://www.playseries-online.tk/categoria/desenho/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/suspense/</loc>
+  <loc>http://www.playseries-online.tk/categoria/suspense/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/romance/</loc>
+  <loc>http://www.playseries-online.tk/categoria/romance/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/aventura/</loc>
+  <loc>http://www.playseries-online.tk/categoria/aventura/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/comedia/</loc>
+  <loc>http://www.playseries-online.tk/categoria/comedia/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.6</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/documentario/</loc>
+  <loc>http://www.playseries-online.tk/categoria/documentario/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.4</priority>
 </url>
 <url>
-  <loc>http://playseries.tk/categoria/busca/</loc>
+  <loc>http://www.playseries-online.tk/categoria/busca/</loc>
   <changefreq>weekly</changefreq>
   <priority>0.7</priority>
 </url>

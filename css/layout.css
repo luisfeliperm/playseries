@@ -1,4 +1,6 @@
 /* ESTILIZAÇÕES GLOBAIS */
+
+a[title*="Hosted on free web hosting 000webhost.com"]{display:none !important;}
 .left{float:left;}.right{float:right;}
 .oculto{display: none !important;}
 .capitalize{text-transform: capitalize;}

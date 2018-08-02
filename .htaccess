@@ -10,4 +10,5 @@ Options -Indexes
   RewriteRule ^sitemap([0-9]+).xml /sitemap$1.php [L]
   
 </IfModule>
+php_flag session.auto_start on
 ErrorDocument 404 /paginas/404.html

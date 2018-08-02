@@ -1,2 +1,6 @@
 ??Adicionar nome ao ep
 ??Autor do post
+
+
+Maximo 100 eps e 100 series p/sitemap
+	alertar no painel adm

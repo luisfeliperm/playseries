@@ -49,7 +49,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 			<select class="w_input" id="ep_select">
 				<?php
 				// Lista eps
-				$ler_temp = ler_db("eps", "WHERE identificador = '".$url_serie."' ORDER BY temporada ASC ");
+				$ler_temp = ler_db("eps", "WHERE identificador = '".$url_serie."' ORDER BY ep ASC ");
 				if (empty($ler_temp)) {
 					echo "<option>00</option>";
 				}else{
@@ -140,7 +140,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 		}else{
 			?>
 			<div class="video">
-				<video class="vjs-tech vsc-initialized" preload="none" poster="<?php echo @$list_play['poster']; ?>" controls="" >
+				<video preload="true" poster="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" controls style="background:red url('<?php echo @$list_play['poster']; ?>') 50% 50% / cover no-repeat;object-fit:cover;">
 					<source src="<?php echo @$list_play['src_1']; ?>" type="video/mp4">
 				</video>
 			</div>
@@ -174,7 +174,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 			  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&autoLogAppEvents=1&version=v3.1&appId=1459113217499136';
 			  fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));</script>
-			<div class="fb-comments" data-href="<?php echo "http://playseries.tk/watch/serie/".$url_serie."/?s=".$season."&e=".$ep;?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+			<div class="fb-comments" data-href="<?php echo "http://www.playseries-online.tk/watch/serie/".$url_serie."/?s=".$season."&e=".$ep;?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 		</div>
 	</div>
 </div>
@@ -239,9 +239,12 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 	.assistir .players_alt a.bug{opacity: 0.3;border:1px solid #fff;padding:5px;font-size: 14px;float: left;}
 	.assistir .players_alt a:hover{opacity: 0.5;}
 	.assistir .players_alt a.active{opacity: 0.1;cursor: default;}
-	.assistir .video,.assistir .diframePlay{margin: 10px auto;display: block;width: 90%;}
-	.assistir .video video{width: 100%;;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);}
-	.assistir .diframePlay iframe.iframePlay{width: 100%;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);border:1px solid #211b1b;}
+	.assistir .video,.assistir .diframePlay{margin: 10px auto;display: block;width: 90%;background: #0c0101;}
+	.assistir .video video{width: 100%;margin:0 auto;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);
+		
+		max-height: 480px;
+	}
+	.assistir .diframePlay iframe.iframePlay{width: 100%;margin:0;box-shadow: 0px 0px 2px rgba(0,0,0,0.7);border:1px solid #211b1b;object-fit:cover;}
 	@media screen and (min-width: 670px) {
 		.assistir .diframePlay iframe.iframePlay{height: 400px;}
 	}

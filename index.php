@@ -2,6 +2,15 @@
 <?php
 include_once($_SERVER['DOCUMENT_ROOT']."/config/config.php");
 include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
+function Charscategoria($char){
+	$char = str_replace("mais-visitados","Mais Vistos",$char);
+	$char = str_replace("ficcao","Ficção",$char);
+	$char = str_replace("acao","Ação",$char);
+	$char = str_replace("documentario","Documentário",$char);
+	$char = str_replace("/","&#47;",$char);
+	$char = str_replace("'","&#39;",$char);
+	return $char;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +19,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta property="og:locale" content="pt_BR">
 	<meta property="og:type" content="website"/>
-	<meta property="og:site_name" content="Xploitvid">
+	<meta property="og:site_name" content="PLaySeries">
 	<meta http-equiv="content-language" content="pt-br">
 	<?php 
 	/**** SEO **/
@@ -52,10 +61,10 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 					if (!empty($seo_ep)) {
 						foreach ($seo_ep as $play_array) {
 							$list_play = array('data' => $play_array['data']);
-							echo "<meta name='date' content='". date('Y-m-d\TH:i:s',  strtotime($list_play['data']))."'>";
+							echo "<meta name='date' content='".$list_play['data']."'>";
 						}
 					}else{
-						?><meta name='date' content="<?php echo date('Y-m-d\TH:i:s',  strtotime($dados_ep['data']));?>"><?php 
+						?><meta name='date' content="<?php echo $dados_ep['data'];?>"><?php 
 					}
 				}else{// O EP NÃO EXISTE
 					echo "<title>Episódio não encontrado</title>";
@@ -79,19 +88,34 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 			}
 		}else{$epNExiste=TRUE; /* Link não existe */ echo "<title>Não encontrado</title>";}
 	}else{ // padrão
-		?>
-		<title>PlaySeries</title>
-		<meta property="og:title" content="PlaySeries" />
-		<meta name="twitter:title" content="PlaySeries">
-		<meta name="description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
-		<meta property="og:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. "/>
-		<meta name="twitter:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. ">
-		<meta property="og:image" content="/img/logo.png"/>
-		<meta name="twitter:image" content="/img/logo.png">
-		<meta name="Keywords" content="series,assistir,de graça,hd,720p,dublado,pirata,sem anuncios,site de filmes,online,playseries">
-		<meta property="article:section" content="Home"/>
-		<meta property="og:url" content="http://<?php echo $_SERVER['SERVER_NAME'] ?>/ ">
+		if (isset($_GET['pi'],$_GET['cat']) && @$_GET['pi'] == "categoria.php") {
+			$categoria = Charscategoria($_GET['cat']);?>
+				<title>PlaySeries Categoria: <?php echo $categoria;?></title>
+				<meta property="og:title" content="PlaySeries Categoria: <?php echo $categoria;?>" />
+				<meta name="twitter:title" content="PlaySeries Categoria: <?php echo $categoria;?>">
+				<meta name="description" content="Series de <?php echo $categoria;?> HD dublado.">
+				<meta property="og:description" content="Series de <?php echo $categoria;?> HD dublado."/>
+				<meta name="twitter:description" content="Series de <?php echo $categoria;?> HD dublado.">
+				<meta property="og:image" content="/img/logo.png"/>
+				<meta name="twitter:image" content="/img/logo.png">
+				<meta name="Keywords" content="<?php echo $_GET['cat'];?>,series,assistir,de graça,hd,720p,dublado,pirata,sem anuncios,site de filmes,online,playseries">
+				<meta property="article:section" content="Categorias"/>
+			<?php
+		}else{ ?>
+			<title>PlaySeries</title>
+			<meta property="og:title" content="PlaySeries" />
+			<meta name="twitter:title" content="PlaySeries">
+			<meta name="description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+			<meta property="og:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. "/>
+			<meta name="twitter:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. ">
+			<meta property="og:image" content="/img/logo.png"/>
+			<meta name="twitter:image" content="/img/logo.png">
+			<meta name="Keywords" content="series,assistir,de graça,hd,720p,dublado,pirata,sem anuncios,site de filmes,online,playseries">
+			<meta property="article:section" content="Home"/>
+			<meta property="og:url" content="http://<?php echo $_SERVER['SERVER_NAME'] ?>/ ">
 		<?php
+		}
+		
 	}
 	?>
 	<link rel="icon" type="image/png" href="/img/favicon.png" />
@@ -152,30 +176,30 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 	<ul>
 		<li>Top 6 series</li>
 		<li><a href="/watch/serie/prison-break/">Prison Break</a></li>
-		<li><a href="/watch/serie/sobrenatural/">Sobrenatural</a></li>
+		<li><a href="#">Sobrenatural</a></li>
 		<li><a href="/watch/serie/the-walking-dead/">The Walking Dead</a></li>
-		<li><a href="/watch/serie/Breaking-bad/">Breaking Bad</a></li>
+		<li><a href="#">Breaking Bad</a></li>
 		<li><a href="/watch/serie/game-of-thrones">Game Of Thrones</a></li>
 		<li><a href="/watch/serie/stranger-things/">Stranger Things</a></li>
 	</ul>
 	<ul>
 		<li>Recomendados</li>
-		<li><a href="/watch/serie/la-casa-de-papel/">Lá Casa de Papel</a></li>
-		<li><a href="/watch/serie/naruto/">Naruto</a></li>
-		<li><a href="/watch/serie/the-flash/">The Flash</a></li>
-		<li><a href="/watch/serie/arrow/">Arrow</a></li>
-		<li><a href="/watch/serie/riverdale/">Riverdale</a></li>
-		<li><a href="/watch/serie/lucifer/">Lúcifer</a></li>
-		<li><a href="/watch/serie/13-reasons-why/">13 Reasons Why</a></li>
-		<li><a href="/watch/serie/naruto-shippuden/">Naruto Shippuden</a></li>
-		<li><a href="/watch/serie/3-por-cento/">3%</a></li>
-		<li><a href="/watch/serie/death-note/">Death Note</a></li>
-		<li><a href="/watch/serie/the-100/">The100</a></li>
-		<li><a href="/watch/serie/the-originals/">The Originals</a></li>
-		<li><a href="/watch/serie/o-atirador/">O Atirador</a></li>
-		<li><a href="/watch/serie/the-vampire-diaries/">The Vampire Diaries</a></li>
-		<li><a href="/watch/serie/american-horror-story/">American Horror Story</a></li>
-		<li><a href="/watch/serie/os-simpsons/">Os simpsons</a></li>
+		<li><a href="#">Lá Casa de Papel</a></li>
+		<li><a href="#">Naruto</a></li>
+		<li><a href="#">The Flash</a></li>
+		<li><a href="#">Arrow</a></li>
+		<li><a href="#">Riverdale</a></li>
+		<li><a href="#">Lúcifer</a></li>
+		<li><a href="#">13 Reasons Why</a></li>
+		<li><a href="#">Naruto Shippuden</a></li>
+		<li><a href="/#">3%</a></li>
+		<li><a href="#">Death Note</a></li>
+		<li><a href="#">The100</a></li>
+		<li><a href="/#">The Originals</a></li>
+		<li><a href="#">O Atirador</a></li>
+		<li><a href="#">The Vampire Diaries</a></li>
+		<li><a href="#">American Horror Story</a></li>
+		<li><a href="#">Os simpsons</a></li>
 	</ul>
 </aside>
 <section class="conteudo">
@@ -192,15 +216,6 @@ include_once($_SERVER['DOCUMENT_ROOT']."/config/visualizacoes.php");
 	</div>
 	<!-- Inclui PÁGINAS -->
 	<?php
-	function Charscategoria($char){
-	$char = str_replace("mais-visitados","Mais Vistos",$char);
-	$char = str_replace("ficcao","Ficção",$char);
-	$char = str_replace("acao","Ação",$char);
-	$char = str_replace("documentario","Documentário",$char);
-	$char = str_replace("/","&#47;",$char);
-	$char = str_replace("'","&#39;",$char);
-	return $char;
-	}
 	$pagina = @$_GET['pi'];
 	if (isset($pagina)) {
 		$file_pagina = $_SERVER['DOCUMENT_ROOT']."/paginas/".$pagina;
