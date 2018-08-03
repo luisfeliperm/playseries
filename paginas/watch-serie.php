@@ -18,9 +18,9 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 	$ep = 1;
 }
 ?>
-<div class="watch_section width-90">
+<main class="watch_section width-90">
 	<div class="thumb">
-		<div class="w_nome"><?php echo $dados_ep['nome']; ?></div>
+		<div class="w_nome"><h1><?php echo $dados_ep['nome']; ?></h1></div>
 		<span class="qualy"><?php echo $info_ep['qualy'];?></span>
 	</div>
 	<div class="assistir">
@@ -140,7 +140,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 		}else{
 			?>
 			<div class="video">
-				<video preload="true" poster="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" controls style="background:red url('<?php echo @$list_play['poster']; ?>') 50% 50% / cover no-repeat;object-fit:cover;">
+				<video preload="true" poster="https://upload.wikimedia.org/wikipedia/commons/c/ca/1x1.png" controls style="background:#101010 url('<?php echo @$list_play['poster']; ?>') 50% 50% / cover no-repeat;object-fit:cover;">
 					<source src="<?php echo @$list_play['src_1']; ?>" type="video/mp4">
 				</video>
 			</div>
@@ -177,7 +177,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 			<div class="fb-comments" data-href="<?php echo "http://www.playseries-online.tk/watch/serie/".$url_serie."/?s=".$season."&e=".$ep;?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 		</div>
 	</div>
-</div>
+</main>
 <div class="report" id="report">
 	<form>
 		<a href="javascript:void(0)" onclick="display_edit('report', 'none');"><i class="fas fa-times"></i></a>
@@ -199,15 +199,13 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 	    border-bottom: solid 1px #000;
 	}
 	.w_nome{
-		font-size: 30px;
-	    color: #a97272;    background: rgba(27, 27, 27, 0.7);
-	    font-weight: 300;
+	    color: #a97272;background: rgba(27, 27, 27, 0.7);
 	    text-shadow: 0px 1px 5px #000;
-	    padding: 15px 2%;
-	    position: absolute;top: 0;left: 0;
+	    padding: 15px 2%;position: absolute;top: 0;left: 0;
 	    text-overflow: ellipsis;white-space: nowrap;overflow: hidden;
 	    width: 100%;z-index: 1;
 	}
+	.w_nome h1{margin:0;font-size: 30px;font-weight: 300;}
 	.thumb span.qualy {
 	    position: absolute;bottom: 0;right: 0;
 	    background-color: rgba(0, 0, 0, 0.5);

@@ -134,6 +134,7 @@ if (isset($_POST['add_serie'])) {
 if (isset($_POST['add_ep'])){
 	$post = array(
 		'id'        => @anti_injection($_POST['id']),
+		'idReal'    => @anti_injection($_POST['idReal']),
 		'season'    => @anti_injection($_POST['season']),
 		'ep'        => @anti_injection($_POST['ep']),
 		'poster'    => @anti_injection($_POST['poster']),
@@ -182,7 +183,7 @@ if (isset($_POST['add_ep'])){
 				nome_3 = '".$post['name_src3']."', 
 				src_3  = '".$post['src3']."',
 				data   = '".$dataLocal."' 
-				WHERE identificador = '".$post['id']."' ";
+				WHERE id = '".$post['idReal']."' ";
 			if (executa_query($query) == 1) {
 				echo "SUCESSO! Atualizado";exit();
 			}

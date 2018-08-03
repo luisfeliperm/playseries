@@ -13,16 +13,14 @@ function Charscategoria($char){
 }
 ?>
 <!DOCTYPE html>
-<html>
-<head lang="pt-br">
-	<!-- SEO -->
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta property="og:locale" content="pt_BR">
 	<meta property="og:type" content="website"/>
-	<meta property="og:site_name" content="PLaySeries">
-	<meta http-equiv="content-language" content="pt-br">
+	<meta property="og:site_name" content="PlaySeries">
 	<?php 
-	/**** SEO **/
 	if (!empty($url_serie)) {
 		if (isset($_GET['player'])) {echo "<meta name='robots' content='noindex,follow'>";}
 		$seo_ler_serie = ler_db("series", "WHERE identificador = '".$url_serie."' ");
@@ -44,14 +42,12 @@ function Charscategoria($char){
 					$titulo_meta = $dados_ep['nome']." ".$season." Temporada Episódio ".$ep." dublado ".$info_ep['qualy'];
 					?>
 					<title>Assistir <?php echo $titulo_meta?></title>
-					<meta property="og:title" content="Assista <?php echo $titulo_meta;?>" />
-					<meta name="twitter:title" content="Assista <?php echo $titulo_meta; ?>">
+					<meta property="og:title" content="Assistir <?php echo $titulo_meta;?>" />
+					<meta name="twitter:title" content="Assistir <?php echo $titulo_meta; ?>">
 					<meta name="description" content="Assistir <?php echo $titulo_meta;?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
 					<meta property="og:description" content="Assistir <?php echo $titulo_meta;?>"/>
 					<meta name="twitter:description" content="Assistir <?php echo $titulo_meta;?>">
-					<meta property="og:image" content="<?php echo $dados_ep['background']; ?>"/>
-					<meta name="twitter:image" content="<?php echo $dados_ep['background']; ?>">
-					<meta name="Keywords" content="<?php echo $dados_ep['tags'];?>,hd,dublado,assistir,sem anuncios,playseries,temporada,ep">
+					<meta name="Keywords" content="<?php echo $dados_ep['tags'];?>,hd,dublado,">
 					<meta property="article:section" content="<?php echo $dados_ep['nome'];?>"/>
 					<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/?s=".$season."&e=".$ep; ?>
 					<meta property="og:url" content="<?php echo $meta_url;?>">
@@ -62,9 +58,15 @@ function Charscategoria($char){
 						foreach ($seo_ep as $play_array) {
 							$list_play = array('data' => $play_array['data']);
 							echo "<meta name='date' content='".$list_play['data']."'>";
+							echo '<meta property="og:image" content="'.$play_array['poster'].'"/>';
+							echo '<meta name="twitter:image" content="'.$play_array['poster'].'"/>';
 						}
 					}else{
-						?><meta name='date' content="<?php echo $dados_ep['data'];?>"><?php 
+						?>
+						<meta name='date' content="<?php echo $dados_ep['data'];?>">
+						<meta property="og:image" content="<?php echo $dados_ep['background']; ?>"/>
+						<meta name="twitter:image" content="<?php echo $dados_ep['background']; ?>">
+						<?php 
 					}
 				}else{// O EP NÃO EXISTE
 					echo "<title>Episódio não encontrado</title>";
@@ -72,8 +74,8 @@ function Charscategoria($char){
 			}else{// Apenas info da serie, não do ep
 				?>
 				<title>Assistir <?php echo $dados_ep['nome'];?> dublado</title>
-				<meta property="og:title" content="Assista <?php echo $dados_ep['nome'];?>" />
-				<meta name="twitter:title" content="Assista <?php echo $dados_ep['nome']; ?>">
+				<meta property="og:title" content="Assistir <?php echo $dados_ep['nome'];?>" />
+				<meta name="twitter:title" content="Assistir <?php echo $dados_ep['nome']; ?>">
 				<meta name="description" content="Assistir <?php echo $dados_ep['nome'];?> online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
 				<meta property="og:description" content="Assistir <?php echo $dados_ep['nome'];?>"/>
 				<meta name="twitter:description" content="Assistir <?php echo $dados_ep['nome'];?>">
@@ -83,7 +85,7 @@ function Charscategoria($char){
 				<meta property="article:section" content="<?php echo $dados_ep['nome'];?>"/>
 				<?php $meta_url =  "http://".$_SERVER['SERVER_NAME']."/".$url_serie."/";?>
 				<meta property="og:url" content="<?php echo $meta_url;?>">
-				<meta name='date' content="<?php echo date('Y-m-d\TH:i:s',  strtotime($dados_ep['data']));?>">
+				<meta name='date' content="<?php echo $dados_ep['data'];?>">
 				<?php
 			}
 		}else{$epNExiste=TRUE; /* Link não existe */ echo "<title>Não encontrado</title>";}
@@ -105,7 +107,7 @@ function Charscategoria($char){
 			<title>PlaySeries</title>
 			<meta property="og:title" content="PlaySeries" />
 			<meta name="twitter:title" content="PlaySeries">
-			<meta name="description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios.">
+			<meta name="description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. Assista series livre de anuncios. Lançamentos 2018, novos episódios.">
 			<meta property="og:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. "/>
 			<meta name="twitter:description" content="Assistir series e animes online dublado hd 720p de graça, sem anuncios. ">
 			<meta property="og:image" content="/img/logo.png"/>
@@ -119,7 +121,6 @@ function Charscategoria($char){
 	}
 	?>
 	<link rel="icon" type="image/png" href="/img/favicon.png" />
-	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="/css/layout.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="/js/site.js"></script>
@@ -128,7 +129,7 @@ function Charscategoria($char){
 <body>
 <header>
 	<div class="title_site">
-		<figure><img src="/img/logo.png"></figure>
+		<figure><img alt="PlaySeries Logo" src="/img/logo.png"></figure>
 	</div>
 	<div class="menu">
 		<div class="show_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'block');document.body.style.overflow = 'hidden';"><i class="fas fa-bars"></i></a></div>
@@ -152,7 +153,7 @@ function Charscategoria($char){
 			<div class="menu_user">
 				<form class="busc_desk" method="get" action="/busca/">
 					<a href="#" style="padding-left: 2px;padding-right: 2px;"><i class="fas fa-search"></i></a>
-					<input name="key" type="search" name="" placeholder="Pesquisar">
+					<input name="key" type="search" placeholder="Pesquisar">
 				</form>
 				<a href="javascript:void(0)" class="btn_show_search" onclick="display_edit('fundo_preto', 'block');"><i class="fas fa-search"></i></a>
 				<span class="teste" style="color:#fff;padding: 0px 15px;font-size: 17px;">PlaySeries</span>
@@ -171,7 +172,7 @@ function Charscategoria($char){
 	</div>
 </header>
 
-<main>
+<div class="meio">
 <aside>
 	<ul>
 		<li>Top 6 series</li>
@@ -229,7 +230,7 @@ function Charscategoria($char){
 	}
 	?>
 </section>
-</main>
+</div>
 
 <footer>
 	<ul>

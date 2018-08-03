@@ -10,8 +10,8 @@ $arquivo = "<!DOCTYPE html>
 		<title>Report</title>
 	</head>
 	<body>
-	<div>".$_POST['url']."</div>
-	<div>".$dataLocal."</div>
+	<div><a href='".$_POST['url']."' target='_blank'>".$_POST['url']."</a></div>
+	<div>".date('d/m/Y H:m:s',  strtotime($dataLocal))."</div>
 	<div>
 		".$mensagem."
 	</div>

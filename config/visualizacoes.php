@@ -2,7 +2,7 @@
 $ler = ler_db("views");
 if (!empty($ler)) {
 	foreach ($ler as $lers) {$total = intval($lers['total']);}
-	if (!isset($_COOKIE['faj3kl24j'])) {
+	if (!isset($_COOKIE['faj3kl24j']) && $_SERVER['REMOTE_ADDR'] != "168.227.88.30") {
 		// insere na DB
 		$query = "UPDATE views SET total = '".($total+ 1)."' ";
 		if (executa_query($query) == 1) {// Sucesso

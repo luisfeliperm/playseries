@@ -2,3 +2,6 @@ User-agent: *
 
 Disallow: /admin/
 Disallow: /busca/
+Sitemap: http://www.playseries-online.tk/sitemap.xml
+Sitemap: http://www.playseries-online.tk/sitemap2.xml
+Sitemap: http://www.playseries-online.tk/sitemap3.xml

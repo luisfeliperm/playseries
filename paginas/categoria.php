@@ -1,4 +1,4 @@
-<div class="container-cat">
+<main class="container-cat">
 	<div class="cat-conteudo width-90">
 		<div class="cat_nome" style="text-transform: uppercase;"><?php echo(Charscategoria($_GET['cat']));?></div>
 		<div class="list-films">
@@ -25,26 +25,26 @@
 					$lers['info'] = str_replace('_',' ',$lers['info']);
 					parse_str($lers['info'], $info_serie);
 					?>
-					<div class="filme">
-						<img src="<?php echo $lers['miniatura'];?>">
+					<article class="filme">
+						<img alt="<?php echo $lers['nome'];?>" src="<?php echo $lers['miniatura'];?>">
 						<div class="info">
 							<div class="dadosFilm">
-								<div class="InfTitulo"><?php echo $lers['nome'];?></div>
-								<div class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></div>
-								<div class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
+								<h1 class="InfTitulo"><?php echo $lers['nome'];?></h1>
+								<p class="InfoDataTime mininfo"><i class="fas fa-clock"></i> <?php echo $info_serie['tempo']. " ".$info_serie['data'];?></p>
+								<p class="InfoCategoria mininfo"><i class="fas fa-film"></i> 
 									<?php 
 									echo "<span class='capitalize'>".Charscategoria($lers['cat1'])."</span> "."<span class='capitalize'>".Charscategoria($lers['cat2'])."</span> "."<span class='capitalize'>".Charscategoria($lers['cat3'])."</span> "."<span class='capitalize'>".$lers['cat4']."</span> ";
 									?>
-								</div>							
-								<div class="InfoNumTempor mininfo"><i class="fas fa-video"></i> 2 Temporadas</div>
-								<div class="InfoSinopse" title="<?php echo $lers['sinopse'];?>"><?php echo $lers['sinopse'];?> </div>
+								</p>
+								<p class="InfoNumTempor mininfo"><i class="fas fa-video"></i> <?php echo mysqli_num_rows(executa_query("SELECT DISTINCT temporada FROM eps WHERE identificador = '".$lers['identificador']."' ORDER BY temporada ASC ")) ?? 0;?> Temporadas</p>
+								<p class="InfoSinopse" title="<?php echo $lers['sinopse'];?>"><?php echo $lers['sinopse'];?></p>
 							</div>
 							<div class="overflowDark"></div>
 							<div class="ver">
 								<a href="/watch/serie/<?php echo $lers['identificador'];?>/"><i class="far fa-play-circle"></i></a>
 							</div>
 						</div>
-					</div>
+					</article>
 				<?php 
 				}
 			}else{
@@ -96,4 +96,4 @@
 		}
 		?>
 	</div>
-</div>
+</main>

@@ -359,7 +359,7 @@
 										alert('Player 3, verifique!');return false;
 									}
 
-									$.post('/config/admin/valida_add_serie.php',{add_ep: 'update',id: '<?php echo $ep_id;?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
+									$.post('/config/admin/valida_add_serie.php',{add_ep: 'update',id: '<?php echo $ep_id;?>',idReal: '<?php echo $epArray['idReal'];?>',season: season,ep: ep,poster: poster,src1: input_src1,name_src2: name_src2,src2: input_src2,name_src3: name_src3,src3: input_src3},function(data){
 										
 									 alert(data);
 									})
