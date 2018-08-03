@@ -1,4 +1,4 @@
-<main class="container-cat">
+<div class="container-cat">
 	<div class="cat-conteudo width-90">
 		<div class="cat_nome" style="text-transform: uppercase;"><?php echo(Charscategoria($_GET['cat']));?></div>
 		<div class="list-films">
@@ -96,4 +96,4 @@
 		}
 		?>
 	</div>
-</main>
+</div>

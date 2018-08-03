@@ -1,4 +1,4 @@
-<main class="container-cat">
+<div class="container-cat">
 	<div class="cat-conteudo width-90">
 		<h1>Resultados para: <?php echo charsEspe(@$_GET['key']); ?></h1>
 		<div class="list-films">
@@ -92,4 +92,4 @@
 
 		?>
 	</div>
-</main>
+</div>

@@ -1,4 +1,4 @@
-<main class="container-cat">
+<div class="container-cat">
 	<div class="cat-conteudo width-90">
 		<div class="cat_nome">Novos</div>
 		<div class="list-films">
@@ -86,7 +86,7 @@
 		}
 		?>
 	</div>
-</main>
+</div>
 <?php
 // total de páginas
 

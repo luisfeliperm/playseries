@@ -18,7 +18,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 	$ep = 1;
 }
 ?>
-<main class="watch_section width-90">
+<div class="watch_section width-90">
 	<div class="thumb">
 		<div class="w_nome"><h1><?php echo $dados_ep['nome']; ?></h1></div>
 		<span class="qualy"><?php echo $info_ep['qualy'];?></span>
@@ -151,14 +151,27 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 		<div class="controles" >
 			<?php
 			if ($ep == 1) {
-				echo "<a href='javascript:void(0);'  style='float:left;opacity:0.4;cursor:default;'>Voltar</a>";
+				if ($season > 1) {
+					$before_ep = ler_db("eps", "WHERE identificador = '".$url_serie."' AND temporada = '".($season-1)."' ORDER BY ep DESC LIMIT 1  ");
+					if (!empty($before_ep)) {
+						foreach ($before_ep as $before_array) {
+							echo "<a href='?s=".($season-1)."&e=".$before_array['ep']."'  style='float:left;'>Voltar</a>";
+						}
+					}
+				}else{
+					echo "<a href='javascript:void(0);' style='float:left;opacity:0.4;cursor:default;'>Voltar</a>";
+				}
 			}else{
 				echo "<a href='?s=".$season."&e=".($ep - 1)."'  style='float:left;'>Voltar</a>";
 			} 
-
 			$query = "SELECT * FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".$season."' AND ep = '".($ep+1)."' ";
 			if (!mysqli_num_rows(executa_query($query))) {
-				echo "<a href='javascript:void(0);'  style='float:right;opacity:0.4;cursor:default;'>Proximo</a>";
+				$query = "SELECT identificador,temporada FROM eps WHERE identificador = '".$url_serie."' AND temporada = '".($season+1)."' ";
+				if (!mysqli_num_rows(executa_query($query))) {
+					echo "<a href='javascript:void(0);' style='float:right;opacity:0.4;cursor:default;'>Proximo</a>";
+				}else{
+					echo "<a href='?s=".($season+1)."&e=1' style='float:right;'>Proximo</a>";
+				}
 			}else{
 				echo "<a href='?s=".$season."&e=".($ep + 1)."' style='float:right;'>Proximo</a>";
 			}
@@ -177,7 +190,7 @@ if (isset($_GET['e']) && !empty($_GET['e']) && $_GET['e'] > 0) {
 			<div class="fb-comments" data-href="<?php echo "http://www.playseries-online.tk/watch/serie/".$url_serie."/?s=".$season."&e=".$ep;?>" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
 		</div>
 	</div>
-</main>
+</div>
 <div class="report" id="report">
 	<form>
 		<a href="javascript:void(0)" onclick="display_edit('report', 'none');"><i class="fas fa-times"></i></a>
