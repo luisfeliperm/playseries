@@ -22,7 +22,7 @@ function charsEspe($str){
 }
 function fecha_conexao($conn){mysqli_close($conn) or die (mysqli_error());}
 function connect_db(){
-	$conn = mysqli_connect('localhost', 'luisfeliperm', '@Root123', 'playseries');
+	$conn = mysqli_connect('localhost', 'root', '', 'playseries.luisfeliperm');
 	#$conn = mysqli_connect('localhost', 'id3901780_root', 'naruto123', 'id3901780_playseries');
 	mysqli_set_charset($conn, "utf8") or die (mysqli_error($conn));
 	if (mysqli_connect_errno()) {

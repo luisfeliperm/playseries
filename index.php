@@ -142,7 +142,7 @@ function Charscategoria($char){
 			</ul>
 
 			<ul class="menu_mob" id="menu_mob">
-				<li id="close_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'none');document.body.style.overflow = 'auto';"><i class="fas fa-times"></i></a></li>
+				<span id="close_menu"><a href="javascript:void(0)" onclick="display_edit('menu_mob', 'none');document.body.style.overflow = 'auto';"><i class="fas fa-times"></i></a></span>
 				<li><a href="/">Inicio</a></li>
 				<li><a href="/categoria/documentario/">Documentarios</a></li>
 				<li><a href="/categoria/anime/">Animes</a></li>

@@ -1,15 +1,20 @@
-<?php $mod_edit='0';?><link rel="stylesheet" type="text/css" href="/css/admin.css">
+<?php 
+if (isset($_POST['Loginemail']) && isset($_POST['Loginpass'])) {
+	$email = anti_injection($_POST['Loginemail']);$pass = md5(anti_injection($_POST['Loginpass']));
+	$query = "SELECT * FROM admin WHERE email = '".$email."' AND pass = '".$pass."' AND nivel > 0";
+	$result = executa_query($query);
+	if (mysqli_num_rows($result)) {
+		$_SESSION['email'] = $email;
+		$_SESSION['pass'] = $pass;
+	}
+}
+$mod_edit='0';
+?><link rel="stylesheet" type="text/css" href="/css/admin.css">
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Recomendados -->
 <div class="container-cat" style="text-shadow:none;">
 <div class="cat-conteudo width-90">
 	<?php 
-	if (isset($_POST['Loginemail']) && isset($_POST['Loginpass'])) {
-		$email = anti_injection($_POST['Loginemail']);$pass = anti_injection($_POST['Loginpass']);
-		$query = "SELECT * FROM admin WHERE email = '".$email."' AND pass = '".$pass."' AND nivel > 0";
-		$result = executa_query($query);
-		if (mysqli_num_rows($result)) {$_SESSION['email'] = $email;$_SESSION['pass'] = $pass;}
-	}
 	if (!isset($_SESSION['email'],$_SESSION['pass']) || empty($_SESSION['email']) || empty($_SESSION['pass'])) {
 		// Não está logado
 		?>
@@ -551,7 +556,7 @@
 					<div style="color:#fff;text-align:center;margin:10px;">
 						<?php 
 						$email = @anti_injection($_POST['Useremail']);
-						$pass  = @anti_injection($_POST['Userpass']);
+						$pass  = @md5(anti_injection($_POST['Userpass']));
 						$nivel = @anti_injection($_POST['Usernivel']);
 						if (!empty($email) && !empty($pass) && isset($_POST['Usernivel']) && $nivel < 3 && $nivel >= 0 ) {
 							
